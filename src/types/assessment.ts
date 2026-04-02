@@ -72,6 +72,54 @@ export interface QualifyingAnswers {
   planning: string;
 }
 
+// ─── Diagnostic Patterns ────────────────────────────────────────────────────
+
+export type PatternPriority = "critical" | "warning" | "insight";
+
+export interface PatternTrigger {
+  questionId: string;
+  expectedAnswer: boolean;
+}
+
+export interface DiagnosticPattern {
+  id: string;
+  name: string;
+  triggers: PatternTrigger[];
+  priority: PatternPriority;
+  isCrossDimension: boolean;
+  championSummary: string;
+  ctoSummary: string;
+  salesTalkTrack: string;
+  recommendedAction: string;
+}
+
+export interface TriggeredPattern {
+  pattern: DiagnosticPattern;
+  score: number;
+}
+
+export type LeadBucket = "hot" | "warm" | "nurture";
+
+export interface LeadScore {
+  score: number;
+  bucket: LeadBucket;
+}
+
+export interface SeesawScript {
+  strongestDimension: { id: DimensionId; label: string; percentage: number };
+  weakestDimension: { id: DimensionId; label: string; percentage: number };
+  openingLine: string;
+  pivotLine: string;
+}
+
+export interface DiagnosticResult {
+  allTriggered: TriggeredPattern[];
+  topPatterns: TriggeredPattern[];
+  leadScore: LeadScore;
+  seesawScript: SeesawScript;
+  isStrongPosition: boolean;
+}
+
 // ─── Lead ────────────────────────────────────────────────────────────────────
 
 export interface Lead {
@@ -96,6 +144,11 @@ export interface Assessment {
   tier: TierId;
   completedAt: string;
   emailSentAt?: string | null;
+  triggeredPatterns?: TriggeredPattern[] | null;
+  topPatterns?: TriggeredPattern[] | null;
+  leadScore?: number | null;
+  leadBucket?: LeadBucket | null;
+  seesawData?: SeesawScript | null;
 }
 
 // ─── Content & Config Interfaces ─────────────────────────────────────────────

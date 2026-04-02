@@ -4,6 +4,7 @@ import { z } from "zod/v3";
 import type { ScoredAnswers, QualifyingAnswers } from "@/types/assessment";
 import { createClient } from "@/lib/supabase/server";
 import { scoreAssessment } from "@/lib/scoring";
+import { generateDiagnostic } from "@/lib/quiz/diagnostic-engine";
 import { sendResultsEmail } from "@/lib/email";
 
 // ─── Input Validation ──────────────────────────────────────────────────────
@@ -97,6 +98,13 @@ export async function submitAssessment(
     scoredAnswers as ScoredAnswers,
   );
 
+  // 3b. Generate diagnostic patterns
+  const diagnostic = generateDiagnostic(
+    scoredAnswers as ScoredAnswers,
+    qualifyingAnswers as QualifyingAnswers,
+    dimensionPercentages,
+  );
+
   // 4. Store the assessment
   const { data: assessment, error: assessmentError } = await supabase
     .from("assessments")
@@ -107,6 +115,11 @@ export async function submitAssessment(
       total_percentage: totalPercentage,
       dimension_percentages: dimensionPercentages,
       tier,
+      triggered_patterns: diagnostic.allTriggered,
+      top_patterns: diagnostic.topPatterns,
+      lead_score: diagnostic.leadScore.score,
+      lead_bucket: diagnostic.leadScore.bucket,
+      seesaw_data: diagnostic.seesawScript,
     })
     .select("id")
     .single();

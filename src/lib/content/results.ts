@@ -93,31 +93,6 @@ export const diagnosisTemplates: Record<TierId, string> = {
     "Your Angular stack is well-maintained and modern. Focus on the dimensions where you scored lower to maintain your competitive edge and continue leading in best practices.",
 };
 
-// ─── Compound Risk Statements ───────────────────────────────────────────────
-
-export const compoundRiskIntro =
-  "Multiple dimensions scored low, which compounds risk:";
-
-export const compoundRiskStatements: Record<
-  string,
-  string
-> = {
-  "migration_health+architecture":
-    "Outdated Angular versions on a poorly structured codebase make every upgrade exponentially harder.",
-  "migration_health+modern_adoption":
-    "Running old Angular without modern patterns means you're accumulating two generations of technical debt.",
-  "migration_health+delivery_readiness":
-    "Version lag combined with delivery friction signals a team that's struggling to keep up — and falling further behind.",
-  "architecture+modern_adoption":
-    "Poor structure plus legacy patterns make the codebase increasingly resistant to change.",
-  "architecture+delivery_readiness":
-    "Architectural gaps plus delivery friction mean your team is fighting the codebase and the process.",
-  "modern_adoption+ai_governance":
-    "Without modern patterns or AI guardrails, your team is writing legacy code — whether by hand or by AI.",
-  "ai_governance+delivery_readiness":
-    "No AI governance combined with delivery challenges means your team is moving slowly and the AI isn't helping.",
-};
-
 // ─── Score Section Labels ───────────────────────────────────────────────────
 
 export const resultsPage = {
@@ -132,9 +107,3 @@ export const resultsPage = {
   retakeHref: "/assessment",
 } as const;
 
-export const sectionTaglines = {
-  score: "Your Results",
-  diagnosis: "Your Diagnosis",
-  recommendations: "Your Recommendations",
-  cta: "Recommended Next Step",
-} as const;
