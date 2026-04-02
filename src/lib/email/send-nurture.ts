@@ -16,7 +16,7 @@ export async function sendNurtureEmail(params: {
   if (!template) return null;
 
   const { data, error } = await resend.emails.send({
-    from: "FrontendMinds <newsletter@frontendminds.com>",
+    from: "FrontendMinds <contact@frontendminds.com>",
     to: params.to,
     subject: template.subject,
     react: React.createElement(NurtureEmail, {

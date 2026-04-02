@@ -51,7 +51,7 @@ export function ContentPillars() {
                     <h3 className="text-[1.15rem] font-semibold text-foreground transition-colors md:group-hover:text-white">
                       {item.title}
                     </h3>
-                    <p className="mt-1 text-[0.9rem] leading-[1.65] text-[#8B9DB8]">
+                    <p className="mt-1 text-[0.9rem] leading-[1.65] text-muted-foreground">
                       {item.description}
                     </p>
                     <span className={`mt-3 inline-block text-[0.8rem] font-semibold transition-colors ${accent.link}`}>

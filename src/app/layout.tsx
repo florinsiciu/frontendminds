@@ -67,7 +67,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col">
         <PostHogProvider>
           <Navigation />
-          <div className="flex-1 pb-16 pt-14 lg:pb-0">{children}</div>
+          <main className="flex-1 pb-16 pt-14 lg:pb-0">{children}</main>
           <Footer />
         </PostHogProvider>
       </body>

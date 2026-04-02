@@ -23,14 +23,14 @@ export function LeadMagnet() {
             The Frontend<br />
             <em className="font-heading italic text-[#818CF8]">Signal</em>
           </h2>
-          <p className="mb-6 text-[0.9rem] leading-[1.65] text-[#8B9DB8]">
+          <p className="mb-6 text-[0.9rem] leading-[1.65] text-muted-foreground">
             {newsletterCta.subheading}
           </p>
           <ul className="space-y-[0.6rem]">
             {newsletterCta.benefits.map((benefit) => (
               <li key={benefit} className="flex items-center gap-3">
                 <span className="shrink-0 text-[1rem] text-[#34D399]">✓</span>
-                <span className="text-[0.9rem] leading-[1.65] text-[#8B9DB8]">{benefit}</span>
+                <span className="text-[0.9rem] leading-[1.65] text-muted-foreground">{benefit}</span>
               </li>
             ))}
           </ul>
@@ -40,7 +40,7 @@ export function LeadMagnet() {
         <div className="w-full flex-1">
           <GlassCard className="w-full p-8">
             <NewsletterForm variant="full" onSuccess={handleSuccess} />
-            <p className="mt-3 text-center text-[0.75rem] text-[#7A8CA3]">
+            <p className="mt-3 text-center text-[0.75rem] text-muted-foreground">
               {newsletterCta.finePrint}
             </p>
           </GlassCard>

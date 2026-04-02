@@ -165,6 +165,6 @@ export const founderSection = {
   title: "Angular Modernization Consultant",
   description:
     "8+ years helping frontend teams untangle legacy Angular codebases, adopt AI tools that actually work, and ship with confidence. Previously lead architect on a 19-app enterprise micro-frontend platform.",
-  ctaText: "Learn more",
+  ctaText: "Learn more about Florin",
   ctaHref: "/about",
 } as const;

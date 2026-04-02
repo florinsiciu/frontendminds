@@ -70,7 +70,7 @@
  * Background: #0F172A (main bg)
  * Surface:    #1E293B (cards, elevated)
  * Border:     #253349 (borders, dividers)
- * Primary:    #6366F1 (Indigo — CTAs, links)
+ * Primary:    #5B5EEB (Indigo — CTAs, links)
  * Accent:     #818CF8 (Light Indigo — highlights, hover)
  * Secondary:  #34D399 (Emerald — success, growth)
  * Warning:    #FBBF24 (medium scores, alerts)
@@ -92,14 +92,14 @@
   --popover: #1E293B;
   --popover-foreground: #F1F5F9;
 
-  --primary: #6366F1;
+  --primary: #5B5EEB;
   --primary-foreground: #FFFFFF;
 
   --secondary: #1E293B;
   --secondary-foreground: #34D399;
 
   --muted: #1E293B;
-  --muted-foreground: #8B9DB8;
+  --muted-foreground: #94A3BB;
 
   --accent: #818CF8;
   --accent-foreground: #FFFFFF;
@@ -109,7 +109,7 @@
 
   --border: #253349;
   --input: #253349;
-  --ring: #6366F1;
+  --ring: #5B5EEB;
 
   /* Custom tokens */
   --surface: #1E293B;
@@ -125,7 +125,7 @@
   --dim-delivery: #F87171;
 
   /* Chart colors using new palette */
-  --chart-1: #6366F1;
+  --chart-1: #5B5EEB;
   --chart-2: #34D399;
   --chart-3: #818CF8;
   --chart-4: #FBBF24;
@@ -134,12 +134,12 @@
   /* Sidebar (unused in MVP, but shadcn expects them) */
   --sidebar: #1E293B;
   --sidebar-foreground: #F1F5F9;
-  --sidebar-primary: #6366F1;
+  --sidebar-primary: #5B5EEB;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #253349;
   --sidebar-accent-foreground: #F1F5F9;
   --sidebar-border: #253349;
-  --sidebar-ring: #6366F1;
+  --sidebar-ring: #5B5EEB;
 }
 
 @layer base {

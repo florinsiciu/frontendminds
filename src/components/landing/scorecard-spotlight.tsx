@@ -39,7 +39,7 @@ export function ScorecardSpotlight() {
 
       <div className="mx-auto mt-12 max-w-2xl">
         <GlassCard variant="highlight" className="p-5 sm:p-8 lg:p-10">
-          <p className="mb-6 text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-slate-500">
+          <p className="mb-6 text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
             Sample report
           </p>
 
@@ -75,7 +75,7 @@ export function ScorecardSpotlight() {
           </div>
 
           <div className="mt-8 text-center">
-            <p className="text-sm text-slate-400">Overall Score</p>
+            <p className="text-sm text-muted-foreground">Overall Score</p>
             <p className="font-heading text-5xl font-bold text-foreground">
               {totalPct}%
             </p>

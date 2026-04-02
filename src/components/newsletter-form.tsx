@@ -73,7 +73,7 @@ export function NewsletterForm({
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="w-full rounded-full bg-[#6366F1] px-[2.25rem] py-[0.85rem] text-[0.9375rem] font-semibold text-white shadow-[0_4px_24px_rgba(99,102,241,0.35)] transition-all md:hover:-translate-y-0.5 md:hover:shadow-[0_0_0_4px_rgba(99,102,241,0.15),0_6px_28px_rgba(99,102,241,0.45)] disabled:opacity-50 sm:w-auto"
+            className="w-full rounded-full bg-primary px-[2.25rem] py-[0.85rem] text-[0.9375rem] font-semibold text-white shadow-[0_4px_24px_rgba(99,102,241,0.35)] transition-all md:hover:-translate-y-0.5 md:hover:shadow-[0_0_0_4px_rgba(99,102,241,0.15),0_6px_28px_rgba(99,102,241,0.45)] disabled:opacity-50 sm:w-auto"
           >
             {status === "submitting"
               ? newsletterFormDefaults.submittingText
@@ -127,7 +127,7 @@ export function NewsletterForm({
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="mt-1 w-full rounded-full bg-[#6366F1] px-[2.25rem] py-4 text-[0.9375rem] font-semibold text-white shadow-[0_4px_24px_rgba(99,102,241,0.35)] transition-all md:hover:-translate-y-0.5 md:hover:shadow-[0_0_0_4px_rgba(99,102,241,0.15),0_6px_28px_rgba(99,102,241,0.45)] disabled:opacity-50"
+          className="mt-1 w-full rounded-full bg-primary px-[2.25rem] py-4 text-[0.9375rem] font-semibold text-white shadow-[0_4px_24px_rgba(99,102,241,0.35)] transition-all md:hover:-translate-y-0.5 md:hover:shadow-[0_0_0_4px_rgba(99,102,241,0.15),0_6px_28px_rgba(99,102,241,0.45)] disabled:opacity-50"
         >
           {status === "submitting"
             ? newsletterFormDefaults.submittingText

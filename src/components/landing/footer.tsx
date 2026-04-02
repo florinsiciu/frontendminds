@@ -55,7 +55,7 @@ export function Footer() {
             <span className="mb-2 block font-heading text-[1.1rem] font-bold tracking-[-0.02em] text-foreground">
               Frontend<span className="text-[#818CF8]">Minds</span>
             </span>
-            <p className="max-w-[280px] text-[0.8rem] leading-[1.65] text-[#8B9DB8]">
+            <p className="max-w-[280px] text-[0.8rem] leading-[1.65] text-muted-foreground">
               Helping Angular teams modernize with confidence. Assessment tools, expert content, and consulting.
             </p>
           </div>
@@ -64,7 +64,7 @@ export function Footer() {
           <div className="flex flex-wrap gap-x-8 gap-y-6 sm:gap-12">
             {/* Platform */}
             <div>
-              <h3 className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] text-[#475569]">
+              <h3 className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] text-muted-foreground">
                 Platform
               </h3>
               <ul className="flex flex-col gap-2">
@@ -72,7 +72,7 @@ export function Footer() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-[0.85rem] text-[#8B9DB8] transition-colors hover:text-foreground"
+                      className="text-[0.85rem] text-muted-foreground transition-colors hover:text-foreground"
                     >
                       {item.label}
                     </Link>
@@ -83,7 +83,7 @@ export function Footer() {
 
             {/* Company */}
             <div>
-              <h3 className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] text-[#475569]">
+              <h3 className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] text-muted-foreground">
                 Company
               </h3>
               <ul className="flex flex-col gap-2">
@@ -91,7 +91,7 @@ export function Footer() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-[0.85rem] text-[#8B9DB8] transition-colors hover:text-foreground"
+                      className="text-[0.85rem] text-muted-foreground transition-colors hover:text-foreground"
                     >
                       {item.label}
                     </Link>
@@ -102,7 +102,7 @@ export function Footer() {
 
             {/* Legal */}
             <div>
-              <h3 className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] text-[#475569]">
+              <h3 className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] text-muted-foreground">
                 Legal
               </h3>
               <ul className="flex flex-col gap-2">
@@ -110,7 +110,7 @@ export function Footer() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-[0.85rem] text-[#8B9DB8] transition-colors hover:text-foreground"
+                      className="text-[0.85rem] text-muted-foreground transition-colors hover:text-foreground"
                     >
                       {item.label}
                     </Link>
@@ -123,7 +123,7 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/[0.04] pt-6 sm:flex-row">
-          <p className="text-[0.75rem] text-[#7A8CA3]">{copyright}</p>
+          <p className="text-[0.75rem] text-muted-foreground">{copyright}</p>
           <div className="flex gap-1">
             {socialLinks.map((social) => (
               <a
@@ -131,7 +131,7 @@ export function Footer() {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-[#475569] transition-colors hover:text-foreground"
+                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
                 aria-label={social.label}
               >
                 <SocialIcon name={social.icon} className="size-5" />

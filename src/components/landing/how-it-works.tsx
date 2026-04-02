@@ -40,7 +40,7 @@ export function HowItWorks() {
                 <h3 className="mb-3 text-[1.3rem] font-semibold text-foreground">
                   {step.title}
                 </h3>
-                <p className="max-w-[480px] text-[0.9rem] leading-[1.65] text-[#8B9DB8]">
+                <p className="max-w-[480px] text-[0.9rem] leading-[1.65] text-muted-foreground">
                   {step.description}
                 </p>
               </div>

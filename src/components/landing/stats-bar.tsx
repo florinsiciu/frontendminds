@@ -35,7 +35,7 @@ export function StatsBar() {
                 >
                   {stat.value}
                 </div>
-                <div className="text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-[#7A8CA3]">
+                <div className="text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
                   {stat.label}
                 </div>
               </div>

@@ -65,12 +65,12 @@ export function Hero() {
         </Reveal>
 
         <Reveal delay={350}>
-          <p className="mb-12 text-[0.8rem] text-[#64748B]">{hero.socialProof}</p>
+          <p className="mb-12 text-[0.8rem] text-muted-foreground">{hero.socialProof}</p>
         </Reveal>
 
         <Reveal delay={400}>
           <div>
-            <p className="mb-3 text-[0.65rem] font-semibold uppercase tracking-[0.15em] text-[#64748B]">
+            <p className="mb-3 text-[0.65rem] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
               {hero.dimensionLabel}
             </p>
             <div className="flex flex-wrap justify-center gap-[0.625rem]">

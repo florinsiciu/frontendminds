@@ -52,7 +52,7 @@ export function FounderSection() {
               <p className="mb-4 text-[0.875rem] font-medium text-[#818CF8]">
                 {founderSection.title}
               </p>
-              <p className="mb-4 text-[0.9rem] leading-[1.65] text-[#8B9DB8]">
+              <p className="mb-4 text-[0.9rem] leading-[1.65] text-muted-foreground">
                 {founderSection.description}
               </p>
 
@@ -68,7 +68,7 @@ export function FounderSection() {
                     href="https://linkedin.com/in/florinsiciu"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-[#64748B] transition-colors hover:text-slate-300"
+                    className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-muted-foreground transition-colors hover:text-slate-300"
                     aria-label="LinkedIn"
                   >
                     <LinkedinIcon className="size-5" />
@@ -77,7 +77,7 @@ export function FounderSection() {
                     href="https://github.com/florinsiciu"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-[#64748B] transition-colors hover:text-slate-300"
+                    className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-muted-foreground transition-colors hover:text-slate-300"
                     aria-label="GitHub"
                   >
                     <GithubIcon className="size-5" />
@@ -86,7 +86,7 @@ export function FounderSection() {
                     href="https://x.com/nicusorsiciu"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-[#64748B] transition-colors hover:text-slate-300"
+                    className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-muted-foreground transition-colors hover:text-slate-300"
                     aria-label="X"
                   >
                     <TwitterIcon className="size-5" />

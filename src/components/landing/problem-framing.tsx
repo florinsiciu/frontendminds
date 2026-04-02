@@ -76,7 +76,7 @@ export function ProblemFraming() {
                   <IconCircle className={colors.iconBg}>
                     {Icon && <Icon className="h-5 w-5" />}
                   </IconCircle>
-                  <p className="text-[0.9rem] leading-[1.65] text-[#8B9DB8]">
+                  <p className="text-[0.9rem] leading-[1.65] text-muted-foreground">
                     &ldquo;{situation.quote}&rdquo;
                   </p>
                 </GlassCard>

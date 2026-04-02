@@ -41,9 +41,9 @@ export function BlogPostRow({ post, index = 0 }: { post: BlogPostMeta; index?: n
               <span className="text-xs text-muted-foreground">{post.readingTime}</span>
             </div>
 
-            <h3 className="text-lg font-semibold text-foreground transition-colors group-hover:text-primary">
+            <h2 className="text-lg font-semibold text-foreground transition-colors group-hover:text-primary">
               {post.title}
-            </h3>
+            </h2>
 
             <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">
               {post.description}
