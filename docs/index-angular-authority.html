@@ -1,0 +1,3200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Florin Siciu — Angular Modernization Architect</title>
+  <meta name="description" content="Enterprise Angular modernization consulting. 19 apps migrated from Angular 9 to 17. Get the free Migration Playbook or book a free architecture review.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <meta property="og:title" content="Florin Siciu — Angular Modernization Architect">
+  <meta property="og:description" content="Enterprise Angular modernization consulting. 19 apps migrated from Angular 9 to 17. Get the free Migration Playbook or book a free architecture review.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://florinsiciu.com">
+  <meta property="og:image" content="https://florinsiciu.com/og-angular-authority.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Florin Siciu — Angular Modernization Architect">
+  <meta name="twitter:description" content="Enterprise Angular modernization consulting. 19 apps migrated from Angular 9 to 17. Get the free Migration Playbook or book a free architecture review.">
+  <meta name="robots" content="index, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"></noscript>
+  <!-- Calendly CSS (loaded async — only needed on interaction) -->
+  <link rel="preload" as="style" href="https://assets.calendly.com/assets/external/widget.css" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet"></noscript>
+  <style>
+    /* Font metric overrides — match fallback to web font to prevent CLS */
+    @font-face {
+      font-family: 'DM Sans Fallback';
+      src: local('Arial');
+      size-adjust: 104.83%;
+      ascent-override: 99.21%;
+      descent-override: 31.2%;
+      line-gap-override: 0%;
+    }
+    @font-face {
+      font-family: 'IBM Plex Sans Fallback';
+      src: local('Arial');
+      size-adjust: 99.94%;
+      ascent-override: 101.03%;
+      descent-override: 27.18%;
+      line-gap-override: 0%;
+    }
+
+    /* ========================================
+       RESET & BASE
+       ======================================== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --black: #0F172A;
+      --dark: #1E293B;
+      --dark-2: #1E293B;
+      --dark-3: #253349;
+      --gray-900: #334155;
+      --gray-800: #2D3B4F;
+      --gray-700: #475569;
+      --gray-600: #64748B;
+      --gray-500: #94A3B8;
+      --gray-400: #CBD5E1;
+      --gray-300: #CBD5E1;
+      --gray-200: #E2E8F0;
+      --white: #F1F5F9;
+      --white-pure: #ffffff;
+      --accent: #FF5370;
+      --accent-dim: rgba(221, 0, 49, 0.25);
+      --accent-glow: rgba(221, 0, 49, 0.06);
+      --blue: #93C5FD;
+      --blue-dim: rgba(147, 197, 253, 0.25);
+      --warning: #FBBF24;
+      --cta-bg: #DD0031;
+      --cta-text: #ffffff;
+      --font-heading: 'DM Sans', 'DM Sans Fallback', sans-serif;
+      --font-body: 'IBM Plex Sans', 'IBM Plex Sans Fallback', 'Segoe UI', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--black);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ========================================
+       BACKGROUND DOT MATRIX PATTERN (Phase 3)
+       ======================================== */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle, rgba(221, 0, 49, 0.08) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Noise texture overlay (Phase 3) */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
+
+    /* ========================================
+       TYPOGRAPHY (Phase 2)
+       ======================================== */
+    h1, h2, h3, h4, h5, h6,
+    .section-heading, .hero-headline, .service-name,
+    .why-item-title, .stat-number, .step-title {
+      font-family: var(--font-heading);
+      letter-spacing: -0.01em;
+    }
+
+    /* ========================================
+       UTILITY
+       ======================================== */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      padding: clamp(4rem, 10vw, 8rem) 0;
+      position: relative;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; }
+    .fade-in-delay-4 { transition-delay: 0.4s; }
+
+    /* ========================================
+       GOLD ACCENT LINE (vertical motif)
+       ======================================== */
+    .gold-line {
+      position: absolute;
+      left: clamp(1.5rem, 5vw, 4rem);
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--accent) 20%,
+        var(--accent) 80%,
+        transparent
+      );
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    /* ========================================
+       NAVIGATION (Updated Phase 11 nav links)
+       ======================================== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1.25rem 0;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, padding 0.4s ease;
+    }
+
+    .nav.scrolled {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(221, 0, 49, 0.25);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--gray-400);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-cta {
+      display: inline-block;
+      padding: 0.6rem 1.5rem;
+      background: var(--cta-bg);
+      border: 1px solid var(--cta-bg);
+      border-radius: 8px;
+      color: var(--cta-text) !important;
+      font-size: 0.8rem !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s ease !important;
+    }
+
+    .nav-cta:hover {
+      background: #FF5370 !important;
+      border-color: #FF5370 !important;
+      color: #fff !important;
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: all 0.3s ease;
+    }
+
+    /* ========================================
+       HERO (Phase 1 - Rewritten)
+       ======================================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding-top: 5rem;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: radial-gradient(ellipse at 80% 40%, var(--accent-glow) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-content {
+      position: relative;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-headline {
+      font-family: var(--font-heading);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 1.05;
+      color: var(--white-pure);
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+      font-weight: 700;
+      transition: text-shadow 0.1s ease;
+    }
+
+    /* Glitch micro-effect on headline hover (Phase 10) */
+    @keyframes glitch-text {
+      0% { text-shadow: 2px 0 #DD0031, -2px 0 #93C5FD; }
+      25% { text-shadow: -2px 0 #DD0031, 2px 0 #93C5FD; }
+      50% { text-shadow: 2px -1px #DD0031, -2px 1px #93C5FD; }
+      75% { text-shadow: -1px 2px #DD0031, 1px -2px #93C5FD; }
+      100% { text-shadow: 0 0 transparent, 0 0 transparent; }
+    }
+
+    .hero-headline:hover {
+      animation: glitch-text 0.1s linear;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-heading);
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      font-style: italic;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .hero-byline {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--gray-400);
+      margin-bottom: 2.5rem;
+      padding-left: 1rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    .hero-headshot {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-dim);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2.5rem;
+      background: var(--cta-bg);
+      border-radius: 8px;
+      color: var(--cta-text);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::after {
+      content: '\2192';
+      transition: transform 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: #FF5370;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(221, 0, 49, 0.3);
+    }
+
+    .btn-primary:hover::after {
+      transform: translateX(4px);
+    }
+
+    .scarcity-pill {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      border: 1px solid var(--accent-dim);
+      border-radius: 100px;
+      padding: 0.4rem 1rem;
+      margin-top: 1.25rem;
+      margin-left: 0.5rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-code-transform {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .code-block {
+      flex: 1;
+      background: var(--dark-2);
+      border: 1px solid var(--gray-800);
+      border-radius: 8px;
+      padding: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-block pre {
+      font-family: 'JetBrains Mono', 'Consolas', monospace;
+      font-size: 0.65rem;
+      line-height: 1.7;
+      color: var(--gray-300);
+      white-space: pre;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .code-before {
+      opacity: 0.6;
+      border-color: var(--gray-700);
+    }
+
+    .code-before pre {
+      text-decoration: line-through;
+      text-decoration-color: var(--accent-dim);
+    }
+
+    .code-after {
+      border-color: var(--blue-dim);
+      box-shadow: 0 0 30px var(--blue-dim);
+      position: relative;
+    }
+
+    /* Pulsing red glow behind After code block (Phase 3) */
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 30px var(--blue-dim), 0 0 60px rgba(221, 0, 49, 0.1); }
+      50% { box-shadow: 0 0 40px var(--blue-dim), 0 0 80px rgba(221, 0, 49, 0.25); }
+    }
+
+    .code-after {
+      animation: pulse-glow 4s ease-in-out infinite;
+      will-change: box-shadow;
+    }
+
+    .code-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .code-after .code-label {
+      color: var(--accent);
+    }
+
+    .code-block pre .kw {
+      color: var(--accent);
+    }
+
+    .code-block pre .fn {
+      color: var(--white-pure);
+    }
+
+    .code-block pre .cm {
+      color: var(--gray-600);
+    }
+
+    .transform-arrow {
+      font-size: 1.5rem;
+      color: var(--accent);
+      flex-shrink: 0;
+      animation: pulse-arrow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-arrow {
+      0%, 100% { opacity: 0.5; transform: translateX(0); }
+      50% { opacity: 1; transform: translateX(4px); }
+    }
+
+    /* ========================================
+       STATS BAR (with bar-fill animation Phase 10)
+       ======================================== */
+    .stats {
+      background: var(--dark);
+      border-top: 1px solid var(--accent-dim);
+      border-bottom: 1px solid var(--accent-dim);
+      position: relative;
+      z-index: 1;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-item + .stat-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background: var(--accent-dim);
+    }
+
+    .stat-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 0;
+      background: var(--accent);
+      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .stat-item.bar-animated .stat-bar {
+      width: 100%;
+    }
+
+    .stat-number {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========================================
+       SECTION HEADERS
+       ======================================== */
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.15;
+      color: var(--white-pure);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-subheading {
+      font-size: 1.1rem;
+      color: var(--gray-400);
+      max-width: 640px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    /* ========================================
+       PROBLEM SECTION (Phase 9 - Expanded)
+       ======================================== */
+    .problem {
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .problem::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+    }
+
+    .problem .section-eyebrow::before {
+      background: var(--warning);
+    }
+
+    .problem .section-eyebrow {
+      color: var(--warning);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 4rem;
+      margin-top: 3rem;
+      align-items: start;
+    }
+
+    .problem-pains {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .pain-item {
+      padding: 1.25rem 1.5rem;
+      border-left: 3px solid var(--warning);
+      background: rgba(251, 191, 36, 0.04);
+      font-size: 1.05rem;
+      color: var(--gray-300);
+      line-height: 1.6;
+      font-weight: 400;
+      transition: all 0.3s ease;
+    }
+
+    .pain-item:hover {
+      border-left-color: var(--accent);
+      background: rgba(221, 0, 49, 0.06);
+    }
+
+    .pain-item strong {
+      color: var(--white-pure);
+      font-weight: 600;
+    }
+
+    .problem-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      border: 1px solid var(--accent-dim);
+      border-radius: 8px;
+      background: var(--accent-glow);
+    }
+
+    .problem-stat-number {
+      font-family: var(--font-heading);
+      font-size: clamp(4rem, 8vw, 6rem);
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .problem-stat-context {
+      font-size: 1rem;
+      color: var(--gray-400);
+      line-height: 1.6;
+      max-width: 280px;
+    }
+
+    /* ========================================
+       HOW IT WORKS (Phase 4 - New)
+       ======================================== */
+    .how-it-works {
+      position: relative;
+    }
+
+    .how-it-works::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+    }
+
+    .steps-timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      margin-top: 4rem;
+      position: relative;
+    }
+
+    /* Horizontal connecting line */
+    .steps-timeline::after {
+      content: '';
+      position: absolute;
+      top: 2.25rem;
+      left: calc(16.67% + 1rem);
+      right: calc(16.67% + 1rem);
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-dim), var(--accent), var(--accent-dim));
+      z-index: 0;
+    }
+
+    .step-item {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 4.5rem;
+      height: 4.5rem;
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--cta-bg);
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      background: var(--black);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .step-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: var(--white-pure);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .step-text {
+      font-size: 0.95rem;
+      color: var(--gray-400);
+      line-height: 1.7;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    .how-it-works .btn-primary {
+      margin-top: 3rem;
+    }
+
+    .how-it-works-cta {
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    /* ========================================
+       CTA BAND (Phase 7 - Mid-page CTAs)
+       ======================================== */
+    .cta-band {
+      background: var(--dark-3);
+      padding: 3rem 0;
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--accent-dim);
+      border-bottom: 1px solid var(--accent-dim);
+    }
+
+    .cta-band-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-band-text {
+      font-size: 1.15rem;
+      color: var(--gray-300);
+      font-weight: 400;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    .cta-band-text strong {
+      color: var(--white-pure);
+    }
+
+    /* ========================================
+       SERVICES SECTION (Phase 5 - Improved)
+       ======================================== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+      align-items: stretch;
+    }
+
+    .service-card {
+      background: var(--dark-2);
+      border: 1px solid var(--gray-800);
+      border-radius: 8px;
+      padding: 2.5rem;
+      position: relative;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      border-left: 3px solid var(--accent);
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -3px;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 8px 8px 0 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .service-card:hover {
+      border-color: var(--accent-dim);
+      border-left-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 4px 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .service-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* Tier 1: Outlined */
+    .service-card.tier-1 {
+      background: transparent;
+      border: 1px solid var(--gray-700);
+      border-left: 3px solid var(--accent);
+    }
+
+    /* Tier 2: Featured / Most Popular */
+    .service-card.featured {
+      border-color: var(--accent-dim);
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(180deg, var(--accent-glow) 0%, var(--dark-2) 40%);
+      padding: 3rem;
+      transform: scale(1.02);
+      box-shadow: 0 0 40px var(--accent-glow);
+    }
+
+    .service-card.featured::before {
+      transform: scaleX(1);
+    }
+
+    .service-card.featured:hover {
+      transform: scale(1.02) translateY(-4px);
+      box-shadow: 4px 8px 24px rgba(0, 0, 0, 0.5), 0 0 60px var(--accent-glow);
+    }
+
+    /* Tier 3: Secondary gradient */
+    .service-card.tier-3 {
+      background: linear-gradient(180deg, rgba(37, 51, 73, 0.8) 0%, var(--dark-2) 60%);
+    }
+
+    .service-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent-dim);
+      padding: 0.25rem 0.75rem;
+      background: rgba(221, 0, 49, 0.08);
+    }
+
+    .service-tier {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .service-name {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--white-pure);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .service-value {
+      font-size: 0.9rem;
+      color: var(--gray-500);
+      font-style: italic;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .service-price {
+      font-size: 1.1rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--gray-800);
+    }
+
+    .service-list {
+      list-style: none;
+      flex: 1;
+    }
+
+    .service-list li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      font-size: 0.9rem;
+      color: var(--gray-300);
+      line-height: 1.5;
+    }
+
+    .service-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.95rem;
+      width: 8px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .service-timeline {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--gray-800);
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .service-timeline span {
+      color: var(--white);
+    }
+
+    .service-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      margin-top: 1.5rem;
+      background: var(--cta-bg);
+      color: var(--cta-text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .service-cta:hover {
+      background: #FF5370;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(221, 0, 49, 0.3);
+    }
+
+    .service-card.tier-1 .service-cta {
+      background: transparent;
+      border: 1px solid var(--cta-bg);
+      color: var(--accent);
+    }
+
+    .service-card.tier-1 .service-cta:hover {
+      background: var(--cta-bg);
+      color: var(--cta-text);
+    }
+
+    .services-anchor {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.95rem;
+      color: var(--gray-500);
+      font-style: italic;
+    }
+
+    /* ========================================
+       SOCIAL PROOF (Phase 11 - New)
+       ======================================== */
+    .social-proof {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-proof::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+    }
+
+    .social-proof-quote {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      color: var(--white-pure);
+      line-height: 1.4;
+      max-width: 800px;
+      margin: 2rem 0 2.5rem;
+      padding-left: 2rem;
+      border-left: 4px solid var(--accent);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .social-proof-quote span {
+      color: var(--accent);
+    }
+
+    .tech-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .tech-badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      border: 1px solid var(--blue-dim);
+      border-radius: 8px;
+      padding: 0.4rem 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .tech-badge:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .social-proof-note {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      font-style: italic;
+    }
+
+    /* ========================================
+       LEAD MAGNET EMAIL CAPTURE
+       ======================================== */
+    .lead-magnet {
+      background: var(--dark);
+      position: relative;
+    }
+
+    .lead-magnet::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+    }
+
+    .lead-magnet-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .lead-magnet-form {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .lead-magnet-input {
+      flex: 1;
+      padding: 0.9rem 1.25rem;
+      border: 1px solid var(--gray-700);
+      border-radius: 8px;
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .lead-magnet-input::placeholder {
+      color: var(--gray-600);
+    }
+
+    .lead-magnet-input:focus {
+      border-color: var(--accent);
+    }
+
+    .lead-magnet-submit {
+      padding: 0.9rem 2rem;
+      background: var(--cta-bg);
+      color: var(--cta-text);
+      border: none;
+      border-radius: 8px;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .lead-magnet-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(221, 0, 49, 0.4);
+    }
+
+    .lead-magnet-note {
+      font-size: 0.8rem;
+      color: var(--gray-600);
+      margin-top: 0.75rem;
+    }
+
+    /* ========================================
+       SECONDARY CTA BUTTON (ghost/outline)
+       ======================================== */
+    .btn-secondary {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: transparent;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(221, 0, 49, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(221, 0, 49, 0.2);
+    }
+
+    /* ========================================
+       EXIT-INTENT POPUP
+       ======================================== */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .popup-overlay.active {
+      display: flex;
+    }
+
+    .popup-content {
+      background: var(--dark);
+      border: 1px solid var(--gray-800);
+      border-radius: 12px;
+      padding: 3rem;
+      max-width: 520px;
+      width: 100%;
+      position: relative;
+      text-align: center;
+      animation: popupEnter 0.3s ease;
+    }
+
+    @keyframes popupEnter {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--gray-500);
+      font-size: 1.75rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0.25rem;
+      transition: color 0.2s ease;
+    }
+
+    .popup-close:hover {
+      color: var(--white);
+    }
+
+    .popup-content h3 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .popup-content p {
+      color: var(--gray-400);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    /* ========================================
+       FOOTER EMAIL CAPTURE
+       ======================================== */
+    .footer-email {
+      text-align: center;
+      padding-bottom: 2rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--gray-800);
+    }
+
+    .footer-email p {
+      font-size: 0.95rem;
+      color: var(--gray-400);
+      margin-bottom: 1rem;
+    }
+
+    .footer-email-form {
+      display: flex;
+      gap: 0.5rem;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .footer-email-form .lead-magnet-input {
+      font-size: 0.9rem;
+      padding: 0.7rem 1rem;
+    }
+
+    .footer-email-form .lead-magnet-submit {
+      font-size: 0.85rem;
+      padding: 0.7rem 1.25rem;
+    }
+
+    /* ========================================
+       CREDIBILITY GRID (social proof cards)
+       ======================================== */
+    .credibility-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+    }
+
+    .credibility-card {
+      background: rgba(28, 28, 36, 0.5);
+      border: 1px solid var(--gray-800);
+      border-radius: 8px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: border-color 0.3s ease;
+    }
+
+    .credibility-card:hover {
+      border-color: var(--accent-dim);
+    }
+
+    .credibility-number {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .credibility-label {
+      font-size: 0.9rem;
+      color: var(--gray-400);
+      font-weight: 500;
+    }
+
+    /* ========================================
+       WHY SECTION (with Phase 3 card styling)
+       ======================================== */
+    .why {
+      background: var(--dark);
+      position: relative;
+    }
+
+    .why::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .why-item {
+      padding: 2.5rem;
+      border: 1px solid var(--gray-800);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+      background: rgba(28, 28, 36, 0.5);
+      transition: all 0.4s ease;
+    }
+
+    .why-item:hover {
+      border-color: var(--accent-dim);
+      border-left-color: var(--accent);
+      box-shadow: 4px 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .why-item-number {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      color: var(--accent);
+      opacity: 0.3;
+      line-height: 1;
+      margin-bottom: 1rem;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* Phase 10: Why item number hover scale */
+    .why-item:hover .why-item-number {
+      transform: scale(1.1);
+      opacity: 0.6;
+    }
+
+    .why-item-title {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      color: var(--white-pure);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .why-item-text {
+      font-size: 0.95rem;
+      color: var(--gray-400);
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    /* ========================================
+       TRACK RECORD
+       ======================================== */
+    .track-record-list {
+      margin-top: 4rem;
+      display: grid;
+      gap: 0;
+    }
+
+    .track-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--gray-800);
+      align-items: start;
+    }
+
+    .track-item:first-child {
+      border-top: 1px solid var(--gray-800);
+    }
+
+    .track-item-number {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--accent);
+      opacity: 0.5;
+      padding-top: 0.1rem;
+    }
+
+    .track-item-text {
+      font-size: 1.05rem;
+      color: var(--gray-300);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .track-item-text strong {
+      color: var(--white-pure);
+      font-weight: 600;
+    }
+
+    .track-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border: 1px solid var(--blue-dim);
+      border-radius: 4px;
+      color: var(--blue);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-left: 0.5rem;
+      margin-top: 0.25rem;
+      vertical-align: middle;
+    }
+
+    /* ========================================
+       FAQ SECTION (Phase 6 - New)
+       ======================================== */
+    .faq {
+      background: var(--dark);
+      position: relative;
+    }
+
+    .faq::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+    }
+
+    .faq-list {
+      margin-top: 3rem;
+      max-width: 800px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--gray-800);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .faq-item:first-child {
+      border-top: 1px solid var(--gray-800);
+    }
+
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--white-pure);
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: left;
+      width: 100%;
+      letter-spacing: -0.01em;
+      transition: color 0.3s ease;
+    }
+
+    .faq-question:hover {
+      color: var(--accent);
+    }
+
+    .faq-toggle {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .faq-toggle::before,
+    .faq-toggle::after {
+      content: '';
+      position: absolute;
+      background: var(--accent);
+      transition: transform 0.3s ease;
+    }
+
+    .faq-toggle::before {
+      width: 16px;
+      height: 2px;
+    }
+
+    .faq-toggle::after {
+      width: 2px;
+      height: 16px;
+    }
+
+    .faq-item.open .faq-toggle::after {
+      transform: rotate(90deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .faq-answer-inner {
+      padding: 0 0 1.5rem 0;
+      font-size: 0.95rem;
+      color: var(--gray-400);
+      line-height: 1.7;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+    }
+
+    /* ========================================
+       CONTACT / CTA (Phase 8 - Overhauled)
+       ======================================== */
+    .contact {
+      background: var(--dark);
+      position: relative;
+    }
+
+    .contact::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+    }
+
+    .contact-inner {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .contact .section-heading {
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact .section-subheading {
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Booking Card */
+    .booking-card {
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      background: linear-gradient(165deg, var(--dark-3) 0%, var(--dark) 100%);
+      border: 1px solid rgba(221, 0, 49, 0.2);
+      border-radius: 16px;
+      padding: 0;
+      text-align: center;
+      box-shadow: 0 4px 40px rgba(0, 0, 0, 0.25), 0 0 80px rgba(221, 0, 49, 0.04);
+      overflow: hidden;
+    }
+
+    .booking-card-guarantee {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      background: rgba(221, 0, 49, 0.06);
+      border-bottom: 1px solid rgba(221, 0, 49, 0.12);
+    }
+
+    .booking-card-guarantee svg {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      fill: var(--accent);
+    }
+
+    .booking-card-guarantee span {
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .booking-card-body {
+      padding: 2rem 2.5rem 2.5rem;
+    }
+
+    .booking-card-features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      margin-bottom: 2rem;
+      text-align: left;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .booking-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--gray-300);
+      letter-spacing: 0.01em;
+      line-height: 1.4;
+    }
+
+    .booking-feature-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(221, 0, 49, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: var(--accent);
+    }
+
+    .booking-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 1.1rem 2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      font-family: var(--font-heading);
+    }
+
+    .booking-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(221, 0, 49, 0.35);
+    }
+
+    .booking-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      color: var(--gray-700);
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .booking-divider::before,
+    .booking-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gray-800);
+    }
+
+    .booking-email-fallback {
+      font-size: 0.85rem;
+      color: var(--gray-600);
+    }
+
+    .booking-email-fallback a {
+      color: var(--gray-400);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      border-bottom: 1px solid var(--gray-800);
+      padding-bottom: 1px;
+    }
+
+    .booking-email-fallback a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* Next Steps (Phase 8) */
+    .next-steps {
+      margin-top: 3rem;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .next-step-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--gray-400);
+    }
+
+    .next-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      border: 1px solid var(--accent-dim);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ========================================
+       FOOTER
+       ======================================== */
+    .footer {
+      padding: 3rem 0;
+      border-top: 1px solid var(--gray-800);
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-text {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .footer-links a {
+      color: var(--gray-400);
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-links svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* ========================================
+       STICKY MOBILE CTA (Phase 7)
+       ======================================== */
+    .sticky-cta {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      z-index: 998;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+      border-top: 1px solid var(--accent-dim);
+    }
+
+    .sticky-cta.visible {
+      transform: translateY(0);
+    }
+
+    .sticky-cta a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 40px;
+      background: var(--cta-bg);
+      border-radius: 8px;
+      color: var(--cta-text);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    @media (min-width: 769px) {
+      .sticky-cta {
+        display: none;
+      }
+    }
+
+    /* ========================================
+       MOBILE MENU
+       ======================================== */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 11, 15, 0.98);
+      z-index: 1001;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mobile-menu a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-family: var(--font-heading);
+      transform: translateY(-15px);
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
+    }
+
+    .mobile-menu.open a {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .mobile-menu.open a:nth-child(2) { transition-delay: 0.05s; }
+    .mobile-menu.open a:nth-child(3) { transition-delay: 0.1s; }
+    .mobile-menu.open a:nth-child(4) { transition-delay: 0.15s; }
+    .mobile-menu.open a:nth-child(5) { transition-delay: 0.2s; }
+
+    .mobile-menu a:hover {
+      color: var(--accent);
+    }
+
+    .mobile-close {
+      position: absolute;
+      top: 5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 2rem;
+      cursor: pointer;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ========================================
+       RESPONSIVE
+       ======================================== */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .hero-visual {
+        /* headline appears first on mobile for better first impression */
+      }
+
+      .hero-code-transform {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+        max-width: 560px;
+      }
+
+      .service-card.featured {
+        transform: none;
+      }
+
+      .service-card.featured:hover {
+        transform: translateY(-4px);
+      }
+
+      .why-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .problem-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .steps-timeline {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .steps-timeline::after {
+        display: none;
+      }
+
+      .credibility-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat-item:nth-child(3)::before {
+        display: none;
+      }
+
+      .stat-item {
+        padding: 2rem 1rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: flex;
+      }
+
+      .track-item {
+        grid-template-columns: 50px 1fr;
+        gap: 1rem;
+      }
+
+      .gold-line {
+        display: none;
+      }
+
+      /* How It Works vertical layout on mobile */
+      .steps-timeline {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding-left: 2rem;
+        position: relative;
+      }
+
+      /* Vertical connecting line on mobile */
+      .steps-timeline::before {
+        content: '';
+        position: absolute;
+        left: 2.15rem;
+        top: 2.25rem;
+        bottom: 2.25rem;
+        width: 2px;
+        background: linear-gradient(to bottom, var(--accent-dim), var(--accent), var(--accent-dim));
+      }
+
+      .step-item {
+        text-align: left;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1.5rem;
+        align-items: start;
+      }
+
+      .step-item > div {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .step-text {
+        margin: 0;
+      }
+
+      .cta-band-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .next-steps {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      body {
+        padding-bottom: 56px;
+      }
+
+      .lead-magnet-form {
+        flex-direction: column;
+      }
+
+      .credibility-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-email-form {
+        flex-direction: column;
+      }
+
+      .footer-email {
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-headline {
+        font-size: 2.5rem;
+      }
+
+      .hero-code-transform {
+        flex-direction: column;
+        max-width: 280px;
+      }
+
+      .transform-arrow {
+        transform: rotate(90deg);
+      }
+
+      .service-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .service-card.featured {
+        padding: 2rem 1.5rem;
+      }
+
+      .why-item {
+        padding: 1.75rem;
+      }
+
+    }
+
+    /* ========================================
+       SELECTION & SCROLLBAR
+       ======================================== */
+    ::selection {
+      background: var(--accent);
+      color: var(--black);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--black);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--gray-700);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo" aria-label="Florin Siciu — Home">Florin Siciu</a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#track-record">Track Record</a></li>
+        <li><a href="#why">Why Me</a></li>
+        <li><a href="#contact" class="nav-cta" onclick="openCalendly(); return false;">Book a Review</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobile navigation">
+    <button class="mobile-close" aria-label="Close menu">&times;</button>
+    <a href="#services">Services</a>
+    <a href="#track-record">Track Record</a>
+    <a href="#why">Why Me</a>
+    <a href="#contact">Book a Review</a>
+  </div>
+
+  <!-- ==================== HERO (Phase 1) ==================== -->
+  <header class="hero section" id="hero">
+    <div class="gold-line" aria-hidden="true"></div>
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-label fade-in">Angular Modernization</div>
+        <h1 class="hero-headline fade-in fade-in-delay-1">Stop Losing Months to Failed Angular Upgrades</h1>
+        <p class="hero-subtitle fade-in fade-in-delay-2">I've modernized 19 enterprise micro-frontends. I'll modernize yours in weeks.</p>
+        <div class="hero-byline fade-in fade-in-delay-3">
+          <img class="hero-headshot" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='24' fill='%231E293B'/%3E%3Ctext x='24' y='29' text-anchor='middle' font-family='sans-serif' font-size='18' font-weight='600' fill='%23FF5370'%3EFS%3C/text%3E%3C/svg%3E" alt="Florin Siciu" width="48" height="48" loading="lazy">
+          <span>Florin Siciu &mdash; Angular Modernization Architect</span>
+        </div>
+        <div class="fade-in fade-in-delay-4">
+          <a href="#lead-magnet" class="btn-primary" aria-label="Get the Free Migration Playbook">
+            Get the Free Migration Playbook
+          </a>
+          <div style="margin-top: 0.75rem;">
+            <a href="#contact" class="btn-secondary" aria-label="Book a Free Architecture Review" style="font-size: 0.9rem; padding: 0.7rem 1.5rem;">
+              or Book a Free Architecture Review
+            </a>
+          </div>
+          <div class="scarcity-pill">Accepting 2 new projects for Q2 2026</div>
+        </div>
+      </div>
+      <div class="hero-visual fade-in fade-in-delay-2" aria-hidden="true">
+        <div class="hero-code-transform">
+          <div class="code-block code-before">
+            <div class="code-label">Before</div>
+            <pre><span class="cm">// Angular 9</span>
+<span class="kw">@NgModule</span>({
+  declarations: [<span class="fn">AppComponent</span>],
+  imports: [<span class="fn">BrowserModule</span>],
+  bootstrap: [<span class="fn">AppComponent</span>]
+})
+<span class="kw">export class</span> <span class="fn">AppModule</span> {}</pre>
+          </div>
+          <div class="transform-arrow">&rarr;</div>
+          <div class="code-block code-after" id="code-after-block">
+            <div class="code-label">After</div>
+            <pre id="typewriter-target"><span class="cm">// Angular 17+</span>
+<span class="kw">bootstrapApplication</span>(
+  <span class="fn">AppComponent</span>, {
+  providers: [
+    <span class="kw">provideRouter</span>(routes),
+    <span class="kw">provideHttpClient</span>()
+  ]
+});</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== STATS ==================== -->
+  <section class="stats section" aria-label="Key statistics">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item fade-in">
+          <div class="stat-number" data-target="19">0</div>
+          <div class="stat-label">Apps Migrated Successfully</div>
+          <div class="stat-bar"></div>
+        </div>
+        <div class="stat-item fade-in fade-in-delay-1">
+          <div class="stat-number" data-target="0">0</div>
+          <div class="stat-label">Production Incidents</div>
+          <div class="stat-bar"></div>
+        </div>
+        <div class="stat-item fade-in fade-in-delay-2">
+          <div class="stat-number" data-target="3" data-suffix="x">0</div>
+          <div class="stat-label">Faster Delivery</div>
+          <div class="stat-bar"></div>
+        </div>
+        <div class="stat-item fade-in fade-in-delay-3">
+          <div class="stat-number" data-target="8" data-suffix="+">0</div>
+          <div class="stat-label">Years in Angular Ecosystem</div>
+          <div class="stat-bar"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROBLEM (Phase 9 - Expanded) ==================== -->
+  <section class="problem section" id="problem">
+    <div class="gold-line" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-eyebrow fade-in">The Problem</div>
+      <h2 class="section-heading fade-in fade-in-delay-1">Legacy Angular Is Costing You</h2>
+      <div class="problem-grid">
+        <div class="problem-pains">
+          <div class="pain-item fade-in fade-in-delay-2">
+            Your <strong>Angular 9-14 app still works</strong>... but new hires refuse to touch it
+          </div>
+          <div class="pain-item fade-in fade-in-delay-2">
+            Every upgrade attempt <strong>breaks something</strong> and costs a sprint
+          </div>
+          <div class="pain-item fade-in fade-in-delay-3">
+            Security vulnerabilities in <strong>outdated dependencies</strong> keep piling up
+          </div>
+          <div class="pain-item fade-in fade-in-delay-3">
+            Your best developers are spending time on <strong>migration instead of features</strong>
+          </div>
+        </div>
+        <div class="problem-stat fade-in fade-in-delay-2">
+          <div class="problem-stat-number">$100K+</div>
+          <p class="problem-stat-context">typical enterprise Angular migration cost. Security patches for Angular v14 and below have already expired.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LEAD MAGNET ==================== -->
+  <section class="lead-magnet section" id="lead-magnet">
+    <div class="container">
+      <div class="lead-magnet-inner fade-in">
+        <div class="section-eyebrow">Free Resource</div>
+        <h2 class="section-heading">Get the Angular Migration Playbook</h2>
+        <p class="section-subheading">The exact process I used to migrate 19 enterprise apps from Angular 9 to 17 &mdash; without blocking a single sprint.</p>
+        <form class="lead-magnet-form" action="https://formsubmit.co/contact@florinsiciu.com" method="POST">
+          <input type="hidden" name="_subject" value="Migration Playbook Request">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="email" name="email" class="lead-magnet-input" placeholder="Your work email" required aria-label="Email address">
+          <button type="submit" class="lead-magnet-submit">Get the Playbook</button>
+        </form>
+        <p class="lead-magnet-note">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== HOW IT WORKS (Phase 4 - New) ==================== -->
+  <section class="how-it-works section" id="how-it-works">
+    <div class="gold-line" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-eyebrow fade-in">Process</div>
+      <h2 class="section-heading fade-in fade-in-delay-1">How It Works</h2>
+      <p class="section-subheading fade-in fade-in-delay-2">Three steps from legacy to modern. No guesswork.</p>
+      <div class="steps-timeline">
+        <div class="step-item fade-in">
+          <div class="step-number">1</div>
+          <div>
+            <h3 class="step-title">Free Architecture Review</h3>
+            <p class="step-text">30-min call. I assess your codebase and identify the critical risks.</p>
+          </div>
+        </div>
+        <div class="step-item fade-in fade-in-delay-1">
+          <div class="step-number">2</div>
+          <div>
+            <h3 class="step-title">Get Your Migration Plan</h3>
+            <p class="step-text">You receive a clear roadmap with fixed pricing. No surprises.</p>
+          </div>
+        </div>
+        <div class="step-item fade-in fade-in-delay-2">
+          <div class="step-number">3</div>
+          <div>
+            <h3 class="step-title">Ship Modern Angular</h3>
+            <p class="step-text">I execute the migration while your team keeps building features.</p>
+          </div>
+        </div>
+      </div>
+      <div class="how-it-works-cta fade-in fade-in-delay-3">
+        <a href="#contact" class="btn-primary">Start With Step 1 &mdash; It's Free</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MID-PAGE CTA BAND 1 (Phase 7) ==================== -->
+  <div class="cta-band fade-in">
+    <div class="container cta-band-inner">
+      <p class="cta-band-text"><strong>Every week you wait, migration debt grows.</strong> Let's fix that.</p>
+      <a href="#lead-magnet" class="btn-primary">Get the Free Playbook</a>
+    </div>
+  </div>
+
+  <!-- ==================== SERVICES (Phase 5 - Restructured) ==================== -->
+  <section class="section" id="services">
+    <div class="gold-line" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-eyebrow fade-in">Services</div>
+      <h2 class="section-heading fade-in fade-in-delay-1">Three Ways to Modernize</h2>
+      <p class="section-subheading fade-in fade-in-delay-2">Fixed price. Clear scope. No surprises.</p>
+      <div class="services-grid">
+
+        <!-- Tier 1 -->
+        <article class="service-card tier-1 fade-in" aria-label="Architecture Review service">
+          <span class="service-badge">Start Here</span>
+          <div class="service-tier">Tier 1</div>
+          <h3 class="service-name">Architecture Review</h3>
+          <p class="service-value">Get clarity on your migration path &mdash; zero risk.</p>
+          <div class="service-price">
+            Free 30-min call<br>
+            <span style="font-size: 0.85rem; color: var(--gray-400); font-weight: 400;">
+              Full written report &mdash; priced after assessment
+            </span>
+          </div>
+          <ul class="service-list">
+            <li>30-minute architecture review call</li>
+            <li>High-level codebase assessment</li>
+            <li>Key migration risks identified</li>
+            <li>Comprehensive codebase analysis (paid)</li>
+            <li>Migration roadmap with prioritized steps (paid)</li>
+            <li>Deliverable: Detailed report + recommendations (paid)</li>
+          </ul>
+          <a href="#contact" class="service-cta">Book Free Call</a>
+        </article>
+
+        <!-- Tier 2 -->
+        <article class="service-card featured fade-in fade-in-delay-1" aria-label="Angular Version Upgrade service">
+          <span class="service-badge">Most Popular</span>
+          <div class="service-tier">Tier 2</div>
+          <h3 class="service-name">Angular Version Upgrade</h3>
+          <p class="service-value">The most common engagement. Upgrade fast, stay focused.</p>
+          <div class="service-price">Fixed price &mdash; scoped after your free review</div>
+          <ul class="service-list">
+            <li>Upgrade from Angular 8&ndash;15 to latest</li>
+            <li>Adopt modern patterns (standalone, signals, new control flow)</li>
+            <li>Working upgraded application</li>
+            <li>Complete migration documentation</li>
+            <li>Team handoff &amp; knowledge transfer</li>
+          </ul>
+          <div class="service-timeline">Timeline: <span>2&ndash;4 weeks</span></div>
+          <a href="#contact" class="service-cta">Get a Quote</a>
+        </article>
+
+        <!-- Tier 3 -->
+        <article class="service-card tier-3 fade-in fade-in-delay-2" aria-label="Full Platform Modernization service">
+          <span class="service-badge">Complete Solution</span>
+          <div class="service-tier">Tier 3</div>
+          <h3 class="service-name">Full Platform Modernization</h3>
+          <p class="service-value">End-to-end platform transformation for complex codebases.</p>
+          <div class="service-price">Fixed price &mdash; scoped after your free review</div>
+          <ul class="service-list">
+            <li>Complete Angular migration to latest version</li>
+            <li>Nx monorepo architecture setup</li>
+            <li>Reusable library architecture (13+ library pattern)</li>
+            <li>CI/CD pipeline with selective builds</li>
+            <li>Design system foundations</li>
+            <li>SSO/OIDC authentication architecture</li>
+          </ul>
+          <div class="service-timeline">Timeline: <span>6&ndash;10 weeks</span></div>
+          <a href="#contact" class="service-cta">Get a Quote</a>
+        </article>
+
+      </div>
+      <p class="services-anchor fade-in fade-in-delay-3">A full-time Angular architect costs thousands per month. Most projects finish in 2-10 weeks.</p>
+    </div>
+  </section>
+
+
+  <!-- ==================== MID-PAGE CTA BAND 2 (Phase 7) ==================== -->
+  <div class="cta-band fade-in">
+    <div class="container cta-band-inner">
+      <p class="cta-band-text"><strong>Ready to see what modernization looks like for your codebase?</strong></p>
+      <a href="#contact" class="btn-primary">Book Your Free Review</a>
+    </div>
+  </div>
+
+  <!-- ==================== WHY ME ==================== -->
+  <section class="why section" id="why">
+    <div class="gold-line" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-eyebrow fade-in">Differentiation</div>
+      <h2 class="section-heading fade-in fade-in-delay-1">Why Companies Choose Me</h2>
+      <div class="why-grid">
+        <div class="why-item fade-in">
+          <div class="why-item-number" aria-hidden="true">01</div>
+          <h3 class="why-item-title">Proven at Scale</h3>
+          <p class="why-item-text">A full enterprise micro-frontend platform in production, not toy demos. Battle-tested architecture patterns across real workloads.</p>
+        </div>
+        <div class="why-item fade-in fade-in-delay-1">
+          <div class="why-item-number" aria-hidden="true">02</div>
+          <h3 class="why-item-title">Migration Playbook</h3>
+          <p class="why-item-text">Angular 9 &rarr; 14 &rarr; 16 &rarr; 17 across an entire platform &mdash; documented, repeatable process that eliminates guesswork.</p>
+        </div>
+        <div class="why-item fade-in fade-in-delay-2">
+          <div class="why-item-number" aria-hidden="true">03</div>
+          <h3 class="why-item-title">AI-Assisted Delivery</h3>
+          <p class="why-item-text">What takes others months, I deliver in weeks. Strategic use of AI-powered tooling accelerates every phase of the modernization process.</p>
+        </div>
+        <div class="why-item fade-in fade-in-delay-3">
+          <div class="why-item-number" aria-hidden="true">04</div>
+          <h3 class="why-item-title">Full-Stack Frontend</h3>
+          <p class="why-item-text">Architecture, CI/CD, auth, design systems, testing, i18n &mdash; a one-person platform team. One expert, zero coordination overhead.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SOCIAL PROOF / CREDIBILITY ==================== -->
+  <section class="social-proof section" id="social-proof">
+    <div class="gold-line" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-eyebrow fade-in">Credibility</div>
+      <h2 class="section-heading fade-in fade-in-delay-1">Trusted at Enterprise Scale</h2>
+      <p class="section-subheading fade-in fade-in-delay-2">Verifiable facts, not marketing claims.</p>
+
+      <div class="credibility-grid fade-in fade-in-delay-3">
+        <div class="credibility-card">
+          <div class="credibility-number">8+</div>
+          <div class="credibility-label">Years in Angular</div>
+        </div>
+        <div class="credibility-card">
+          <div class="credibility-number">19</div>
+          <div class="credibility-label">Production Applications</div>
+        </div>
+        <div class="credibility-card">
+          <div class="credibility-number">1</div>
+          <div class="credibility-label">Enterprise Financial Services Platform</div>
+        </div>
+      </div>
+
+      <div class="social-proof-quote fade-in fade-in-delay-3">
+        <span>19 apps migrated, zero downtime, zero production incidents.</span>
+      </div>
+      <p class="social-proof-note fade-in fade-in-delay-3">
+        <a href="https://linkedin.com/in/florinsiciu" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none;">Verify on LinkedIn &rarr;</a>
+      </p>
+
+      <!-- Testimonial template — ready for real quotes
+      <div class="social-proof-quote">
+        <span>"Quote from client here."</span>
+        <p class="social-proof-note">— Name, Title at Company</p>
+      </div>
+      -->
+    </div>
+  </section>
+
+  <!-- ==================== TRACK RECORD ==================== -->
+  <section class="section" id="track-record">
+    <div class="gold-line" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-eyebrow fade-in">Evidence</div>
+      <h2 class="section-heading fade-in fade-in-delay-1">My Track Record</h2>
+      <p class="section-subheading fade-in fade-in-delay-2">Real outcomes from real enterprise work. Not theory &mdash; production.</p>
+      <div class="tech-badges fade-in fade-in-delay-3" style="margin-top: 2rem;">
+        <span class="tech-badge">Angular</span>
+        <span class="tech-badge">Nx</span>
+        <span class="tech-badge">TypeScript</span>
+        <span class="tech-badge">GitLab CI</span>
+        <span class="tech-badge">Docker</span>
+      </div>
+      <div class="track-record-list">
+        <div class="track-item fade-in">
+          <div class="track-item-number">01</div>
+          <div class="track-item-text"><strong>Migrated 19 enterprise apps to Angular 17</strong> &mdash; zero downtime during transition
+            <span class="track-tag">Nx</span><span class="track-tag">Angular 17</span><span class="track-tag">Micro-frontends</span>
+          </div>
+        </div>
+        <div class="track-item fade-in">
+          <div class="track-item-number">02</div>
+          <div class="track-item-text"><strong>Created shared component library adopted across 13+ teams</strong> &mdash; 39 releases and counting
+            <span class="track-tag">Nx Libraries</span><span class="track-tag">Storybook</span>
+          </div>
+        </div>
+        <div class="track-item fade-in">
+          <div class="track-item-number">03</div>
+          <div class="track-item-text"><strong>Upgraded entire platform from Angular 9 to 17</strong> &mdash; no feature development blocked
+            <span class="track-tag">Standalone</span><span class="track-tag">Signals</span><span class="track-tag">Control Flow</span>
+          </div>
+        </div>
+        <div class="track-item fade-in">
+          <div class="track-item-number">04</div>
+          <div class="track-item-text"><strong>Reduced CI build times by 60%</strong> through Nx selective builds and Docker caching
+            <span class="track-tag">GitLab CI</span><span class="track-tag">Docker</span><span class="track-tag">Nx Affected</span>
+          </div>
+        </div>
+        <div class="track-item fade-in">
+          <div class="track-item-number">05</div>
+          <div class="track-item-text"><strong>Unified authentication across 19 apps</strong> &mdash; seamless SSO for 1000+ users
+            <span class="track-tag">OIDC</span><span class="track-tag">SSO</span><span class="track-tag">Auth Guards</span>
+          </div>
+        </div>
+        <div class="track-item fade-in">
+          <div class="track-item-number">06</div>
+          <div class="track-item-text"><strong>Delivered design system with 1,830+ tokens</strong> &mdash; consistent UX across all applications
+            <span class="track-tag">CSS Tokens</span><span class="track-tag">Theming</span>
+          </div>
+        </div>
+        <div class="track-item fade-in">
+          <div class="track-item-number">07</div>
+          <div class="track-item-text"><strong>Cut dependency footprint by 63%</strong> &mdash; faster installs, fewer vulnerabilities
+            <span class="track-tag">Dependency Audit</span><span class="track-tag">Tree Shaking</span>
+          </div>
+        </div>
+        <div class="track-item fade-in">
+          <div class="track-item-number">08</div>
+          <div class="track-item-text"><strong>Migrated to pnpm workspaces</strong> &mdash; 40% faster installs across all 19 applications
+            <span class="track-tag">pnpm</span><span class="track-tag">Workspaces</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ (Phase 6 - New) ==================== -->
+  <section class="faq section" id="faq">
+    <div class="gold-line" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section-eyebrow fade-in">Questions</div>
+      <h2 class="section-heading fade-in fade-in-delay-1">Frequently Asked Questions</h2>
+      <div class="faq-list">
+
+        <div class="faq-item fade-in">
+          <button class="faq-question" aria-expanded="false">
+            How is this different from hiring a contractor?
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" role="region">
+            <div class="faq-answer-inner">Fixed price, proven playbook, weeks not months. You get a specialist who's done this exact migration 19 times, not a generalist learning on your dime.</div>
+          </div>
+        </div>
+
+        <div class="faq-item fade-in">
+          <button class="faq-question" aria-expanded="false">
+            What Angular versions do you support?
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" role="region">
+            <div class="faq-answer-inner">Angular 8 through the latest version. I've migrated through every major version &mdash; 9, 14, 16, 17 &mdash; and know every breaking change along the way.</div>
+          </div>
+        </div>
+
+        <div class="faq-item fade-in">
+          <button class="faq-question" aria-expanded="false">
+            Will this disrupt my team's current work?
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" role="region">
+            <div class="faq-answer-inner">No. I work independently alongside your team. Your developers keep building features while I handle the migration infrastructure.</div>
+          </div>
+        </div>
+
+        <div class="faq-item fade-in">
+          <button class="faq-question" aria-expanded="false">
+            What if the migration is more complex than expected?
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" role="region">
+            <div class="faq-answer-inner">Fixed price means the risk is mine, not yours. I scope thoroughly upfront so there are no surprises.</div>
+          </div>
+        </div>
+
+        <div class="faq-item fade-in">
+          <button class="faq-question" aria-expanded="false">
+            Do you work with Nx monorepos?
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" role="region">
+            <div class="faq-answer-inner">Yes &mdash; I built a 19-app Nx monorepo from scratch with 13+ shared libraries. Nx is my native environment.</div>
+          </div>
+        </div>
+
+        <div class="faq-item fade-in">
+          <button class="faq-question" aria-expanded="false">
+            What's your availability?
+            <span class="faq-toggle" aria-hidden="true"></span>
+          </button>
+          <div class="faq-answer" role="region">
+            <div class="faq-answer-inner">I take on 1-2 projects at a time to give each client my full focus. Book a call to check current availability.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT (Phase 8 - Overhauled) ==================== -->
+  <section class="contact section" id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="section-eyebrow fade-in" style="justify-content: center;">Next Step</div>
+        <h2 class="section-heading fade-in fade-in-delay-1">Ready to Modernize Your Angular Platform?</h2>
+        <p class="section-subheading fade-in fade-in-delay-2" style="margin-left: auto; margin-right: auto;">
+          Book a free 30-minute architecture review. I'll assess your codebase
+          and show you exactly what needs to change.
+        </p>
+
+        <!-- Booking Card -->
+        <div class="booking-card fade-in fade-in-delay-2">
+          <div class="booking-card-guarantee">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+            <span>Fixed price. No obligation. Satisfaction guaranteed.</span>
+          </div>
+          <div class="booking-card-body">
+            <div class="booking-card-features">
+              <div class="booking-feature">
+                <span class="booking-feature-icon">&#10003;</span>
+                30-minute architecture deep-dive
+              </div>
+              <div class="booking-feature">
+                <span class="booking-feature-icon">&#10003;</span>
+                Personalized migration roadmap
+              </div>
+              <div class="booking-feature">
+                <span class="booking-feature-icon">&#10003;</span>
+                Honest assessment, even if DIY is the right call
+              </div>
+            </div>
+            <button class="btn-primary booking-cta" onclick="openCalendly()" type="button">
+              Pick a Time
+            </button>
+            <div class="booking-divider">or</div>
+            <p class="booking-email-fallback">
+              Email <a href="mailto:contact@florinsiciu.com">contact@florinsiciu.com</a>
+            </p>
+          </div>
+        </div>
+
+        <p class="fade-in fade-in-delay-3" style="text-align: center; margin-top: 2rem;">
+          <a href="#lead-magnet" style="color: var(--gray-400); text-decoration: none; font-size: 0.95rem; transition: color 0.2s ease;">Not ready yet? <span style="color: var(--accent);">Get the Free Migration Playbook First &darr;</span></a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-email">
+        <p>Get the Angular Migration Playbook &mdash; free.</p>
+        <form class="footer-email-form" action="https://formsubmit.co/contact@florinsiciu.com" method="POST">
+          <input type="hidden" name="_subject" value="Migration Playbook Request (Footer)">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="email" name="email" class="lead-magnet-input" placeholder="Your work email" required aria-label="Email address">
+          <button type="submit" class="lead-magnet-submit">Get the Playbook</button>
+        </form>
+      </div>
+    </div>
+    <div class="container footer-inner">
+      <p class="footer-text">&copy; 2026 Florin Siciu &mdash; Angular Modernization Architect</p>
+      <div class="footer-links">
+        <a href="https://linkedin.com/in/florinsiciu" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="https://x.com/FlorinSiciu" target="_blank" rel="noopener noreferrer" aria-label="X profile">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  </main>
+
+  <!-- ==================== STICKY MOBILE CTA (Phase 7) ==================== -->
+  <div class="sticky-cta" id="sticky-cta" aria-label="Book a review">
+    <a href="#contact" onclick="openCalendly(); return false;">Book Free Review</a>
+  </div>
+
+  <!-- ==================== EXIT-INTENT POPUP ==================== -->
+  <div class="popup-overlay" id="exit-popup" role="dialog" aria-modal="true" aria-label="Get the Angular Migration Playbook before you go">
+    <div class="popup-content">
+      <button class="popup-close" aria-label="Close popup">&times;</button>
+      <h3>Before You Go&hellip;</h3>
+      <p>Get the Angular Migration Playbook &mdash; the exact process behind 19 successful enterprise migrations.</p>
+      <form class="lead-magnet-form" action="https://formsubmit.co/contact@florinsiciu.com" method="POST" id="exit-popup-form" style="justify-content: center;">
+        <input type="hidden" name="_subject" value="Migration Playbook Request (Exit Popup)">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="email" name="email" class="lead-magnet-input" placeholder="Your work email" required aria-label="Email address">
+        <button type="submit" class="lead-magnet-submit" id="exit-popup-submit">Get the Playbook</button>
+      </form>
+      <p class="lead-magnet-note">No spam. Unsubscribe anytime.</p>
+    </div>
+  </div>
+
+  <!-- FAQ Structured Data (SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is this different from hiring a contractor?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Fixed price, proven playbook, weeks not months. You get a specialist who's done this exact migration 19 times, not a generalist learning on your dime."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What Angular versions do you support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Angular 8 through the latest version. I've migrated through every major version — 9, 14, 16, 17 — and know every breaking change along the way."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Will this disrupt my team's current work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. I work independently alongside your team. Your developers keep building features while I handle the migration infrastructure."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if the migration is more complex than expected?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Fixed price means the risk is mine, not yours. I scope thoroughly upfront so there are no surprises."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you work with Nx monorepos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — I built a 19-app Nx monorepo from scratch with 13+ shared libraries. Nx is my native environment."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's your availability?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "I take on 1-2 projects at a time to give each client my full focus. Book a call to check current availability."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Calendly JS -->
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // --- Scroll-triggered fade-in (IntersectionObserver) ---
+      var fadeEls = document.querySelectorAll('.fade-in');
+      if ('IntersectionObserver' in window) {
+        var fadeObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              fadeObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        fadeEls.forEach(function(el) { fadeObserver.observe(el); });
+      } else {
+        fadeEls.forEach(function(el) { el.classList.add('visible'); });
+      }
+
+      // --- Stats counter animation with bar-fill (Phase 10) ---
+      var statNumbers = document.querySelectorAll('.stat-number[data-target]');
+      var statsAnimated = false;
+
+      function animateCounter(el) {
+        var target = parseInt(el.getAttribute('data-target'), 10);
+        var format = el.getAttribute('data-format');
+        var suffix = el.getAttribute('data-suffix') || '';
+        var duration = 2000;
+        var startTime = null;
+
+        function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+        function formatValue(val) {
+          if (format === 'comma') {
+            return val.toLocaleString('en-US') + suffix;
+          }
+          return val + suffix;
+        }
+
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          var easedProgress = easeOutCubic(progress);
+          var current = Math.floor(easedProgress * target);
+
+          el.textContent = formatValue(current);
+
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = formatValue(target);
+          }
+        }
+
+        requestAnimationFrame(step);
+      }
+
+      if ('IntersectionObserver' in window) {
+        var statsSection = document.querySelector('.stats');
+        var statsObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting && !statsAnimated) {
+              statsAnimated = true;
+              statNumbers.forEach(function(el, i) {
+                setTimeout(function() { animateCounter(el); }, i * 150);
+              });
+              // Bar-fill animation
+              var statItems = document.querySelectorAll('.stat-item');
+              statItems.forEach(function(item, i) {
+                setTimeout(function() { item.classList.add('bar-animated'); }, i * 200 + 500);
+              });
+              statsObserver.unobserve(statsSection);
+            }
+          });
+        }, { threshold: 0.3 });
+
+        statsObserver.observe(statsSection);
+      }
+
+      // --- Navbar scroll effect ---
+      var nav = document.querySelector('.nav');
+
+      window.addEventListener('scroll', function() {
+        var currentScroll = window.pageYOffset;
+        if (currentScroll > 80) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      }, { passive: true });
+
+      // --- Mobile menu ---
+      var toggle = document.querySelector('.nav-toggle');
+      var mobileMenu = document.getElementById('mobile-menu');
+      var mobileClose = document.querySelector('.mobile-close');
+      var mobileLinks = mobileMenu.querySelectorAll('a');
+
+      function openMenu() {
+        mobileMenu.classList.add('open');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMenu() {
+        mobileMenu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+
+      toggle.addEventListener('click', openMenu);
+      mobileClose.addEventListener('click', closeMenu);
+      mobileLinks.forEach(function(link) {
+        link.addEventListener('click', closeMenu);
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+          closeMenu();
+        }
+      });
+
+      // --- FAQ Accordion (Phase 6) ---
+      var faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(function(item) {
+        var question = item.querySelector('.faq-question');
+        question.addEventListener('click', function() {
+          var isOpen = item.classList.contains('open');
+          // Close all others
+          faqItems.forEach(function(other) {
+            other.classList.remove('open');
+            other.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          });
+          // Toggle current
+          if (!isOpen) {
+            item.classList.add('open');
+            question.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+
+      // --- Sticky Mobile CTA (Phase 7) ---
+      var stickyCta = document.getElementById('sticky-cta');
+      var heroSection = document.getElementById('hero');
+      var contactSection = document.getElementById('contact');
+
+      if ('IntersectionObserver' in window && stickyCta) {
+        var heroVisible = true;
+        var contactVisible = false;
+
+        function updateStickyCta() {
+          if (!heroVisible && !contactVisible) {
+            stickyCta.classList.add('visible');
+          } else {
+            stickyCta.classList.remove('visible');
+          }
+        }
+
+        var heroObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            heroVisible = entry.isIntersecting;
+            updateStickyCta();
+          });
+        }, { threshold: 0 });
+
+        var contactObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            contactVisible = entry.isIntersecting;
+            updateStickyCta();
+          });
+        }, { threshold: 0 });
+
+        heroObserver.observe(heroSection);
+        contactObserver.observe(contactSection);
+      }
+
+      // --- Staggered track record item reveals (Phase 10) ---
+      var trackItems = document.querySelectorAll('.track-item.fade-in');
+      if ('IntersectionObserver' in window) {
+        var trackObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              var items = document.querySelectorAll('.track-item.fade-in');
+              items.forEach(function(item, index) {
+                item.style.transitionDelay = (0.05 * index) + 's';
+                item.classList.add('visible');
+              });
+              trackObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+
+        var trackList = document.querySelector('.track-record-list');
+        if (trackList) {
+          trackObserver.observe(trackList);
+        }
+      }
+
+      // --- Service card hover gradient (Phase 10) ---
+      var serviceCards = document.querySelectorAll('.service-card');
+      serviceCards.forEach(function(card) {
+        card.addEventListener('mousemove', function(e) {
+          var rect = card.getBoundingClientRect();
+          var x = e.clientX - rect.left;
+          var y = e.clientY - rect.top;
+          card.style.backgroundImage = 'radial-gradient(circle at ' + x + 'px ' + y + 'px, rgba(221, 0, 49, 0.06) 0%, transparent 50%)';
+        });
+
+        card.addEventListener('mouseleave', function() {
+          card.style.backgroundImage = '';
+        });
+      });
+
+      // --- Parallax-lite on hero glow (Phase 10) ---
+      var heroEl = document.querySelector('.hero');
+      if (heroEl) {
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+          if (!ticking) {
+            requestAnimationFrame(function() {
+              var scrollY = window.pageYOffset;
+              heroEl.style.setProperty('--parallax-y', (scrollY * 0.3) + 'px');
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }, { passive: true });
+
+        // Apply parallax via inline style to hero::before
+        var style = document.createElement('style');
+        style.textContent = '.hero::before { transform: translateY(var(--parallax-y, 0)); }';
+        document.head.appendChild(style);
+      }
+
+      // --- Typewriter effect on After code block (Phase 10) ---
+      var typewriterTarget = document.getElementById('typewriter-target');
+      var codeAfterBlock = document.getElementById('code-after-block');
+
+      if (typewriterTarget && codeAfterBlock && 'IntersectionObserver' in window) {
+        var originalHTML = typewriterTarget.innerHTML;
+        var originalText = typewriterTarget.textContent;
+        var typewriterDone = false;
+
+        var typewriterObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting && !typewriterDone) {
+              typewriterDone = true;
+              typewriterTarget.textContent = '';
+              var charIndex = 0;
+
+              function typeChar() {
+                if (charIndex < originalText.length) {
+                  typewriterTarget.textContent += originalText.charAt(charIndex);
+                  charIndex++;
+                  setTimeout(typeChar, 30);
+                } else {
+                  // Restore syntax-highlighted HTML once done
+                  typewriterTarget.innerHTML = originalHTML;
+                }
+              }
+
+              typeChar();
+              typewriterObserver.unobserve(codeAfterBlock);
+            }
+          });
+        }, { threshold: 0.3 });
+
+        typewriterObserver.observe(codeAfterBlock);
+      }
+
+      // --- Exit-Intent Popup ---
+      var exitPopup = document.getElementById('exit-popup');
+      var exitPopupShown = false;
+      var COOLDOWN_KEY = 'exit_popup_dismissed';
+      var COOLDOWN_DAYS = 7;
+
+      function isPopupCoolingDown() {
+        var dismissed = localStorage.getItem(COOLDOWN_KEY);
+        if (!dismissed) return false;
+        var dismissedDate = new Date(parseInt(dismissed, 10));
+        var now = new Date();
+        var diffDays = (now - dismissedDate) / (1000 * 60 * 60 * 24);
+        return diffDays < COOLDOWN_DAYS;
+      }
+
+      function showExitPopup() {
+        if (exitPopupShown || isPopupCoolingDown() || !exitPopup) return;
+        exitPopupShown = true;
+        exitPopup.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function hideExitPopup() {
+        if (!exitPopup) return;
+        exitPopup.classList.remove('active');
+        document.body.style.overflow = '';
+        localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
+      }
+
+      // Desktop trigger: mouse leaves viewport top
+      document.addEventListener('mouseout', function(e) {
+        if (e.clientY < 10) {
+          showExitPopup();
+        }
+      });
+
+      // Mobile trigger: 45-second timeout
+      if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        setTimeout(showExitPopup, 45000);
+      }
+
+      // Close button
+      if (exitPopup) {
+        var closeBtn = exitPopup.querySelector('.popup-close');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', hideExitPopup);
+        }
+
+        // Click outside to close
+        exitPopup.addEventListener('click', function(e) {
+          if (e.target === exitPopup) {
+            hideExitPopup();
+          }
+        });
+      }
+
+      // Escape key to close
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && exitPopup && exitPopup.classList.contains('active')) {
+          hideExitPopup();
+        }
+      });
+
+      // Form submit UX: show "Sending..."
+      var exitForm = document.getElementById('exit-popup-form');
+      var exitSubmitBtn = document.getElementById('exit-popup-submit');
+      if (exitForm && exitSubmitBtn) {
+        exitForm.addEventListener('submit', function() {
+          exitSubmitBtn.textContent = 'Sending\u2026';
+          exitSubmitBtn.disabled = true;
+        });
+      }
+
+      // Lead magnet form submit UX (all forms)
+      var allLeadForms = document.querySelectorAll('.lead-magnet-form');
+      allLeadForms.forEach(function(form) {
+        if (form.id === 'exit-popup-form') return; // already handled
+        form.addEventListener('submit', function() {
+          var btn = form.querySelector('.lead-magnet-submit');
+          if (btn) {
+            btn.textContent = 'Sending\u2026';
+            btn.disabled = true;
+          }
+        });
+      });
+
+    })();
+
+    // --- Calendly popup (outside IIFE so onclick can access it) ---
+    function openCalendly() {
+      if (typeof Calendly !== 'undefined') {
+        Calendly.initPopupWidget({
+          url: 'https://calendly.com/florinsiciu/30min?utm_source=landing_page&utm_medium=web&utm_campaign=angular_authority',
+          utm: {
+            utmSource: 'landing_page',
+            utmMedium: 'web',
+            utmCampaign: 'angular_authority'
+          }
+        });
+      }
+      return false;
+    }
+
+  </script>
+</body>
+</html>
