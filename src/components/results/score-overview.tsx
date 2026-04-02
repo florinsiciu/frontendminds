@@ -4,7 +4,7 @@ import { GlassCard } from "@/components/ui/glass-card";
 import type { TierId } from "@/types/assessment";
 
 const tierBadgeColors: Record<TierId, string> = {
-  critical_risk: "bg-destructive/20 text-destructive",
+  critical_risk: "bg-destructive/20 text-red-300",
   modernization_ready: "bg-warning/20 text-warning",
   well_positioned: "bg-secondary-foreground/20 text-secondary-foreground",
 };

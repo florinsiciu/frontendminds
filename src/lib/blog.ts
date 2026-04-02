@@ -2,17 +2,21 @@ import "server-only";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import readingTime from "reading-time";
 import type { BlogPost, BlogPostMeta } from "@/types/assessment";
 
 export { CATEGORIES, type CategorySlug } from "@/lib/blog-categories";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
+function estimateReadingTime(text: string): string {
+  const words = text.trim().split(/\s+/).length;
+  const minutes = Math.ceil(words / 200);
+  return `${minutes} min read`;
+}
+
 function parseMdxFile(filePath: string, slug: string): BlogPostMeta & { content: string } {
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
-  const stats = readingTime(content);
 
   return {
     slug,
@@ -24,7 +28,7 @@ function parseMdxFile(filePath: string, slug: string): BlogPostMeta & { content:
     image: data.image,
     tags: data.tags ?? [],
     featured: data.featured ?? false,
-    readingTime: stats.text,
+    readingTime: estimateReadingTime(content),
     content,
   };
 }

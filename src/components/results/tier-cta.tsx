@@ -34,7 +34,7 @@ export function TierCta({ tier, assessmentId }: TierCtaProps) {
       <GlassCard variant="highlight" className="p-6 lg:p-8 text-center">
         <Tagline>Recommended Next Step</Tagline>
 
-        <h3 className="text-xl font-bold text-foreground">{cta.headline}</h3>
+        <h2 className="text-xl font-bold text-foreground">{cta.headline}</h2>
         <p className="mt-2 text-muted-foreground">{cta.body}</p>
 
         <div className="mt-6">

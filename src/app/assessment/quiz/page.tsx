@@ -115,7 +115,7 @@ export default function Quiz() {
   );
 
   return (
-    <main className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col">
       <div className="px-4 pt-6 lg:pt-8">
         <div className="mx-auto max-w-xl">
           <ProgressBar
@@ -184,6 +184,6 @@ export default function Quiz() {
           )}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

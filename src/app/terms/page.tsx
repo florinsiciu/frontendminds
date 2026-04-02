@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Terms() {
   return (
-    <main className="mx-auto max-w-2xl px-6 py-16">
+    <div className="mx-auto max-w-2xl px-6 py-16">
       <h1 className="text-3xl font-bold">{termsOfService.title}</h1>
       <p className="mt-2 text-sm text-muted-foreground">
         Last updated: {termsOfService.lastUpdated}
@@ -25,6 +25,6 @@ export default function Terms() {
           </section>
         ))}
       </div>
-    </main>
+    </div>
   );
 }

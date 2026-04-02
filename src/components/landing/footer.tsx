@@ -64,9 +64,9 @@ export function Footer() {
           <div className="flex flex-wrap gap-x-8 gap-y-6 sm:gap-12">
             {/* Platform */}
             <div>
-              <h3 className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] text-muted-foreground">
+              <p className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] text-muted-foreground">
                 Platform
-              </h3>
+              </p>
               <ul className="flex flex-col gap-2">
                 {platformLinks.map((item) => (
                   <li key={item.href}>
@@ -83,9 +83,9 @@ export function Footer() {
 
             {/* Company */}
             <div>
-              <h3 className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] text-muted-foreground">
+              <p className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] text-muted-foreground">
                 Company
-              </h3>
+              </p>
               <ul className="flex flex-col gap-2">
                 {companyLinks.map((item) => (
                   <li key={item.href}>
@@ -102,9 +102,9 @@ export function Footer() {
 
             {/* Legal */}
             <div>
-              <h3 className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] text-muted-foreground">
+              <p className="mb-3 text-[0.7rem] font-bold uppercase tracking-[0.15em] text-muted-foreground">
                 Legal
-              </h3>
+              </p>
               <ul className="flex flex-col gap-2">
                 {legalAndResourceLinks.map((item) => (
                   <li key={item.href}>

@@ -51,7 +51,7 @@ export default async function ResultsPage({
   }
 
   return (
-    <main>
+    <>
       <TrackResultsView tier={data.tier} totalPercentage={data.total_percentage} />
 
       {/* Section 1 — Score */}
@@ -93,6 +93,6 @@ export default async function ResultsPage({
           <TierCta tier={data.tier} assessmentId={data.id} />
         </Reveal>
       </Section>
-    </main>
+    </>
   );
 }

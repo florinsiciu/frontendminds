@@ -73,7 +73,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   };
 
   return (
-    <main className="bg-dot-grid">
+    <div className="bg-dot-grid">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
@@ -119,6 +119,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       <AssessmentCta />
 
       <LeadMagnet />
-    </main>
+    </div>
   );
 }

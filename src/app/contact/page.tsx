@@ -34,7 +34,7 @@ export default function ContactPage() {
   }
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
+    <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
       {/* Page header */}
       <div className="mb-10">
         <h1 className="mb-3 font-heading text-4xl font-bold text-foreground">
@@ -153,6 +153,6 @@ export default function ContactPage() {
           </button>
         </form>
       )}
-    </main>
+    </div>
   );
 }

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function AssessmentIntro() {
   return (
-    <main>
+    <>
       {/* Hero */}
       <Section bg="muted" width="narrow">
         <div className="text-center">
@@ -47,11 +47,11 @@ export default function AssessmentIntro() {
             </Link>
           </div>
 
-          <p className="mt-5 text-[0.8rem] text-[#64748B]">
+          <p className="mt-5 text-[0.8rem] text-muted-foreground">
             {intro.microStats.map((stat, i) => (
               <span key={stat}>
                 {i > 0 && (
-                  <span className="mx-2 text-[#475569]">|</span>
+                  <span className="mx-2 text-muted-foreground/50">|</span>
                 )}
                 {stat}
               </span>
@@ -65,7 +65,7 @@ export default function AssessmentIntro() {
         <div className="flex flex-col items-center">
           <Reveal>
             <GlassCard className="w-full max-w-xl p-6 text-center lg:p-8">
-              <Tagline>What you&apos;ll discover</Tagline>
+              <h2 className="mb-5 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-indigo-400">What you&apos;ll discover</h2>
               <ul className="mt-4 space-y-3 text-left">
                 {intro.benefitList.map((benefit) => (
                   <li key={benefit} className="flex items-start gap-3">
@@ -79,7 +79,7 @@ export default function AssessmentIntro() {
 
           <Reveal delay={150}>
             <div className="mt-10 text-center">
-              <p className="mb-3 text-[0.65rem] font-semibold uppercase tracking-[0.15em] text-[#64748B]">
+              <p className="mb-3 text-[0.65rem] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
                 {intro.dimensionLabel}
               </p>
               <div className="flex flex-wrap justify-center gap-[0.625rem]">
@@ -112,6 +112,6 @@ export default function AssessmentIntro() {
           <span>{intro.credibility}</span>
         </div>
       </Section>
-    </main>
+    </>
   );
 }

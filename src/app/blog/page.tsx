@@ -26,7 +26,7 @@ export default async function BlogIndex({
   );
 
   return (
-    <main className="bg-dot-grid">
+    <div className="bg-dot-grid">
       <BlogHero categories={uniqueCategories} postCount={allPosts.length} />
 
       <Section width="medium" className="pt-8 md:pt-12">
@@ -46,6 +46,6 @@ export default async function BlogIndex({
       </Section>
 
       <LeadMagnet />
-    </main>
+    </div>
   );
 }

@@ -38,9 +38,9 @@ export function DimensionRecommendations({
                 className="h-3 w-3 rounded-full"
                 style={{ backgroundColor: DIMENSION_COLORS[dimId] }}
               />
-              <h3 className="text-base font-semibold text-foreground">
+              <h2 className="text-base font-semibold text-foreground">
                 {display.label}
-              </h3>
+              </h2>
               <span
                 className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${scoreColorClasses[color]}`}
               >

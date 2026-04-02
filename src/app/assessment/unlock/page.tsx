@@ -2,8 +2,6 @@
 
 import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod/v3";
 import { Loader2, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -24,20 +22,14 @@ const emailGateSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
 });
 
-type EmailGateForm = z.infer<typeof emailGateSchema>;
+type FieldErrors = { firstName?: string[]; email?: string[] };
 
 export default function Unlock() {
   const router = useRouter();
   const redirected = useRef(false);
   const [serverError, setServerError] = useState<string | null>(null);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<EmailGateForm>({
-    resolver: zodResolver(emailGateSchema),
-  });
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [pending, setPending] = useState(false);
 
   useEffect(() => {
     if (!sessionStorage.getItem("quizAnswers") && !redirected.current) {
@@ -46,8 +38,24 @@ export default function Unlock() {
     }
   }, [router]);
 
-  async function onSubmit(data: EmailGateForm) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     setServerError(null);
+    setFieldErrors({});
+
+    const formData = new FormData(e.currentTarget);
+    const raw = {
+      firstName: formData.get("firstName") as string,
+      email: formData.get("email") as string,
+    };
+
+    const result = emailGateSchema.safeParse(raw);
+    if (!result.success) {
+      setFieldErrors(result.error.flatten().fieldErrors as FieldErrors);
+      return;
+    }
+
+    setPending(true);
 
     const quizAnswers = sessionStorage.getItem("quizAnswers");
     if (!quizAnswers) {
@@ -57,12 +65,11 @@ export default function Unlock() {
 
     const { scoredAnswers, qualifyingAnswers } = JSON.parse(quizAnswers);
 
-    // Read UTM params from the URL (persisted through the funnel)
     const params = new URLSearchParams(window.location.search);
 
-    const result = await submitAssessment({
-      firstName: data.firstName,
-      email: data.email,
+    const submitResult = await submitAssessment({
+      firstName: result.data.firstName,
+      email: result.data.email,
       scoredAnswers,
       qualifyingAnswers,
       utmSource: params.get("utm_source"),
@@ -70,17 +77,15 @@ export default function Unlock() {
       utmCampaign: params.get("utm_campaign"),
     });
 
-    if (!result.success) {
-      setServerError(result.error ?? serverErrors.submitFailed);
+    if (!submitResult.success) {
+      setPending(false);
+      setServerError(submitResult.error ?? serverErrors.submitFailed);
       return;
     }
 
-    // Track email_submitted
     posthog.capture(EVENTS.EMAIL_SUBMITTED);
-
-    // Clean up session storage after successful submission
     sessionStorage.removeItem("quizAnswers");
-    router.push(`/assessment/results?id=${result.resultId}`);
+    router.push(`/assessment/results?id=${submitResult.resultId}`);
   }
 
   return (
@@ -114,7 +119,7 @@ export default function Unlock() {
           {/* Form */}
           <Reveal delay={100}>
             <GlassCard className="p-6">
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label
                     htmlFor="firstName"
@@ -124,18 +129,18 @@ export default function Unlock() {
                   </label>
                   <input
                     id="firstName"
+                    name="firstName"
                     type="text"
                     autoComplete="given-name"
                     placeholder={emailGate.form.firstNamePlaceholder}
                     className={cn(
                       "h-12 w-full rounded-lg border bg-card px-4 text-base text-foreground placeholder:text-subtle outline-none transition-colors focus:border-accent focus:ring-1 focus:ring-accent",
-                      errors.firstName ? "border-destructive" : "border-border"
+                      fieldErrors.firstName ? "border-destructive" : "border-border"
                     )}
-                    {...register("firstName")}
                   />
-                  {errors.firstName && (
+                  {fieldErrors.firstName && (
                     <p className="mt-1 text-sm text-destructive">
-                      {errors.firstName.message}
+                      {fieldErrors.firstName[0]}
                     </p>
                   )}
                 </div>
@@ -149,31 +154,31 @@ export default function Unlock() {
                   </label>
                   <input
                     id="email"
+                    name="email"
                     type="email"
                     autoComplete="email"
                     placeholder={emailGate.form.emailPlaceholder}
                     className={cn(
                       "h-12 w-full rounded-lg border bg-card px-4 text-base text-foreground placeholder:text-subtle outline-none transition-colors focus:border-accent focus:ring-1 focus:ring-accent",
-                      errors.email ? "border-destructive" : "border-border"
+                      fieldErrors.email ? "border-destructive" : "border-border"
                     )}
-                    {...register("email")}
                   />
-                  {errors.email && (
+                  {fieldErrors.email && (
                     <p className="mt-1 text-sm text-destructive">
-                      {errors.email.message}
+                      {fieldErrors.email[0]}
                     </p>
                   )}
                 </div>
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={pending}
                   className={cn(
                     buttonVariants({ size: "lg", shape: "pill" }),
                     "mt-2 h-12 w-full text-base"
                   )}
                 >
-                  {isSubmitting ? (
+                  {pending ? (
                     <>
                       <Loader2 className="size-4 animate-spin" />
                       Processing...
