@@ -12,6 +12,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "critical",
     isCrossDimension: false,
+    shortSummary:
+      "Running outdated Angular AND still carrying AngularJS remnants — two generations of debt compounding.",
     championSummary:
       "Your app is running an outdated Angular version AND still carries AngularJS remnants. This is a compounding problem — every month you delay makes the eventual migration larger and riskier. You're accumulating two generations of technical debt simultaneously.",
     ctoSummary:
@@ -31,6 +33,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "warning",
     isCrossDimension: false,
+    shortSummary:
+      "Current Angular version, but upgrades take too long — you're current today, fragile tomorrow.",
     championSummary:
       "You're on a current Angular version, which is good — but your team can't complete a major version upgrade within 2 weeks. This means you're current today but fragile tomorrow. When Angular 19 or 20 ships, you'll fall behind again because the upgrade process is too painful.",
     ctoSummary:
@@ -47,6 +51,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     triggers: [{ questionId: "q2", expectedAnswer: false }],
     priority: "critical",
     isCrossDimension: false,
+    shortSummary:
+      "Still running end-of-life AngularJS code — no security patches since 2021.",
     championSummary:
       "You still have AngularJS (v1.x) code in your codebase. AngularJS has been end-of-life since December 2021 — no security patches, no bug fixes, no community support. Every day this code runs in production is a day you're exposed to unpatched vulnerabilities.",
     ctoSummary:
@@ -66,6 +72,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "warning",
     isCrossDimension: false,
+    shortSummary:
+      "Dependencies aren't updated AND upgrades are slow — these two problems feed each other.",
     championSummary:
       "Your third-party dependencies aren't being updated regularly AND your team can't upgrade Angular quickly. These two problems feed each other — outdated dependencies often block framework upgrades, and without regular updates the gap between your versions and current releases keeps widening.",
     ctoSummary:
@@ -87,6 +95,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "critical",
     isCrossDimension: false,
+    shortSummary:
+      "No feature boundaries AND no module independence — everything is coupled to everything else.",
     championSummary:
       "Your codebase lacks clear feature boundaries AND your modules can't be developed or tested independently. This is a monolith trap — everything is coupled to everything else, so changing one thing risks breaking something unrelated. This is the #1 reason teams slow down as codebases grow.",
     ctoSummary:
@@ -106,6 +116,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "insight",
     isCrossDimension: false,
+    shortSummary:
+      "Standards exist on paper but haven't been reviewed in over a year — they may not match reality.",
     championSummary:
       "You have documented architectural standards — that's great — but haven't had an architecture review in the past year. Standards that aren't actively enforced tend to drift. The codebase evolves daily, but if nobody's checking whether the standards still match reality, they become decorative.",
     ctoSummary:
@@ -125,6 +137,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "warning",
     isCrossDimension: false,
+    shortSummary:
+      "Boundaries exist structurally but modules still can't be developed or tested independently.",
     championSummary:
       "Your codebase has clear feature boundaries, but your modules still can't be developed and tested independently. This means the boundaries are structural (folders, naming) but not functional — there are hidden dependencies between modules that prevent true isolation.",
     ctoSummary:
@@ -146,6 +160,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "warning",
     isCrossDimension: false,
+    shortSummary:
+      "Adopted standalone components but no consistent reactivity strategy — codebase speaks two dialects.",
     championSummary:
       "You've adopted standalone components but don't have a consistent reactivity strategy. This means your codebase speaks two dialects — new Angular patterns in some places, old approaches in others. In the short term, this actually creates more confusion than having one consistent (even if older) approach.",
     ctoSummary:
@@ -162,6 +178,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     triggers: [{ questionId: "q12", expectedAnswer: false }],
     priority: "warning",
     isCrossDimension: false,
+    shortSummary:
+      "Team doesn't trust the test suite — tech debt piles up in the areas that need fixing most.",
     championSummary:
       "Your team doesn't trust the test suite enough to refactor with confidence. This is a fundamental blocker — without test confidence, the team will avoid touching risky code, which means technical debt accumulates in exactly the areas that need the most improvement.",
     ctoSummary:
@@ -181,6 +199,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "critical",
     isCrossDimension: false,
+    shortSummary:
+      "No modern patterns AND no test confidence — a catch-22 that locks the codebase in place.",
     championSummary:
       "You haven't adopted standalone components AND your team doesn't trust the test suite. This is a catch-22: you can't modernize safely without tests, but you can't justify the test investment without a modernization plan. Your codebase is effectively locked in its current state.",
     ctoSummary:
@@ -199,6 +219,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     triggers: [{ questionId: "q14", expectedAnswer: false }],
     priority: "warning",
     isCrossDimension: false,
+    shortSummary:
+      "AI-generated code bypasses normal review standards — a growing quality and security risk.",
     championSummary:
       "AI-generated code isn't held to the same review standards as human code. As AI tools become more prevalent, this gap creates a growing quality risk — AI-generated code that bypasses normal review can introduce subtle bugs, security issues, or architectural violations that compound over time.",
     ctoSummary:
@@ -218,6 +240,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "insight",
     isCrossDimension: false,
+    shortSummary:
+      "AI guidelines exist but tools aren't configured to follow your project's patterns.",
     championSummary:
       "You have AI usage guidelines but haven't configured AI tools to follow your project's architectural patterns. Guidelines tell developers what to do, but configured tools actually enforce it. Without project-specific configuration, AI tools generate generic code that doesn't match your codebase.",
     ctoSummary:
@@ -239,6 +263,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "critical",
     isCrossDimension: false,
+    shortSummary:
+      "Can't hire fast enough AND leadership won't budget for modernization — a downward spiral.",
     championSummary:
       "You can't fill Angular positions quickly AND leadership doesn't budget for modernization. This is an organizational crisis — the codebase is making it hard to hire, but leadership isn't investing in the changes that would make the codebase attractive to talent. The longer this persists, the worse both problems get.",
     ctoSummary:
@@ -258,6 +284,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "critical",
     isCrossDimension: false,
+    shortSummary:
+      "Can't deploy confidently AND legacy patterns block new features — the team is stuck.",
     championSummary:
       "Your team can't deploy with confidence AND legacy patterns are blocking new features. This is delivery gridlock — every release feels risky, and the features you do ship take longer because you're working around legacy constraints. The team is moving slowly and anxiously.",
     ctoSummary:
@@ -277,6 +305,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "warning",
     isCrossDimension: false,
+    shortSummary:
+      "Legacy blocks delivery but leadership doesn't see the connection — tech debt is invisible upward.",
     championSummary:
       "Legacy patterns are blocking feature delivery BUT leadership doesn't understand or budget for modernization. Your tech debt is invisible to the people who control the budget. The team feels the pain daily, but it's not translating into investment because leadership doesn't see the connection between the old code and slow delivery.",
     ctoSummary:
@@ -298,6 +328,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "critical",
     isCrossDimension: true,
+    shortSummary:
+      "Can't upgrade the framework quickly AND can't deploy with confidence — building on unstable ground.",
     championSummary:
       "Your team can't upgrade the framework quickly AND can't deploy with confidence. These are two foundational capabilities — version currency and deployment safety — and both are compromised. This means you're building on unstable ground: the platform itself is a source of risk rather than a foundation you can rely on.",
     ctoSummary:
@@ -317,6 +349,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "critical",
     isCrossDimension: true,
+    shortSummary:
+      "Modules can't be tested independently AND team doesn't trust the test suite — testing is structurally broken.",
     championSummary:
       "Your modules can't be tested independently AND the team doesn't trust the test suite. This combination means testing is structurally broken — you can't write reliable tests because the code is too coupled, and the existing tests are unreliable because they test too much at once. It's a quality confidence crisis.",
     ctoSummary:
@@ -336,6 +370,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "critical",
     isCrossDimension: true,
+    shortSummary:
+      "AngularJS code is actively blocking new feature delivery — it's an anchor on the whole team.",
     championSummary:
       "AngularJS remnants are still in your codebase AND legacy patterns are blocking new feature delivery. The AngularJS code isn't just old — it's actively anchoring the entire codebase, preventing the team from shipping modern features. Every new feature has to work around the legacy constraints.",
     ctoSummary:
@@ -355,6 +391,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "critical",
     isCrossDimension: true,
+    shortSummary:
+      "Team doesn't trust tests AND can't deploy safely — every change feels risky.",
     championSummary:
       "Your team doesn't trust the test suite AND can't deploy with confidence. This creates a compounding cycle of anxiety — every change feels risky because tests don't catch issues, and every deployment feels risky because you're not sure what you're releasing. Teams in this state often slow down dramatically, avoiding changes to 'keep things stable.'",
     ctoSummary:
@@ -374,6 +412,8 @@ export const DIAGNOSTIC_PATTERNS: readonly DiagnosticPattern[] = [
     ],
     priority: "warning",
     isCrossDimension: true,
+    shortSummary:
+      "Can't hire because codebase is old, can't modernize because no people — a paradox.",
     championSummary:
       "You can't hire Angular developers quickly AND haven't adopted modern Angular patterns. These are connected — good developers evaluate the tech stack during interviews, and a codebase without modern patterns signals 'legacy maintenance work.' You can't modernize without people, but you can't attract people without modernizing.",
     ctoSummary:

@@ -100,7 +100,7 @@ const hotScore = calculateLeadScore(allNoPatterns, "cto_vp", "yes_budget");
 assert(hotScore.bucket === "hot", `CTO + budget + many critical = hot (score: ${hotScore.score})`);
 
 const nurtureScore = calculateLeadScore(
-  [{ pattern: { id: "test", name: "Test", triggers: [], priority: "insight", isCrossDimension: false, championSummary: "", ctoSummary: "", salesTalkTrack: "", recommendedAction: "" }, score: 1 }],
+  [{ pattern: { id: "test", name: "Test", triggers: [], priority: "insight", isCrossDimension: false, shortSummary: "", championSummary: "", ctoSummary: "", salesTalkTrack: "", recommendedAction: "" }, score: 1 }],
   "senior_dev",
   "not_yet",
 );

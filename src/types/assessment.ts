@@ -87,6 +87,7 @@ export interface DiagnosticPattern {
   triggers: PatternTrigger[];
   priority: PatternPriority;
   isCrossDimension: boolean;
+  shortSummary: string;
   championSummary: string;
   ctoSummary: string;
   salesTalkTrack: string;

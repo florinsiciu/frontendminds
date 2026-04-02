@@ -13,47 +13,54 @@ const PRIORITY_BADGE: Record<
 > = {
   critical: {
     label: "Critical",
-    className:
-      "bg-red-500/10 text-red-400 border-red-500/20",
+    className: "bg-red-500/10 text-red-400 border-red-500/20",
   },
   warning: {
     label: "Warning",
-    className:
-      "bg-amber-500/10 text-amber-400 border-amber-500/20",
+    className: "bg-amber-500/10 text-amber-400 border-amber-500/20",
   },
   insight: {
     label: "Insight",
-    className:
-      "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    className: "bg-blue-500/10 text-blue-400 border-blue-500/20",
   },
 };
 
-function PatternCard({ triggered }: { triggered: TriggeredPattern }) {
+function PatternCard({
+  triggered,
+  index,
+}: {
+  triggered: TriggeredPattern;
+  index: number;
+}) {
   const { pattern } = triggered;
   const badge = PRIORITY_BADGE[pattern.priority];
 
   return (
-    <GlassCard className="p-5 lg:p-6">
-      <div className="flex items-center gap-2">
+    <GlassCard className="p-4 lg:p-5">
+      {/* Header: number + badge + name */}
+      <div className="flex items-center gap-2.5">
+        <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-white/[0.06] text-xs font-bold text-foreground/60">
+          {index + 1}
+        </span>
         <span
-          className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${badge.className}`}
+          className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${badge.className}`}
         >
           {badge.label}
         </span>
-        <h3 className="text-base font-semibold text-foreground">
+        <h3 className="text-sm font-semibold text-foreground">
           {pattern.name}
         </h3>
       </div>
 
-      <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-        {pattern.championSummary}
+      {/* Short summary */}
+      <p className="mt-2 text-sm text-muted-foreground">
+        {pattern.shortSummary}
       </p>
 
-      <div className="mt-3 rounded-lg bg-white/[0.03] border border-white/[0.06] p-3">
-        <p className="text-xs font-medium text-accent uppercase tracking-wider">
-          Recommended Action
-        </p>
-        <p className="mt-1 text-sm text-foreground/80">
+      {/* Recommended action — prominent */}
+      <div className="mt-3 border-l-2 border-indigo-500/40 pl-3">
+        <p className="text-sm text-foreground/90">
+          <span className="font-medium text-indigo-400">Next step: </span>
           {pattern.recommendedAction}
         </p>
       </div>
@@ -73,15 +80,13 @@ export function KeyFindings({
           Your Angular Stack Is in Strong Shape
         </h2>
         <p className="mt-2 text-muted-foreground">
-          Your team has built solid foundations across all key areas. The
-          assessment identified a few refinement opportunities below, but
-          overall your Angular stack is well-maintained and positioned for
-          growth.
+          Solid foundations across all key areas. A few refinement opportunities
+          below.
         </p>
         {topPatterns.length > 0 && (
-          <div className="mt-6 space-y-4">
-            {topPatterns.map((tp) => (
-              <PatternCard key={tp.pattern.id} triggered={tp} />
+          <div className="mt-5 space-y-3">
+            {topPatterns.map((tp, i) => (
+              <PatternCard key={tp.pattern.id} triggered={tp} index={i} />
             ))}
           </div>
         )}
@@ -91,18 +96,9 @@ export function KeyFindings({
 
   return (
     <div>
-      <h2 className="text-xl font-bold text-foreground">
-        Key Findings
-      </h2>
-      <p className="mt-2 text-muted-foreground">
-        We identified {topPatterns.length} specific pattern
-        {topPatterns.length !== 1 ? "s" : ""} in your answers that reveal
-        where your Angular stack is holding you back.
-      </p>
-
-      <div className="mt-6 space-y-4">
-        {topPatterns.map((tp) => (
-          <PatternCard key={tp.pattern.id} triggered={tp} />
+      <div className="space-y-3">
+        {topPatterns.map((tp, i) => (
+          <PatternCard key={tp.pattern.id} triggered={tp} index={i} />
         ))}
       </div>
 
@@ -113,9 +109,9 @@ export function KeyFindings({
 
 function ShareButton({ assessmentId }: { assessmentId: string }) {
   return (
-    <div className="mt-6 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 text-center">
+    <div className="mt-5 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 text-center">
       <p className="text-sm text-muted-foreground">
-        Want to share these findings with your leadership team?
+        Share these findings with your leadership team
       </p>
       <a
         href={`/assessment/summary?id=${assessmentId}`}
