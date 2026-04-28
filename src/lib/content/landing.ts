@@ -4,7 +4,8 @@ export const hero = {
   subheadline:
     "Get a personalized score across five critical dimensions — from migration health to AI readiness. Takes 3 minutes.",
   primaryCta: { text: "Take the Free Assessment", href: "/assessment" },
-  secondaryCta: { text: "Read the Blog", href: "/blog" },
+  // secondaryCta: { text: "Read the Blog", href: "/blog" },
+  secondaryCta: { text: "Learn More", href: "/services" },
   socialProof: "Used by frontend leads at enterprise Angular teams",
   dimensionLabel: "5 Scored Dimensions",
 } as const;

@@ -3,7 +3,7 @@ import type { NavItem } from "@/types/assessment";
 export const logoText = "FrontendMinds";
 
 export const navItems: NavItem[] = [
-  { label: "Blog", href: "/blog" },
+  // { label: "Blog", href: "/blog" },
   { label: "Services", href: "/services" },
   { label: "Newsletter", href: "/newsletter" },
   { label: "About", href: "/about" },
@@ -16,7 +16,7 @@ export const navCta = {
 
 export const mobileMenuItems = [
   { label: "Home", href: "/" },
-  { label: "Blog", href: "/blog" },
+  // { label: "Blog", href: "/blog" },
   { label: "Services", href: "/services" },
   { label: "Newsletter", href: "/newsletter" },
   { label: "About", href: "/about" },

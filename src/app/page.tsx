@@ -25,8 +25,8 @@ export default function Home() {
       <StatsBar />
       <HowItWorks />
       <ScorecardSpotlight />
-      <ContentPillars />
-      <FeaturedArticles />
+      {/* <ContentPillars /> */}
+      {/* <FeaturedArticles /> */}
       <LeadMagnet />
       <FounderSection />
       <ExitIntentPopup />

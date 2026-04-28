@@ -3,7 +3,7 @@ import type { SocialLink } from "@/types/assessment";
 export const copyright = `© ${new Date().getFullYear()} FrontendMinds. All rights reserved.`;
 
 export const footerNav = [
-  { label: "Blog", href: "/blog" },
+  // { label: "Blog", href: "/blog" },
   { label: "Services", href: "/services" },
   { label: "Newsletter", href: "/newsletter" },
   { label: "About", href: "/about" },
