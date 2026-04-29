@@ -4,6 +4,7 @@ import { Navigation } from "@/components/landing/navigation";
 import { Footer } from "@/components/landing/footer";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { defaultSeo, organizationJsonLd, websiteJsonLd } from "@/lib/content/seo";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const inter = Inter({
@@ -78,6 +79,7 @@ export default function RootLayout({
           <Navigation />
           <main className="flex-1 pb-16 pt-14 lg:pb-0">{children}</main>
           <Footer />
+          <Analytics />
         </PostHogProvider>
       </body>
     </html>
