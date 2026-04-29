@@ -3,7 +3,7 @@ import type { PageSeo } from "@/types/assessment";
 // ─── Default Site Metadata ──────────────────────────────────────────────────
 
 export const defaultSeo: PageSeo = {
-  title: "FrontendMinds — Where AI Meets Frontend Excellence",
+  title: "FrontendMinds — How Modern Is Your Angular App?",
   description:
     "Practical insights, tools, and systems for developers building smarter web products. Angular modernization, AI workflows, and developer tooling.",
 };
@@ -12,7 +12,7 @@ export const defaultSeo: PageSeo = {
 
 export const pageSeo: Record<string, PageSeo> = {
   home: {
-    title: "FrontendMinds — Where AI Meets Frontend Excellence",
+    title: "FrontendMinds — How Modern Is Your Angular App?",
     description:
       "Practical insights, tools, and systems for developers building smarter web products. Angular modernization, AI workflows, and developer tooling.",
   },
