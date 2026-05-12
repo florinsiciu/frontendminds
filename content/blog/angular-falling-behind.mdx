@@ -11,7 +11,7 @@ faq:
   - question: "How do I know if my Angular app needs modernization?"
     answer: "Five key signs: your migration path to a current Angular version is unclear, your architecture fights modern patterns like standalone components and Signals, your build times keep growing, your team cannot adopt new Angular features, and AI coding tools generate unreliable output for your codebase. If you recognize three or more, your application is falling further behind with every sprint."
   - question: "Is Angular still worth investing in for 2026?"
-    answer: "Yes. Angular continues active development with significant features like Signals, deferrable views, and the new control flow. The framework has strong enterprise adoption with approximately 50% of Fortune 500 companies using it. The investment question is not whether Angular is viable but whether your specific application is on a modern enough version to benefit from these improvements."
+    answer: "Yes. Angular continues active development with significant features like Signals, deferrable views, and the new control flow. The framework has strong enterprise adoption — thousands of companies rely on it for mission-critical applications. The investment question is not whether Angular is viable but whether your specific application is on a modern enough version to benefit from these improvements."
   - question: "What AI tools work best with Angular?"
     answer: "GitHub Copilot, Cursor, and Claude work well with modern Angular codebases using standard patterns like standalone components and Signals. These tools are trained on modern framework patterns, so legacy codebases using NgModules, BehaviorSubjects, and custom abstractions get unreliable output. Configuring AI tools with project-specific rules through CLAUDE.md files or Cursor rules significantly improves output quality."
 ---
@@ -54,7 +54,7 @@ Libraries stop supporting your version. Developer tools assume a newer baseline.
 
 *Maps to: Codebase Architecture*
 
-Your codebase is built entirely around NgModules when standalone components have been the standard since Angular 15. Module boundaries create circular dependencies that force awkward workarounds. State management is scattered across services, BehaviorSubjects, and component-level variables with no consistent pattern.
+Your codebase is built entirely around NgModules when standalone components have been stable since Angular 15 and the default since Angular 19. Module boundaries create circular dependencies that force awkward workarounds. State management is scattered across services, BehaviorSubjects, and component-level variables with no consistent pattern.
 
 This is not just a style preference. Architecture that fights modern Angular patterns creates concrete problems:
 
@@ -107,7 +107,7 @@ If your team cannot adopt these features, technical debt is blocking innovation.
 
 The most common blocker is architectural. Signals require a reactive mindset and a codebase structured for fine-grained change detection. If your application relies heavily on zone.js-triggered change detection with deeply nested component trees, adopting Signals requires refactoring the change detection strategy — not just importing a new API.
 
-Standalone components are a prerequisite for many modern features. If your codebase is still on NgModules, adopting Signals, deferrable views, and the new control flow requires first migrating to standalone — which brings you back to sign number two.
+Standalone components simplify adoption of many modern features and are the foundation Angular is building on. If your codebase is still on NgModules, adopting Signals and modernizing your architecture will be significantly easier after migrating to standalone — which brings you back to sign number two.
 
 > After two or three missed release cycles, the gap between what your team can deliver and what a modern Angular team can deliver becomes significant enough to affect competitive positioning.
 
