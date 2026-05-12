@@ -18,6 +18,23 @@ export const intro = {
   ctaHref: "/assessment/quiz",
 } as const;
 
+// ─── How Scoring Works ────────────────────────────────────────────────────
+
+export const scoringExplainer = {
+  heading: "How Scoring Works",
+  paragraphs: [
+    "Each question carries a business-impact weight from 1 to 5. Higher weights mean the gap has a larger effect on your team's ability to deliver, hire, and modernize.",
+    "Your score is calculated per dimension and overall as a weighted percentage. A 75% overall score means you've earned 75% of the maximum possible business-impact points across all 20 questions.",
+  ],
+  tiers: [
+    { range: "0–40%", label: "Critical Risk", description: "Significant gaps across multiple areas need structured attention." },
+    { range: "41–74%", label: "Modernization Ready", description: "Solid foundations with clear improvement areas." },
+    { range: "75–100%", label: "Well-Positioned", description: "Strong across the board — targeted optimizations will set you apart." },
+  ],
+  footnote:
+    "The framework also identifies 18 diagnostic patterns — specific combinations of answers that reveal systemic problems spanning multiple dimensions.",
+} as const;
+
 // ─── Email Gate ─────────────────────────────────────────────────────────────
 
 export const emailGate = {

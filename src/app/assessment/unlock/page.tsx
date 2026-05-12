@@ -85,7 +85,7 @@ export default function Unlock() {
 
     posthog.capture(EVENTS.EMAIL_SUBMITTED);
     sessionStorage.removeItem("quizAnswers");
-    router.push(`/assessment/results?id=${submitResult.resultId}`);
+    router.push(`/assessment/results/${submitResult.resultId}`);
   }
 
   return (

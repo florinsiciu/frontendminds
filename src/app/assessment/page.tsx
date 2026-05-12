@@ -7,7 +7,7 @@ import { Section } from "@/components/ui/section";
 import { Tagline } from "@/components/ui/tagline";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Reveal } from "@/components/ui/reveal";
-import { intro } from "@/lib/content/assessment";
+import { intro, scoringExplainer } from "@/lib/content/assessment";
 import { pageSeo, faqJsonLd } from "@/lib/content/seo";
 import { DIMENSION_COLORS, DIMENSION_ORDER } from "@/lib/config/scoring";
 import { DIMENSIONS } from "@/lib/data/questions";
@@ -115,6 +115,45 @@ export default function AssessmentIntro() {
           <Clock className="size-4" />
           <span>{intro.credibility}</span>
         </div>
+      </Section>
+
+      {/* How Scoring Works */}
+      <Section bg="muted" width="narrow">
+        <Reveal>
+          <div className="mx-auto max-w-xl">
+            <h2 className="mb-4 text-center font-heading text-xl font-semibold text-foreground">
+              {scoringExplainer.heading}
+            </h2>
+            {scoringExplainer.paragraphs.map((p) => (
+              <p key={p.slice(0, 30)} className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                {p}
+              </p>
+            ))}
+            <div className="mt-6 space-y-3">
+              {scoringExplainer.tiers.map((tier) => (
+                <div
+                  key={tier.label}
+                  className="flex items-baseline gap-3 text-sm"
+                >
+                  <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                    {tier.range}
+                  </span>
+                  <span>
+                    <span className="font-medium text-foreground">
+                      {tier.label}
+                    </span>
+                    <span className="text-muted-foreground">
+                      {" "}— {tier.description}
+                    </span>
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-5 text-xs text-muted-foreground/70">
+              {scoringExplainer.footnote}
+            </p>
+          </div>
+        </Reveal>
       </Section>
     </>
   );

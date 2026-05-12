@@ -1,0 +1,200 @@
+---
+title: "The Angular Modernization Checklist: 20 Questions Before You Start"
+description: "A structured checklist to evaluate your Angular application's modernization readiness — covering version health, architecture, modern patterns, AI governance, and delivery capacity."
+date: "2026-05-12"
+category: "strategy"
+author: "florin-siciu"
+tags: ["angular", "modernization", "checklist", "assessment", "technical-debt"]
+featured: false
+draft: false
+faq:
+  - question: "What is an Angular modernization checklist?"
+    answer: "An Angular modernization checklist is a structured set of diagnostic questions that evaluate your application's readiness for modernization across multiple dimensions. It covers version health, codebase architecture, modern pattern adoption, AI development governance, and delivery capacity — giving you a prioritized view of where to invest modernization effort."
+  - question: "How do I know if my Angular app needs modernization?"
+    answer: "Key indicators include: running Angular versions more than 2 major releases behind, inability to upgrade within 2 weeks, no adoption of standalone components or Signals, build times exceeding 5 minutes, difficulty hiring Angular developers, and AI coding tools generating unreliable output for your codebase. If you answer 'no' to 8 or more of the 20 checklist questions, modernization should be a priority."
+  - question: "How to prioritize Angular modernization work?"
+    answer: "Score each of the five dimensions independently, then address the lowest-scoring dimension first. Within each dimension, prioritize items with the highest business impact weight. Cross-dimension problems (issues spanning multiple areas) should be addressed before single-dimension issues because they create cascading blockers."
+  - question: "How long does Angular modernization take?"
+    answer: "Timelines vary by scope and approach. Incremental modernization for enterprise applications typically takes 6-9 months with working deliverables every two weeks. The checklist helps scope the effort by identifying which dimensions need attention — a team with only version health issues faces a different timeline than one with architecture, adoption, and delivery problems."
+---
+
+Before you plan a migration, write a proposal, or allocate budget, you need to know exactly where your application stands. Not a vague sense that "things could be better" — a structured assessment that quantifies gaps and reveals which ones matter most.
+
+This checklist is the same diagnostic I run at the start of every enterprise Angular engagement. Twenty yes-or-no questions, organized across five dimensions, each weighted by business impact. Your answers produce a prioritized modernization roadmap — not just a list of problems, but a sequence of actions ordered by how much business value they unlock.
+
+I have used this checklist across 19 enterprise Angular projects. In every case, the team's initial instinct about what to fix first was wrong. The checklist corrects that instinct with data.
+
+## How to Use This Checklist
+
+Answer each question honestly. Yes means your application meets that standard today. No means there is a gap.
+
+**Do not aspirationally answer yes.** If your team has "started" adopting standalone components but most of the codebase still uses NgModules, the answer is no. Partial adoption is not adoption.
+
+After completing all 20 questions, count the gaps per dimension. The dimension with the most gaps is where your modernization effort should begin — unless it depends on another dimension scoring higher first.
+
+<Callout type="tip">
+For an automated version of this checklist that calculates weighted scores and identifies diagnostic patterns, take the [free Angular Modernization Assessment](/assessment). It uses these same 20 questions with business-impact weighting to produce a personalized score.
+</Callout>
+
+## Dimension 1: Migration and Version Health
+
+This dimension determines whether your Angular version is current enough to support modernization. Everything else depends on it.
+
+**Q1. Is your app running Angular 16 or newer?** (Impact: High)
+
+Angular 16 is the threshold where modern patterns become available. Signals, standalone component improvements, and the new control flow syntax all require Angular 16 or later. If you are below this version, modernization of patterns is blocked until you upgrade.
+
+**Q2. Have you fully migrated away from AngularJS?** (Impact: Critical)
+
+AngularJS has been end-of-life since January 2022. Any AngularJS code in production — even in a hybrid setup — creates security risk, hiring difficulty, and velocity drag. This carries the highest impact weight in the entire checklist because it affects every other dimension.
+
+**Q3. Are your third-party dependencies updated at least annually?** (Impact: Medium)
+
+Stale dependencies create cascading conflicts during upgrades. Teams that update annually face manageable migration paths. Teams that wait 2-3 years face dependency resolution nightmares that add weeks to any version upgrade.
+
+**Q4. Can your team complete a major version upgrade within two weeks?** (Impact: High)
+
+This is a proxy for overall upgrade readiness. If a major version upgrade takes months instead of days, it signals deep structural issues: tangled dependency trees, insufficient test coverage, or tightly coupled code that breaks across version boundaries.
+
+### Scoring: Version Health
+
+- **4 Yes answers:** Strong foundation. Modernization can proceed without version-level blockers.
+- **2-3 Yes answers:** Version gaps exist but are manageable. Address before investing in pattern adoption.
+- **0-1 Yes answers:** Critical risk. Version health must be the first priority — other dimensions are constrained until this is resolved.
+
+## Dimension 2: Codebase Architecture
+
+Architecture determines how fast you can move and how safely you can change things. Poor architecture blocks incremental migration because structural problems cascade.
+
+**Q5. Is your codebase organized in a monorepo or with clear feature boundaries?** (Impact: High)
+
+Feature boundaries enable incremental migration. Without them, migrating one module requires touching five others. Clear boundaries were the single biggest predictor of migration success across every project I have led.
+
+**Q6. Do you have documented architectural standards your team follows?** (Impact: Medium)
+
+Documented standards prevent architectural drift during migration. Without them, different team members make different decisions, and the codebase fragments rather than converging during the migration process.
+
+**Q7. Have you had a codebase architecture review in the past year?** (Impact: Low)
+
+Regular reviews catch structural drift before it becomes expensive. Teams that skip reviews for years accumulate debt that only surfaces during migration — usually as surprises that blow timelines.
+
+**Q8. Can your modules or libraries be developed and tested independently?** (Impact: High)
+
+Independent testability is the acid test of architecture quality. If modules cannot be tested in isolation, they have hidden dependencies. Those dependencies will surface during migration as circular dependency nightmares.
+
+### Scoring: Architecture
+
+- **4 Yes answers:** Architecture supports incremental modernization. You can migrate module by module.
+- **2-3 Yes answers:** Structural issues will slow migration but are not blockers. Factor in architecture work during planning.
+- **0-1 Yes answers:** Structural problems will block incremental migration. Address architecture before attempting version upgrades or pattern adoption.
+
+<AssessmentCta />
+
+## Dimension 3: Modern Angular Adoption
+
+This dimension reveals whether your team is using the Angular features available to them. Being on a modern version with legacy patterns is a different problem than being on an old version.
+
+**Q9. Have you adopted standalone components?** (Impact: High)
+
+Standalone components have been the default since Angular 17. They enable better tree-shaking, simpler testing, and clearer dependency management. Most modern Angular features assume standalone adoption.
+
+**Q10. Do you have a consistent strategy for reactive state?** (Impact: Medium)
+
+Whether you choose Signals, RxJS, or a deliberate combination, consistency matters more than the specific approach. Inconsistent state management creates cognitive overhead for every developer on the team and makes AI tooling less effective.
+
+**Q11. Are your forms maintainable and free of repetitive boilerplate?** (Impact: Low)
+
+Form quality is a practical indicator of overall codebase quality. Teams with clean form patterns typically have clean patterns elsewhere. Boilerplate in forms usually means boilerplate everywhere.
+
+**Q12. Does your team trust the test suite enough to refactor with confidence?** (Impact: High)
+
+Test confidence enables all modernization work. Without it, every refactoring decision carries unacceptable risk. Teams default to "do not touch it" — which means modernization never happens, regardless of what the roadmap says.
+
+### Scoring: Modern Adoption
+
+- **4 Yes answers:** Your team is leveraging modern Angular effectively. Focus on optimization rather than adoption.
+- **2-3 Yes answers:** Partial adoption means some patterns are modern while others are legacy. Standardize before expanding.
+- **0-1 Yes answers:** Legacy patterns dominate. Check whether blockers come from this dimension or from architecture/version health — fix the root cause first.
+
+## Dimension 4: AI and Development Governance
+
+The newest dimension and the one most teams score lowest on. AI tools are transforming productivity, but without governance they create as many problems as they solve.
+
+**Q13. Does your team have clear guidelines for using AI in development?** (Impact: Low)
+
+Guidelines establish what AI tools are permitted and how AI-generated code is reviewed. Without them, each developer makes independent decisions, creating inconsistency.
+
+**Q14. Are AI-generated code changes held to the same review standards as human code?** (Impact: Medium)
+
+Ungoverned AI code is the fastest way to accumulate new technical debt. AI tools can generate code that passes tests but violates architectural patterns or introduces subtle maintainability problems.
+
+**Q15. Have you configured AI tools to follow your project's patterns?** (Impact: Low)
+
+Modern AI tools support project-level configuration. Configured tools generate code that matches your architecture. Unconfigured tools generate generic code that may or may not fit.
+
+**Q16. Is your team using AI to accelerate modernization?** (Impact: Low)
+
+Teams that use AI for migration-specific tasks — generating tests, converting patterns, reviewing migration PRs — move faster. But this is aspirational for most teams and carries the lowest impact weight.
+
+### Scoring: AI Governance
+
+- **4 Yes answers:** Your team is ahead of most organizations. AI tooling is a competitive advantage.
+- **2-3 Yes answers:** Basic governance is in place. Formalize and expand.
+- **0-1 Yes answers:** AI tools are being used without guardrails. This is a risk, but a lower-priority one than version health or architecture.
+
+## Dimension 5: Delivery and Talent Readiness
+
+This dimension separates technical readiness from organizational readiness. Perfect code means nothing if the team cannot hire, cannot deploy safely, or does not have leadership buy-in.
+
+**Q17. Can you fill an open Angular developer position within eight weeks?** (Impact: Medium)
+
+Hiring speed reflects codebase attractiveness. Teams that struggle to hire typically have codebases that developers do not want to work with — or use patterns that are too niche to find talent for.
+
+**Q18. Can your team deploy with confidence and without fear of breaking changes?** (Impact: Critical)
+
+Deployment confidence carries the highest impact weight alongside AngularJS migration. A team that fears deployment cannot ship migration work incrementally. They batch changes, which increases risk, which further decreases confidence — a vicious cycle.
+
+**Q19. Can your team ship new features without getting blocked by legacy patterns?** (Impact: High)
+
+When legacy patterns block feature delivery, the business notices. This is often the trigger that starts the modernization conversation. If you are here, you have organizational attention — use it.
+
+**Q20. Does leadership understand and budget for modernization needs?** (Impact: High)
+
+Leadership alignment determines whether modernization gets sustained investment. Migrations take months. Without committed budget and timeline, migration projects get deprioritized every time a feature request arrives.
+
+### Scoring: Delivery Readiness
+
+- **4 Yes answers:** Your organization is ready to execute a migration. The constraint is technical, not organizational.
+- **2-3 Yes answers:** Partial readiness. Address the gaps — particularly deployment confidence and leadership alignment — before committing to a migration timeline.
+- **0-1 Yes answers:** Organizational blockers will prevent migration regardless of technical readiness. [Build the business case](/blog/angular-migration-business-case) before planning technical work.
+
+## Reading Your Results
+
+### Count Your Gaps
+
+| Total "No" Answers | Interpretation |
+|---------------------|----------------|
+| 0-5 | Well-positioned. Targeted optimizations will set you apart. |
+| 6-12 | Modernization ready. Solid foundations with clear improvement areas. |
+| 13-20 | Critical risk. Significant gaps across multiple areas need structured attention. |
+
+### Find Your Starting Point
+
+The dimension with the most "No" answers is your starting point — with one exception: if Dimension 1 (Version Health) has gaps, address those first regardless of other dimension scores. Version health is the foundation that everything else depends on.
+
+### Watch for Cross-Dimension Patterns
+
+Some combinations of "No" answers signal systemic problems:
+
+- **Q1 No + Q2 No:** Legacy trapped — old version plus AngularJS remnants. This is the hardest pattern to escape.
+- **Q8 No + Q12 No:** Untestable monolith — modules cannot be tested independently and the team does not trust the test suite. Refactoring is paralyzed.
+- **Q4 No + Q18 No:** Foundational instability — cannot upgrade quickly and cannot deploy safely. Every change is risky.
+- **Q17 No + Q20 No:** Talent and leadership gap — cannot hire and no modernization budget. Technical plans will stall without organizational alignment.
+
+## Get Your Weighted Score
+
+This checklist gives you a directional assessment. For a weighted score that factors in business impact, identifies specific diagnostic patterns, and produces a prioritized modernization roadmap, take the automated version.
+
+The [free Angular Modernization Assessment](/assessment) uses these same 20 questions with impact weighting to calculate per-dimension scores, identify cross-dimension patterns, and generate personalized recommendations. It takes under three minutes and gives you the data to have an informed conversation with your team and leadership about where to invest modernization effort.
+
+[Take the free assessment](/assessment) and turn this checklist into a scored, prioritized action plan.
