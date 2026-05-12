@@ -17,9 +17,10 @@ export const pageSeo: Record<string, PageSeo> = {
       "Practical insights, tools, and systems for developers building smarter web products. Angular modernization, AI workflows, and developer tooling.",
   },
   assessment: {
-    title: "Angular Modernization Assessment | FrontendMinds",
+    title:
+      "Free Angular Modernization Assessment — Score Your App in 3 Minutes | FrontendMinds",
     description:
-      "20 yes/no questions across 5 dimensions. Get your personalized Angular modernization score in under 3 minutes.",
+      "20 yes/no questions across 5 dimensions. Get your personalized Angular modernization score with instant results — no sales call required.",
   },
   quiz: {
     title: "Assessment Quiz | FrontendMinds",

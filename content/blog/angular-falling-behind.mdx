@@ -7,6 +7,13 @@ author: "florin-siciu"
 tags: ["angular", "modernization", "technical-debt"]
 featured: true
 draft: false
+faq:
+  - question: "How do I know if my Angular app needs modernization?"
+    answer: "Five key signs: your migration path to a current Angular version is unclear, your architecture fights modern patterns like standalone components and Signals, your build times keep growing, your team cannot adopt new Angular features, and AI coding tools generate unreliable output for your codebase. If you recognize three or more, your application is falling further behind with every sprint."
+  - question: "Is Angular still worth investing in for 2026?"
+    answer: "Yes. Angular continues active development with significant features like Signals, deferrable views, and the new control flow. The framework has strong enterprise adoption with approximately 50% of Fortune 500 companies using it. The investment question is not whether Angular is viable but whether your specific application is on a modern enough version to benefit from these improvements."
+  - question: "What AI tools work best with Angular?"
+    answer: "GitHub Copilot, Cursor, and Claude work well with modern Angular codebases using standard patterns like standalone components and Signals. These tools are trained on modern framework patterns, so legacy codebases using NgModules, BehaviorSubjects, and custom abstractions get unreliable output. Configuring AI tools with project-specific rules through CLAUDE.md files or Cursor rules significantly improves output quality."
 ---
 
 Most teams do not realize their Angular application is falling behind until it becomes painful. Build times creep up. Developers start complaining about patterns that fight them instead of helping them. Feature requests that should take days take weeks.

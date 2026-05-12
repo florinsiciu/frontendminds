@@ -199,6 +199,11 @@ export interface AudiencePersona {
 
 // ── Blog types ──────────────────────────────────────────────────────────────
 
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 export interface BlogPostMeta {
   slug: string;
   title: string;
@@ -211,6 +216,7 @@ export interface BlogPostMeta {
   featured: boolean;
   draft: boolean;
   readingTime: string;
+  faq?: FaqItem[];
 }
 
 export interface BlogPost extends BlogPostMeta {

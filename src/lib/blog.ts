@@ -30,6 +30,7 @@ function parseMdxFile(filePath: string, slug: string): BlogPostMeta & { content:
     featured: data.featured ?? false,
     draft: data.draft ?? false,
     readingTime: estimateReadingTime(content),
+    faq: data.faq,
     content,
   };
 }
