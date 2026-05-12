@@ -24,7 +24,7 @@ export const socialLinks: SocialLink[] = [
   },
   {
     label: "X (Twitter)",
-    url: "https://x.com/nicusorsiciu",
+    url: "https://x.com/FlorinSiciu",
     icon: "Twitter",
   },
 ];

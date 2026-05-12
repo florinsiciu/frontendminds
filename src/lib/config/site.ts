@@ -17,6 +17,6 @@ export const siteConfig = {
   social: {
     linkedin: "https://linkedin.com/in/florinsiciu",
     github: "https://github.com/florinsiciu",
-    twitter: "https://x.com/nicusorsiciu",
+    twitter: "https://x.com/FlorinSiciu",
   },
 } as const;

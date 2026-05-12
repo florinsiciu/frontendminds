@@ -87,7 +87,7 @@ export const organizationJsonLd = {
   sameAs: [
     "https://linkedin.com/in/florinsiciu",
     "https://github.com/florinsiciu",
-    "https://x.com/nicusorsiciu",
+    "https://x.com/FlorinSiciu",
   ],
 };
 
