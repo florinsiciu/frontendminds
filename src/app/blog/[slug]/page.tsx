@@ -32,6 +32,9 @@ export async function generateMetadata({
   return {
     title: `${post.title} | FrontendMinds`,
     description: post.description,
+    alternates: {
+      canonical: `${siteConfig.baseUrl}/blog/${slug}`,
+    },
     ...(post.draft && { robots: { index: false, follow: false } }),
     openGraph: {
       title: post.title,
@@ -84,6 +87,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       "@type": "Person",
       name: siteConfig.author,
       url: siteConfig.social.linkedin,
+      sameAs: [
+        siteConfig.social.linkedin,
+        siteConfig.social.github,
+        siteConfig.social.twitter,
+      ],
     },
     publisher: {
       "@type": "Organization",
@@ -96,11 +104,40 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     ...(post.tags.length > 0 && { keywords: post.tags.join(", ") }),
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteConfig.baseUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: `${siteConfig.baseUrl}/blog`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: post.title,
+        item: `${siteConfig.baseUrl}/blog/${slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="bg-dot-grid">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       {faqJsonLd && (
         <script

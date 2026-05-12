@@ -62,9 +62,22 @@ export function getPostsByCategory(category: string): BlogPostMeta[] {
 }
 
 export function getRelatedPosts(currentSlug: string, category: string, limit = 3): BlogPostMeta[] {
-  return getAllPosts()
-    .filter((p) => p.slug !== currentSlug && p.category === category)
-    .slice(0, limit);
+  const current = getPostBySlug(currentSlug);
+  const currentTags = new Set(current?.tags ?? []);
+  const allOther = getAllPosts().filter((p) => p.slug !== currentSlug);
+
+  const sameCategory = allOther.filter((p) => p.category === category);
+  if (sameCategory.length >= limit) return sameCategory.slice(0, limit);
+
+  const remaining = allOther
+    .filter((p) => p.category !== category)
+    .sort((a, b) => {
+      const aOverlap = a.tags.filter((t) => currentTags.has(t)).length;
+      const bOverlap = b.tags.filter((t) => currentTags.has(t)).length;
+      return bOverlap - aOverlap;
+    });
+
+  return [...sameCategory, ...remaining].slice(0, limit);
 }
 
 export function getAllSlugs(): string[] {

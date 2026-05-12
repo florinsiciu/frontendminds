@@ -3,18 +3,18 @@ import type { PageSeo } from "@/types/assessment";
 // ─── Default Site Metadata ──────────────────────────────────────────────────
 
 export const defaultSeo: PageSeo = {
-  title: "FrontendMinds — How Modern Is Your Angular App?",
+  title: "FrontendMinds — Angular Migration & Modernization Consulting",
   description:
-    "Practical insights, tools, and systems for developers building smarter web products. Angular modernization, AI workflows, and developer tooling.",
+    "Helping CTOs and engineering managers modernize Angular applications. Free assessment, migration guides, and business case frameworks — based on 19 enterprise migrations.",
 };
 
 // ─── Per-Page Overrides ─────────────────────────────────────────────────────
 
 export const pageSeo: Record<string, PageSeo> = {
   home: {
-    title: "FrontendMinds — How Modern Is Your Angular App?",
+    title: "FrontendMinds — Angular Migration & Modernization Consulting",
     description:
-      "Practical insights, tools, and systems for developers building smarter web products. Angular modernization, AI workflows, and developer tooling.",
+      "Helping CTOs and engineering managers modernize Angular applications. Free assessment, migration guides, and business case frameworks — based on 19 enterprise migrations.",
   },
   assessment: {
     title:
@@ -84,7 +84,7 @@ export const organizationJsonLd = {
   name: "FrontendMinds",
   url: "https://frontendminds.com",
   description:
-    "Practical insights, tools, and systems for developers building smarter web products. Angular modernization, AI workflows, and developer tooling.",
+    "Helping CTOs and engineering managers modernize Angular applications. Free assessment, migration guides, and business case frameworks — based on 19 enterprise migrations.",
   sameAs: [
     "https://linkedin.com/in/florinsiciu",
     "https://github.com/florinsiciu",
@@ -98,7 +98,7 @@ export const websiteJsonLd = {
   name: "FrontendMinds",
   url: "https://frontendminds.com",
   description:
-    "Practical insights, tools, and systems for developers building smarter web products.",
+    "Helping CTOs and engineering managers modernize Angular applications. Free assessment, migration guides, and business case frameworks.",
   publisher: {
     "@type": "Organization",
     name: "FrontendMinds",
