@@ -6,29 +6,69 @@ category: "strategy"
 author: "florin-siciu"
 tags: ["angularjs", "migration", "technical-debt", "legacy"]
 featured: false
-draft: true
+draft: false
 ---
 
-{/* TODO: Introduction — AngularJS (1.x) hit end-of-life in January 2022. No security patches, no updates, no community support. Yet thousands of enterprise apps still run on it. Here's what that actually costs. */}
+AngularJS reached end-of-life in January 2022. No security patches, no bug fixes, no community support. In 2026, running AngularJS in production is not a technical preference. It is a business risk that compounds every quarter, and the cost is higher than most organizations realize.
+
+I have personally rewritten three legacy AngularJS applications to modern Angular, and I have consulted on dozens more. The pattern is always the same: teams underestimate the hidden costs of staying on AngularJS because those costs do not show up on a single line item. They are spread across security, hiring, velocity, and opportunity cost, each one quietly draining budget and productivity.
+
+If you are a CTO or engineering manager still running AngularJS in production, here is what it is actually costing you.
 
 ## The Security Tax
 
-{/* TODO: No security patches since 2022. Every CVE in the dependency tree is your problem. Compliance audits flag it. Insurance costs go up. */}
+AngularJS has not received a security patch since January 2022. Every vulnerability discovered in the framework or its dependency tree since then is your team's problem to patch manually, work around, or accept as a known risk.
+
+This is not a theoretical concern. The npm ecosystem moves fast. Dependencies that AngularJS relies on continue to receive vulnerability disclosures, and without framework-level patches, your team is responsible for assessing and mitigating each one individually. That is engineering time spent on defense instead of delivery.
+
+The compliance implications are concrete. SOC 2 audits flag end-of-life frameworks. ISO 27001 assessments require documented risk acceptance for unsupported software. PCI-DSS compliance becomes significantly harder when your frontend framework has not received a security update in over four years.
+
+I have seen organizations where cyber insurance renewals were complicated by end-of-life software in production. Insurers are increasingly sophisticated about software risk, and an unsupported framework handling customer data is exactly the kind of risk they price into premiums or exclude from coverage entirely.
+
+The security tax compounds over time. Every month without patches adds to the known vulnerability surface. What was a manageable risk in 2023 is a growing liability in 2026. Services like HeroDevs offer Never-Ending Support as an interim bridge, but that is a bridge, not a destination. It buys time for migration planning, not a reason to stay indefinitely.
 
 ## The Hiring Tax
 
-{/* TODO: New developers don't know AngularJS. The ones who do charge a premium. Onboarding takes 3x longer because the patterns are foreign to modern devs. */}
+New developers do not learn AngularJS. Computer science programs, bootcamps, and self-taught developers all learn modern frameworks: React, Angular, Vue, Svelte. The pool of developers who know AngularJS patterns like scope inheritance, the digest cycle, and two-way binding through ng-model is shrinking every year.
 
-## The Velocity Tax
+The developers who do know AngularJS fall into two categories: experienced specialists who command premium rates, and developers who happened to work on legacy projects and would prefer to move on. Neither category is easy to hire.
 
-{/* TODO: No modern tooling support. Slower development cycles. Features that take days in modern Angular take weeks in AngularJS. AI coding tools can't help. */}
+The numbers are stark. Onboarding a modern Angular developer to an AngularJS codebase takes two to three times longer than onboarding them to a modern Angular codebase. The patterns are different enough that existing Angular knowledge does not transfer cleanly. Scope, controllers, directives, and the digest cycle are conceptual models that modern developers have never encountered.
+
+AngularJS specialists who are willing to work on legacy maintenance projects typically command a 20 to 40 percent rate premium over modern Angular developers. The pool shrinks every year, and the premium grows with it. In many markets, finding an AngularJS developer within eight weeks is simply not possible.
 
 <AssessmentCta />
 
+Then there is the retention problem. Your best developers do not want to spend their careers maintaining a framework that the industry abandoned four years ago. They want to work with modern tooling, modern patterns, and technology that advances their skills. Every month on AngularJS increases the risk that your strongest team members leave for companies using modern stacks. The cost of replacing a senior developer, including recruiting, onboarding, and the productivity gap, typically runs six to nine months of salary.
+
+## The Velocity Tax
+
+AngularJS has no support from modern development tooling. The Angular CLI, Nx workspace tools, modern IDE extensions with deep framework integration, none of these work with AngularJS. Your developers are working without the safety nets and productivity accelerators that modern framework ecosystems provide.
+
+The AI productivity gap is particularly painful. AI coding assistants like GitHub Copilot, Cursor, and Claude are trained overwhelmingly on modern framework patterns. When your codebase uses AngularJS conventions, these tools produce unreliable suggestions. They generate modern Angular syntax in an AngularJS context, suggest patterns that do not exist in your framework version, and create more confusion than productivity. In practical terms, your team cannot benefit from the most significant developer productivity improvement in a decade.
+
+Feature velocity tells the story in concrete terms. Implementing lazy loading in modern Angular is a configuration change. In AngularJS, it requires a custom solution with ocLazyLoad or a similar library, manual route configuration, and careful testing of the digest cycle. What takes a day in modern Angular takes a week or more in AngularJS.
+
+The compound effect of the velocity tax is what makes it dangerous. Slower development means longer sprints. Longer sprints mean missed release windows. Missed release windows mean frustrated product teams, delayed revenue, and competitors that ship faster. Over four quarters, a 30 percent velocity gap becomes a massive competitive disadvantage.
+
 ## The Opportunity Cost
 
-{/* TODO: Every sprint spent maintaining AngularJS is a sprint NOT spent on modern features, performance improvements, or developer experience. The gap widens every quarter. */}
+Every sprint spent maintaining AngularJS is a sprint not spent on modern features, performance improvements, or developer experience. This is the cost that does not appear on any dashboard, but it is often the largest one.
+
+Modern Angular applications can leverage Server-Side Rendering for better SEO and initial load performance. They can use Signals for fine-grained reactivity that dramatically improves change detection performance. They can adopt deferrable views for intelligent loading strategies. None of these capabilities are available to AngularJS applications.
+
+The gap widens every quarter. Each new Angular release adds performance improvements, developer experience enhancements, and ecosystem integrations that AngularJS cannot access. Teams on modern Angular get faster with every release. Teams on AngularJS stay where they are, watching the distance grow.
+
+There is also the AI governance dimension. Teams on modern Angular can integrate AI development tools into their workflow, establish governance frameworks for AI-assisted coding, and leverage AI for code review, testing, and documentation. Teams on AngularJS cannot meaningfully adopt any of these practices because the tooling does not support their framework. As AI becomes a standard part of software development, this gap will define which teams can compete and which cannot.
+
+When your public-facing application feels slow or dated compared to competitors, it affects more than user experience. It affects customer perception, talent recruitment, and the confidence of stakeholders who compare your product to the market every day.
 
 ## The Path Forward
 
-{/* TODO: Migration doesn't have to be a big bang rewrite. Incremental approaches exist. But the first step is always understanding the full scope of what needs to change. */}
+Migration does not have to be a big-bang rewrite. Incremental approaches exist that let you modernize piece by piece while keeping the business running. I have written about [why most Angular migrations fail](/blog/angular-migrations-fail) and the strategies that prevent those failures. The short version: assess first, migrate incrementally, and ship every two weeks.
+
+The first step is always understanding the full scope of what needs to change. Not just the code, but the architecture, the team's readiness, the dependency landscape, and the organizational support required.
+
+The free Angular Modernization Assessment scores your project across five dimensions in under three minutes. It gives you a baseline, highlights your highest-risk areas, and provides the data you need to have an informed conversation about migration planning with your leadership team.
+
+[Take the free assessment](/assessment) and see where your AngularJS application stands today.

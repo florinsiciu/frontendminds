@@ -8,7 +8,7 @@ import { Tagline } from "@/components/ui/tagline";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Reveal } from "@/components/ui/reveal";
 import { intro } from "@/lib/content/assessment";
-import { pageSeo } from "@/lib/content/seo";
+import { pageSeo, faqJsonLd } from "@/lib/content/seo";
 import { DIMENSION_COLORS, DIMENSION_ORDER } from "@/lib/config/scoring";
 import { DIMENSIONS } from "@/lib/data/questions";
 
@@ -20,6 +20,10 @@ export const metadata: Metadata = {
 export default function AssessmentIntro() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* Hero */}
       <Section bg="muted" width="narrow">
         <div className="text-center">
