@@ -3,7 +3,7 @@ import { getAllPosts } from "@/lib/blog";
 import { siteConfig } from "@/lib/config/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const publishedSlugs = getAllPosts().filter((p) => !p.draft).map((p) => p.slug);
+  const publishedPosts = getAllPosts().filter((p) => !p.draft);
   const now = new Date();
 
   const staticPages: MetadataRoute.Sitemap = [
@@ -18,9 +18,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteConfig.baseUrl}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  const blogPages: MetadataRoute.Sitemap = publishedSlugs.map((slug) => ({
-    url: `${siteConfig.baseUrl}/blog/${slug}`,
-    lastModified: now,
+  const blogPages: MetadataRoute.Sitemap = publishedPosts.map((post) => ({
+    url: `${siteConfig.baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
