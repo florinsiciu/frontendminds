@@ -359,7 +359,239 @@ To be cited by AI models as a source, we need:
 
 ---
 
-## 10. Key Takeaways
+## 10. Google Keyword Planner Validation (May 12, 2026)
+
+**Data source:** Google Keyword Planner via Frontend Minds Google Ads account
+**Locations:** Australia, United States, United Kingdom, Romania
+**Language:** English
+**Date range:** April 2025 – March 2026
+**Currency:** RON (1 RON ≈ €0.20)
+**Account status:** No active ad spend — volumes shown as ranges (exact numbers are midpoints)
+
+### Validated Keywords with Volume
+
+| Keyword | Avg Monthly | 3-Month Δ | YoY Δ | Competition | Comp Index | Bid Low (RON) | Bid High (RON) | ~Bid EUR |
+|---------|-------------|-----------|-------|-------------|------------|---------------|----------------|----------|
+| **angular migration** | 500 | 0% | 0% | Low | 10 | 43.46 | 228.71 | €9–€46 |
+| **angular migration guide** | 500 | 0% | **+900%** | Low | 8 | 35.41 | 56.07 | €7–€11 |
+| **angular upgrade guide** | 500 | 0% | 0% | Low | 0 | — | — | — |
+| **angular end of life** | 500 | **+900%** | 0% | Medium | 38 | 15.73 | 40.09 | €3–€8 |
+| **angular eol** | 500 | 0% | 0% | Low | 24 | 13.83 | 30.05 | €3–€6 |
+| **angularjs end of life** | 500 | 0% | **-90%** | Medium | 56 | 50.99 | 189.35 | €10–€38 |
+| angularjs end of life support | 50 | 0% | 0% | Medium | 63 | **237.06** | **596.83** | **€47–€119** |
+| migrate angularjs to angular | 50 | 0% | 0% | Low | 6 | 53.03 | 214.79 | €11–€43 |
+| angularjs to angular migration | 50 | 0% | 0% | Low | 13 | 59.62 | 231.98 | €12–€46 |
+| angularjs eol | 50 | 0% | 0% | Medium | 49 | 43.40 | 182.35 | €9–€36 |
+| migrate from angularjs to angular | 50 | 0% | 0% | Low | 10 | 62.05 | 160.40 | €12–€32 |
+| upgrade from angularjs to angular | 50 | 0% | 0% | Low | 9 | 76.56 | 220.98 | €15–€44 |
+| angular end of support | 50 | 0% | 0% | Medium | 49 | 18.47 | 101.74 | €4–€20 |
+| angularjs support end date | 50 | 0% | 0% | Medium | 43 | 33.19 | 87.29 | €7–€17 |
+| angular to react migration | 50 | 0% | 0% | Low | 8 | 29.19 | 129.10 | €6–€26 |
+| migrate angular to react | 50 | 0% | 0% | Low | 24 | — | — | — |
+| angular 1 end of life | 50 | 0% | 0% | Medium | 36 | — | — | — |
+| angularjs to angular migration tool | 50 | 0% | 0% | Low | 7 | — | — | — |
+| angularjs to angular migration step by step | 50 | 0% | 0% | Low | 4 | — | — | — |
+| angularjs 1.8 end of life | 50 | 0% | 0% | Medium | 57 | — | — | — |
+| gwt to angular migration | 50 | 0% | 0% | **High** | 71 | — | — | — |
+| angular migration tool | 50 | 0% | 0% | Low | 16 | — | — | — |
+| angular migration steps | 50 | 0% | 0% | Low | 7 | — | — | — |
+
+### Keywords with ZERO Volume in Google Keyword Planner
+
+The following keywords from our original research showed **no data at all** — they are below Google's minimum threshold (~10 searches/month globally):
+
+- angular migration fail ← Already indexed but no measurable search volume
+- cost of staying on angularjs 2026
+- angular modernization assessment
+- angular modernization checklist
+- convince management angular migration
+- angular migration cost 2026
+- angular migration business case
+- angular technical debt business impact
+- angular hiring difficulty 2026
+- angular modernization ← No volume data, "Unknown" competition
+- ai governance frontend development
+- copilot vs cursor angular
+- angular signals migration
+- angular standalone components migration
+- angular modernization patterns/framework
+
+### Critical Insights from Validation
+
+1. **"angular modernization" has ZERO search volume.** This is our core brand term but nobody searches for it. People search for "angular migration" (500/mo) instead. Content should use "migration" as the primary keyword while introducing "modernization" as our differentiated framing.
+
+2. **"angular end of life" is EXPLODING (+900% in 3 months).** This is the single biggest trending keyword in our space. We need content targeting this immediately — it maps perfectly to our "cost of staying on angularjs" blog post which should be reframed.
+
+3. **"angular migration guide" grew +900% YoY.** People want step-by-step guides. Our experience-backed guide with 19-app perspective is the differentiator.
+
+4. **"angularjs end of life" is DECLINING (-90% YoY).** The AngularJS-specific concern is fading as most teams have already made decisions. Shift focus to the broader "angular end of life" term which captures teams on older Angular versions (not just AngularJS).
+
+5. **Highest CPC keyword: "angularjs end of life support" at €47-€119.** This signals extreme commercial intent — companies are actively seeking paid solutions. HeroDevs (NES) targets this space. FrontendMinds should differentiate: "don't extend support, migrate" messaging.
+
+6. **All decision-maker keywords (business case, ROI, convince management) show zero volume.** This doesn't mean no demand — it means people use different search terms. They likely search for "angular migration" + add context in follow-up searches. Our strategy of targeting these as content angles within broader migration content is correct.
+
+7. **"angular to react migration" has meaningful volume (50/mo).** This is an opportunity for comparison content: "Angular Migration: Modernize vs. Rewrite in React" — captures both audiences.
+
+### Revised Keyword Priority (Post-Validation)
+
+| Priority | Keyword | Validated Volume | Action |
+|----------|---------|-----------------|--------|
+| **P0** | angular end of life | 500/mo, +900% trending | Write urgently — reframe "cost of angularjs" post around this |
+| **P0** | angular migration guide | 500/mo, +900% YoY | Write pillar guide, experience-backed |
+| **P0** | angular migration | 500/mo, core term | Optimize /services and assessment pages for this |
+| **P1** | angularjs end of life | 500/mo, declining | Complete existing blog post, add FAQ schema |
+| **P1** | angular eol | 500/mo | Create content targeting this exact phrase |
+| **P1** | angularjs to angular migration | 50/mo, high CPC | Technical guide with commercial intent |
+| **P2** | angular to react migration | 50/mo | Comparison content capturing migration-curious teams |
+| **P2** | angularjs end of life support | 50/mo, €47-€119 CPC | High-intent content, differentiate from HeroDevs NES |
+| **P2** | angular end of support | 50/mo, medium comp | FAQ/informational content |
+
+---
+
+## 11. Niche Gap Exploration (May 12, 2026)
+
+**Method:** 4 rounds of "Discover new keywords" + 4 competitor website analyses via Google Keyword Planner
+**Total unique keywords collected:** 2,260
+**Data files:** `docs/kp-round1-technical.csv` through `docs/kp-round4-herodevs.csv`
+
+### Data Sources
+
+| Round | Source | Keywords Found |
+|-------|--------|---------------|
+| Round 1 | Technical seeds (signals, standalone, upgrade, tech debt) | 142 |
+| Round 2 | Business seeds (consulting, audit, hire, modernization) | 11 |
+| Round 3 | AI seeds (copilot, cursor, ai code review, ai frontend) | 6 |
+| Round 4a | Competitor: briebug.com | 1,132 |
+| Round 4b | Competitor: mercurionconsulting.com | 255 |
+| Round 4c | Competitor: bitovi.com | 31 |
+| Round 4d | Competitor: herodevs.com | 586 |
+
+### Key Discovery: "angular signals" = 5,000/mo
+
+The single largest keyword in the entire Angular niche we found is **"angular signals"** at 5,000 monthly searches with LOW competition (index 2). This is 10x larger than "angular migration" (500/mo). Angular Signals is the hottest topic in Angular right now — writing authoritative content here could drive massive traffic.
+
+### High-Volume Angular Keywords (500+/mo)
+
+| Keyword | Volume | Competition | CPC (RON) | Opportunity |
+|---------|--------|-------------|-----------|-------------|
+| **angular signals** | 5,000 | Low (2) | 4-20 | MASSIVE — write signals guide + link to modernization |
+| angular standalone components | 500 | Low (1) | — | Technical guide, maps to assessment questions |
+| angular upgrade | 500 | Low (1) | 34-64 | High CPC = commercial intent |
+| angular upgrade guide | 500 | Low (0) | — | Step-by-step content opportunity |
+| angular devs | 500 | Low (14) | 11-127 | Hiring-related, high CPC |
+| angular component library | 500 | Low (15) | 7-30 | Tangential but topical authority builder |
+| angular material themes | 500 | Low (2) | 4-51 | Design-focused, topical authority |
+
+### Migration/Upgrade Keyword Cluster (50+/mo each, ~30 variants)
+
+Google shows **version-pair upgrade queries** are highly searched. Each variant is 50/mo but collectively they represent a massive long-tail cluster:
+
+| Pattern | Examples | Collective Volume |
+|---------|----------|------------------|
+| upgrade angular X to Y | 7→8, 8→9, 9→10, 11→13, 12→14, 14→15 | ~600/mo combined |
+| upgrade angularjs to angular | + variants (from, migrate, convert) | ~400/mo combined |
+| angular upgrade guide/steps | how-to queries | ~550/mo combined |
+| angular version update | generic version queries | ~200/mo combined |
+
+**Content gap:** Nobody has a comprehensive "Angular Version Upgrade Matrix" covering all version pairs. A single pillar page that maps upgrade paths for every version pair (7→latest, 8→latest, etc.) would capture this entire long-tail cluster.
+
+### Competitor Keyword Insights
+
+**Briebug (1,132 keywords):** Dominates broad Angular consulting + UX/UI design keywords. Their keyword footprint is 10x larger than any other competitor — mostly because they're a full-service agency, not Angular-specific. FrontendMinds can't compete on breadth but can compete on depth in the migration/modernization niche.
+
+**Mercurion (255 keywords):** Focused on Angular migration, consulting, and version-specific content. Most relevant competitor keyword-wise. Their pricing guide for migration cost is a key differentiator.
+
+**Bitovi (31 keywords):** Small keyword footprint despite offering a free Angular audit. Their content strategy is underdeveloped — opportunity to outpace them on content volume.
+
+**HeroDevs (586 keywords):** Strong on "end of life" and "end of support" keywords across multiple frameworks (not just Angular). Also captures open-source security and compliance keywords. Different audience (security/compliance) from FrontendMinds (modernization/migration).
+
+### AI + Angular: Confirmed Blue Ocean
+
+Only 6 keywords found across all AI-related seeds:
+
+| Keyword | Volume | Competition |
+|---------|--------|-------------|
+| copilot angular | 50 | Low |
+| cursor angular | 50 | Low |
+| ai frontend development | 50 | Medium |
+| angular copilot | 50 | Low |
+| github copilot angular | 50 | Low |
+
+Total niche volume is ~250/mo, but **zero authoritative content exists**. First-mover advantage is real — one comprehensive guide on "AI Tools for Angular Development" could own this cluster for years.
+
+### Content Gap Opportunities — Prioritized
+
+| Priority | Content Piece | Target Keyword(s) | Volume | Why |
+|----------|--------------|-------------------|--------|-----|
+| **P0** | "Angular Signals: Complete Guide for Enterprise Teams" | angular signals | 5,000/mo | Biggest keyword, almost no competition, directly related to modernization |
+| **P0** | "Angular Version Upgrade Matrix (Every Version Pair)" | upgrade angular X to Y | ~1,500/mo combined | No comprehensive resource exists, captures entire long-tail cluster |
+| **P0** | "Angular Standalone Components Migration Guide" | angular standalone components | 500/mo | Technical guide → assessment CTA |
+| **P1** | "AI Tools for Angular Development: Copilot vs Cursor vs Claude" | copilot angular, cursor angular | ~250/mo | Blue ocean, zero competition |
+| **P1** | "Angular Consulting: What to Expect and How to Choose" | angular consulting, angular audit | 100/mo | Commercial intent, positions FrontendMinds |
+| **P1** | "Hiring Angular Developers in 2026: Market Reality" | angular devs, hire angular | 550/mo | Connects to modernization narrative |
+| **P2** | "Angular ngUpgrade: Complete Migration Bridge Guide" | angular ngupgrade, ngupgrade | 100/mo | Technical depth content |
+| **P2** | "End of Life Software: What Your Angular Version Means" | angular end of life, eol | 1,000/mo+ | Captures fear/urgency searches across versions |
+
+---
+
+## 12. Real SEO Competitor Analysis (SERP-Based)
+
+**Method:** Searched top 5 target keywords in Google, identified page 1 rankers, then ran those domains through Keyword Planner
+**Keywords searched:** angular migration guide, angular signals, angular end of life, angular standalone components, angular upgrade guide
+**Additional CSVs:** `docs/kp-serp-angular-university.csv`, `docs/kp-serp-yeou.csv`, `docs/kp-serp-logrocket.csv`
+
+### Critical Finding: Business Competitors ≠ SEO Competitors
+
+The consulting agencies (Briebug, Mercurion, Bitovi) from Section 2 are **business** competitors but NOT the sites ranking on page 1 for our target keywords. The actual SERP is dominated by:
+
+| Domain | SERP Appearances | Type | Threat Level |
+|--------|-----------------|------|-------------|
+| angular.dev | 5/5 queries | Official docs | Can't compete — be complementary |
+| blog.angular-university.io | 2/5 | Angular education blog | **HIGH** — direct content competitor |
+| yeou.dev | 2/5 | Personal dev blog | Medium — proves solo blogs can rank |
+| herodevs.com | 2/5 | EOL support vendor | Medium — different angle |
+| medium.com | 3/5 | Individual articles | Low — fragmented, no single authority |
+| stackoverflow.com | 2/5 | Q&A | Low — different content type |
+| dev.to | 2/5 | Individual articles | Low — fragmented |
+| federicocalo.dev | 1/5 | Personal dev blog | Low — proves solo blogs rank |
+| digisoftsolution.com | 1/5 | Agency blog | Low — generic |
+| blog.logrocket.com | 1/5 | Major tech blog | Low — broad, not Angular-focused |
+
+### Why This Is Great News for FrontendMinds
+
+1. **Solo dev blogs are winning these SERPs.** yeou.dev and federicocalo.dev rank for 500/mo+ keywords. You don't need enterprise domain authority.
+2. **No single authority dominates** (except angular.dev official docs). The space is fragmented across Medium, dev.to, and small blogs.
+3. **Angular University is the only real content competitor** — they rank for signals AND standalone. But they're educational, not consulting. FrontendMinds differentiates with the business/modernization angle.
+4. **Zero consulting agencies rank for technical keywords.** Briebug, Mercurion, Bitovi do NOT appear in SERPs for these high-volume terms. This means content > agency branding for SEO.
+
+### SERP Competitor Keyword Planner Results
+
+| Competitor | Keywords Found | Key Insight |
+|-----------|---------------|-------------|
+| blog.angular-university.io | 303 | Covers entire Angular tutorial space. "typed forms" = 5,000/mo is a keyword they own. |
+| yeou.dev | 23 | Small but focused on Angular version updates — version-specific content wins. |
+| blog.logrocket.com | 13 | Angular is tiny slice of their content — not a real threat in this niche. |
+
+### New Keyword Discovery: "typed forms" = 5,000/mo
+
+Angular University's keyword data revealed **"typed forms"** at 5,000/mo (Medium competition, index 40). This refers to Angular Typed Reactive Forms — a major developer topic. Combined with "angular signals" (5,000/mo), these are the two highest-volume Angular-specific keywords found.
+
+### Updated Master Keyword Priority (Post-SERP Analysis)
+
+| Priority | Content Piece | Target Keywords | Volume | SERP Gap |
+|----------|--------------|----------------|--------|----------|
+| **P0** | Angular Signals Enterprise Guide | angular signals | 5,000/mo | Only edu content ranks — no enterprise/modernization angle |
+| **P0** | Angular Migration Pillar Guide | angular migration guide, angular upgrade guide | 1,000/mo | Medium articles + small blogs — beatable with depth |
+| **P0** | Angular End of Life: What It Means | angular end of life | 500/mo +900% | Reference sites + HeroDevs — gap for actionable guide |
+| **P1** | Angular Standalone Components Migration | angular standalone components | 500/mo | Official docs + tutorials — gap for migration-specific guide |
+| **P1** | Angular Typed Forms for Enterprise | typed forms | 5,000/mo | Angular University owns this — harder but high reward |
+| **P1** | Angular Version Upgrade Matrix | upgrade angular X to Y | ~1,500/mo combined | No comprehensive resource exists |
+| **P2** | AI Tools for Angular Development | copilot angular, cursor angular | ~250/mo | Zero authoritative content — first mover wins |
+| **P2** | Angular Consulting Guide | angular consulting, angular audit | 100/mo | No agencies rank for this — pure gap |
+
+---
+
+## 13. Key Takeaways
 
 1. **Content is the #1 bottleneck.** Technical SEO is decent. But 4 blog posts with TODO placeholders = zero organic traffic potential. Completing existing content is the highest-ROI action.
 
