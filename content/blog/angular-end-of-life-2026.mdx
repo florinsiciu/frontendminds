@@ -1,0 +1,161 @@
+---
+title: "Angular End of Life 2026: What Every Version Status Actually Means"
+description: "Angular 14 through 18 are all end-of-life. Angular 19 LTS ends May 2026. Here's what each version status means for your team's security, compliance, hiring, and migration timeline — with concrete next steps."
+date: "2026-05-12"
+category: "strategy"
+author: "florin-siciu"
+tags: ["angular", "end-of-life", "migration", "security", "compliance"]
+featured: false
+draft: false
+faq:
+  - question: "Which Angular versions are end of life in 2026?"
+    answer: "As of mid-2026, Angular 14 (EOL December 2023), Angular 15 (EOL May 2024), Angular 16 (EOL November 2024), Angular 17 (EOL May 2025), Angular 18 (EOL November 2025), and all earlier versions including AngularJS (EOL December 2021) are end-of-life. Angular 19 LTS ends May 2026. Angular 20 is actively supported with LTS through November 2026."
+  - question: "What happens when an Angular version reaches end of life?"
+    answer: "End-of-life means no security patches, no bug fixes, and no updates from the Angular team. Any vulnerability discovered in the framework or its dependency tree after EOL is your team's responsibility to patch, work around, or accept as a known risk. Compliance frameworks like SOC 2, ISO 27001, and PCI-DSS flag end-of-life software as a control gap."
+  - question: "Is Angular 19 still supported?"
+    answer: "Angular 19 is in Long-Term Support (LTS) through May 2026, meaning it receives critical fixes and security patches only. After May 2026, Angular 19 becomes end-of-life. Teams on Angular 19 should upgrade to Angular 20 to maintain support through November 2026."
+  - question: "How long does it take to upgrade from one Angular version to the next?"
+    answer: "A single major version upgrade typically takes 1-3 days for small applications and 1-2 weeks for medium enterprise applications. However, the effort scales non-linearly when you are multiple versions behind. Going from Angular 14 to 20 involves six sequential major upgrades, each with its own breaking changes, dependency updates, and testing requirements. Based on enterprise projects, a multi-version jump typically takes 2-4 months of focused effort."
+  - question: "Should I upgrade Angular incrementally or skip versions?"
+    answer: "Angular officially supports upgrading one major version at a time using ng update. The CLI enforces this constraint — attempting to skip versions will not proceed. The incremental approach — upgrading from 14 to 15, then 15 to 16, and so on — is the only reliable path. Each step has its own migration guide and automated schematics."
+---
+
+Angular 14 through 18 have all reached end-of-life. Angular 19 LTS support ends in May 2026. If your enterprise application is running on anything older than Angular 20, this article is the reference your team needs to understand what that status means and what to do about it.
+
+I have led version upgrades across 19 enterprise Angular applications, several of which were three or more major versions behind when the project started. The pattern is consistent: teams that understand their version status and act on it spend less, move faster, and avoid the compliance emergencies that force expensive, rushed migrations.
+
+<Callout type="warning">
+This is not about AngularJS (version 1.x), which reached end-of-life on December 31, 2021 and is covered in [The Real Cost of Staying on AngularJS in 2026](/blog/cost-of-angularjs-2026). This article covers Angular versions 14 through 20 — the modern Angular framework.
+</Callout>
+
+## Angular Version Status Table: May 2026
+
+Every major Angular release follows the same lifecycle: 6 months of active support with regular updates and patches, followed by 12 months of Long-Term Support with critical fixes and security patches only. After 18 months total, the version reaches end-of-life.
+
+| Version | Released | Active Support Ended | LTS Ended | Status (May 2026) |
+|---------|----------|---------------------|-----------|-------------------|
+| **Angular 14** | June 2022 | December 2022 | December 2023 | End-of-life |
+| **Angular 15** | November 2022 | May 2023 | May 2024 | End-of-life |
+| **Angular 16** | May 2023 | November 2023 | November 2024 | End-of-life |
+| **Angular 17** | November 2023 | May 2024 | May 2025 | End-of-life |
+| **Angular 18** | May 2024 | November 2024 | November 2025 | End-of-life |
+| **Angular 19** | November 2024 | May 2025 | **May 2026** | LTS (ending now) |
+| **Angular 20** | May 2025 | November 2025 | **November 2026** | Active |
+
+If your version shows a past date in the LTS column, you are running unsupported software in production. As of May 2026, that includes Angular 14 through 18 — and Angular 19 LTS is ending within weeks.
+
+<Callout type="info">
+The 18-month support window moves fast. Angular 16 felt current when it launched in May 2023. By November 2024 — just 18 months later — it was end-of-life. Teams that treat version upgrades as "someday" projects consistently get caught by this timeline.
+</Callout>
+
+## What "End-of-Life" Actually Means for Your Organization
+
+End-of-life is not a suggestion to upgrade. It is a concrete change in your risk profile across four areas.
+
+### Security Exposure
+
+When an Angular version reaches end-of-life, the Angular team stops reviewing and patching security vulnerabilities. Any CVE discovered after that date — in Angular itself, in its dependency tree, or in browser APIs that Angular interacts with — receives no framework-level fix.
+
+Your team has three options for each vulnerability:
+
+1. **Patch it yourselves.** Fork the framework code, apply a fix, maintain the fork. This is expensive and error-prone.
+2. **Work around it.** Implement application-level mitigations. This adds technical debt and may not fully address the vulnerability.
+3. **Accept the risk.** Document the known vulnerability and get formal risk acceptance from your security team. This is the reality for most teams — and it accumulates.
+
+In enterprise environments I have worked with, the security team initially accepts one or two known vulnerabilities. By the third quarter on an end-of-life framework, the list has grown long enough to trigger executive escalation.
+
+### Compliance Impact
+
+Compliance frameworks treat end-of-life software as a control gap:
+
+- **SOC 2 Type II** — auditors flag unsupported software in the risk assessment. You need documented compensating controls and a remediation timeline.
+- **ISO 27001** — Control 8.8 (Management of Technical Vulnerabilities) requires a documented process to identify, evaluate, and address vulnerabilities. End-of-life software that cannot receive vendor patches creates a gap that auditors will question.
+- **PCI-DSS 4.0** — Requirement 6.3 mandates that critical and high-severity patches be installed within one month of release. End-of-life frameworks inherently violate this requirement because no patches exist to install.
+- **Cyber insurance** — insurers increasingly ask about end-of-life software during underwriting. Some policies exclude claims related to known vulnerabilities in unsupported frameworks, or require documented compensating controls as a coverage condition.
+
+<Callout type="info">
+The compliance cost is not the audit finding itself — it is the remediation documentation, the risk acceptance meetings, the compensating controls, and the ongoing monitoring. In one engagement, a financial services team spent 120 engineering hours per quarter maintaining compliance documentation for their end-of-life Angular 14 application. Those same hours could have funded the upgrade.
+</Callout>
+
+### Dependency Drift
+
+Third-party libraries stop supporting end-of-life Angular versions. The Angular Material team, NgRx, Nx, and most community libraries follow Angular's own support policy — each major library version is pinned to the corresponding Angular major version. When they drop support for your version:
+
+- Security patches to those libraries no longer apply to your version
+- New features and performance improvements are unavailable
+- Bug fixes may not be backported
+
+The practical impact: your `npm audit` report grows longer every month, and each flagged vulnerability requires manual assessment to determine whether it affects your application.
+
+### Hiring and Onboarding
+
+New Angular developers learn the current version. Tutorials, courses, blog posts, and Stack Overflow answers increasingly reference Angular 19+ patterns — signals, standalone components, the new control flow, deferrable views. Developers hired into your team need to learn both the current Angular ecosystem (for their career growth) and your legacy patterns (for their daily work).
+
+Based on enterprise projects: onboarding a mid-level developer to an Angular 14 or 15 codebase takes 2-3x longer than onboarding to Angular 19+, because the patterns, tooling, and mental models diverge significantly.
+
+<AssessmentCta />
+
+## What to Do Based on Your Current Version
+
+### If You Are on Angular 14, 15, or 16 (End-of-Life)
+
+**Urgency: Critical.** You are running unsupported software that has been end-of-life for over a year. The vulnerability surface grows every quarter.
+
+**Immediate actions:**
+1. Run `ng update` to assess the upgrade path. Angular supports upgrading one major version at a time — 14 → 15 → 16 → 17 → 18 → 19 → 20.
+2. Estimate the total effort. Each major version jump takes 1-2 weeks for a medium enterprise application, but breaking changes compound. A multi-version jump is not linear — overlapping dependency conflicts and accumulated breaking changes multiply the effort.
+3. Present the business case to leadership. Frame it as risk reduction, not technical preference. The [business case framework](/blog/angular-migration-business-case) provides the structure and numbers.
+
+**What to prioritize in the upgrade:**
+- Get to Angular 17 as the first milestone. Angular 17 is where standalone components became the default and core signal APIs became stable. Everything before 17 is the "old Angular."
+- Do not stop at an intermediate version. Your target should be Angular 20 — the currently active version with LTS through November 2026.
+- Plan the upgrade in two phases: first get to Angular 20 (focus on compatibility), then modernize patterns (adopt signals, standalone components, new control flow).
+
+### If You Are on Angular 17 or 18 (End-of-Life)
+
+**Urgency: High.** These versions feel recent, but Angular 17 LTS ended in May 2025 and Angular 18 LTS ended in November 2025. You are already on unsupported software.
+
+**Immediate actions:**
+1. Start the upgrade to Angular 20 now. From Angular 17, that is three sequential upgrades (17 → 18 → 19 → 20). From Angular 18, it is two (18 → 19 → 20).
+2. Budget 1-2 weeks per version jump for a medium enterprise application, so 3-6 weeks total.
+3. The 17 → 18 and 18 → 19 upgrades are relatively straightforward. The biggest changes were the introduction of signal-based APIs, which are opt-in — existing code continues to work.
+
+**Why this feels surprising:**
+Many teams on Angular 17 or 18 assume they are "reasonably current." They are — in terms of features. But the 18-month support window means even recent versions reach end-of-life faster than most teams expect.
+
+### If You Are on Angular 19 (LTS Ending May 2026)
+
+**Urgency: Medium.** Your LTS support is ending within weeks. After May 2026, Angular 19 receives no further patches.
+
+**Recommended actions:**
+1. Upgrade to Angular 20 — this is a single-version jump and typically the lowest-effort upgrade.
+2. Budget 1-2 weeks for the upgrade, including dependency updates and testing.
+3. Angular 20 LTS runs through November 2026, giving you 6 months of continued support to plan your next move.
+
+### If You Are on Angular 20
+
+**No immediate action needed.** You are on the actively supported version. Focus on staying current with the release cadence and adopting modern patterns like [Angular Signals](/blog/angular-signals-enterprise-guide).
+
+When Angular 21 releases (expected November 2026), plan to upgrade within the first few months to stay within the active support window.
+
+## The Version Upgrade Is Not the Hard Part
+
+In 19 enterprise Angular upgrade projects, the version upgrade itself — running `ng update`, fixing breaking changes, updating dependencies — is rarely the bottleneck. The hard part is what comes before and after:
+
+**Before:** Getting organizational approval. Building the business case. Allocating engineering time alongside feature work. Convincing stakeholders that upgrading "working software" is worth the investment.
+
+**After:** Deciding whether to also modernize patterns during the upgrade. Should you adopt standalone components now, or just get to the target version first? Should you start using signals, or save that for a separate initiative?
+
+The answer from experience: **separate version upgrade from pattern modernization.** Get to a supported Angular version first. Then modernize incrementally. Combining both creates a project that is too large, too risky, and too slow.
+
+> The teams that treat version upgrades as routine maintenance — small, frequent, planned — never face the emergency migration conversation. The teams that defer upgrades until end-of-life always do.
+
+## How This Maps to the 5-Dimension Framework
+
+Version status is the foundation of the [5-Dimension Angular Modernization Framework](/blog/angular-modernization-framework). It maps directly to **Dimension 1: Migration & Version Health**, which carries the highest business-impact weight in the framework because every other dimension depends on it.
+
+You cannot adopt [Angular Signals](/blog/angular-signals-enterprise-guide) on Angular 14. You cannot use standalone components as the default on Angular 15. You cannot leverage the new control flow on Angular 16. Version health is the prerequisite for every modern Angular capability.
+
+The [Angular Modernization Checklist](/blog/angular-modernization-checklist) includes specific questions about your version status, upgrade plan, and support timeline. If you are not sure where your application stands across all five dimensions, the assessment quantifies it in under three minutes.
+
+[Take the free Angular Modernization Assessment](/assessment) and find out exactly where your application stands — starting with version health.

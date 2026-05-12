@@ -9,13 +9,13 @@ featured: true
 draft: false
 faq:
   - question: "What are Angular Signals and why do they matter?"
-    answer: "Angular Signals are a fine-grained reactivity primitive introduced in Angular 16 and stable since Angular 17. They replace zone.js-based change detection with explicit, predictable state tracking. For enterprise teams, this means better performance, simpler debugging, and a path to zoneless Angular — but adopting them requires architectural changes that affect your migration timeline, team skills, and testing strategy."
+    answer: "Angular Signals are a fine-grained reactivity primitive introduced as developer preview in Angular 16, with core APIs (signal, computed) stable since Angular 17. They replace zone.js-based change detection with explicit, predictable state tracking. For enterprise teams, this means better performance, simpler debugging, and a path to zoneless Angular — but adopting them requires architectural changes that affect your migration timeline, team skills, and testing strategy."
   - question: "Can I use Angular Signals alongside RxJS?"
     answer: "Yes. Angular provides interop functions like toSignal() and toObservable() that bridge the two models. Most enterprise teams adopt signals incrementally — new components use signals while existing RxJS-based code continues working. You do not need to rewrite your RxJS code to start using signals, but over time the goal is to reduce reliance on RxJS for component-level state."
   - question: "How long does it take to adopt Angular Signals in an enterprise app?"
     answer: "Based on enterprise migration projects, expect 2-4 weeks per major module for incremental signal adoption. A full transition from zone.js-based change detection to zoneless Angular with signals typically takes 3-6 months for a medium enterprise application, running alongside normal feature development. The migration is incremental — you do not need to stop feature work."
   - question: "Do I need to be on the latest Angular version to use Signals?"
-    answer: "Signals require Angular 17 or newer for stable API support. Signal inputs, signal queries, and linkedSignal require Angular 18 or 19+. If your application is on Angular 16 or older, you need to upgrade before adopting signals — which adds to the total migration timeline. The version upgrade itself is a prerequisite, not part of the signals adoption."
+    answer: "Core signal APIs (signal, computed) are stable since Angular 17. Signal inputs and signal queries were introduced in Angular 17.1/17.2 as developer preview and became stable in Angular 19-20. linkedSignal and resource() were introduced in Angular 19 and stabilized in Angular 20. For the full stable signal experience, Angular 20 is the recommended minimum. If your application is on Angular 16 or older, you need to upgrade before adopting signals."
   - question: "What is zoneless Angular and should my team care?"
     answer: "Zoneless Angular removes zone.js from the change detection pipeline entirely, relying on signals and explicit Angular APIs to trigger updates. It eliminates an entire category of performance issues and debugging complexity. Enterprise teams should care because zoneless is the direction Angular is heading — teams that adopt signals now are building toward zoneless readiness, while teams that delay will face a larger migration later."
 ---
@@ -83,7 +83,7 @@ Computed signals cache their result and only recalculate when a dependency actua
 
 ### Component Communication
 
-Angular 18 and 19 introduced signal-based inputs, outputs, and queries:
+Angular 17.1 and 17.2 introduced signal-based inputs and queries as developer preview, with full stability achieved in Angular 19 and 20:
 
 ```typescript
 export class UserCardComponent {
@@ -116,7 +116,7 @@ This is where most articles stop and where most enterprise teams get stuck. Know
 
 Before your team can adopt signals, three conditions must be met:
 
-**1. Angular 17 or newer.** Signals became stable in Angular 17. Signal inputs, queries, and `linkedSignal` require Angular 18-19+. If your application is on Angular 14, 15, or 16, version upgrade comes first — and that is a separate project with its own timeline.
+**1. Angular 17 or newer — ideally Angular 20.** Core signal APIs (`signal`, `computed`) became stable in Angular 17. Signal inputs and queries were introduced in Angular 17.1/17.2 as developer preview and became fully stable in Angular 20. `linkedSignal` and `resource()` were introduced in Angular 19 and stabilized in Angular 20. For the complete stable signals experience, Angular 20 is the recommended target. If your application is on Angular 16 or older, version upgrade comes first — and that is a separate project with its own timeline.
 
 **2. OnPush change detection.** Signals work with the default change detection strategy, but you only get the full performance benefit with `OnPush`. If your components use the default strategy and rely on zone.js to trigger updates from deeply nested mutations, those patterns need to change before signals add value.
 
@@ -149,15 +149,18 @@ Components that use BehaviorSubjects for local state migrate to signals. Service
 
 **Phase 4: Zoneless evaluation (Week 16+)**
 
-Once a critical mass of components use signals and OnPush, evaluate `provideZonelessChangeDetection()`. This removes zone.js entirely, requiring that all state changes flow through signals or explicit Angular APIs like `markForCheck()`. This is the final step, not the first.
+Once a critical mass of components use signals and OnPush, evaluate zoneless change detection. This removes zone.js entirely, requiring that all state changes flow through signals or explicit Angular APIs like `markForCheck()`. This is the final step, not the first.
 
 ```typescript
+// Angular 20+ (stable as of 20.2)
 bootstrapApplication(AppComponent, {
   providers: [
     provideZonelessChangeDetection(),
   ]
 });
 ```
+
+Note: The zoneless API was experimental in Angular 18 (as `provideExperimentalZonelessChangeDetection()`), reached developer preview in Angular 20, and became stable in Angular 20.2. If you are on Angular 18 or 19, use the experimental version — but be prepared for API changes when upgrading.
 
 ### Realistic Timelines
 
@@ -171,7 +174,7 @@ These timelines assume the team is already on Angular 17+ and runs signal adopti
 
 ## The Cost of Waiting
 
-Every Angular release since version 17 has deepened the signal ecosystem. Angular 18 added signal inputs and signal queries. Angular 19 added `linkedSignal` for writable derived state and `resource()` for async data loading. Angular 20 continues this trajectory.
+Every Angular release since version 16 has deepened the signal ecosystem. Angular 17 stabilized core signals and introduced signal inputs and queries in developer preview (17.1/17.2). Angular 18 continued maturing the APIs and introduced experimental zoneless change detection. Angular 19 added `linkedSignal` for writable derived state and `resource()` for async data loading. Angular 20 stabilized the full signal suite — `effect()`, `linkedSignal`, signal inputs, signal queries, and `toSignal` are all stable, and zoneless change detection reached developer preview (stable in 20.2).
 
 The migration schematics help, but they only cover the mechanical conversions. The architectural decisions — which state management patterns to use, how to restructure component communication, where to draw the RxJS/signals boundary — still require human judgment and grow more complex as the codebase grows.
 
@@ -201,7 +204,9 @@ The Angular Modernization Assessment scores your application across all five dim
 
 If you are an engineering manager or tech lead evaluating signals adoption, here is the decision framework:
 
-**If you are on Angular 17+:** Start Phase 1 immediately. New code uses signals. There is no reason to wait — the API is stable, the tooling is mature, and every day of delay adds to the future migration surface.
+**If you are on Angular 19 or 20:** Start Phase 1 immediately. New code uses signals. The full signal API is stable in Angular 20, and production-ready in Angular 19. There is no reason to wait — every day of delay adds to the future migration surface.
+
+**If you are on Angular 17 or 18:** You can start using core signals (`signal`, `computed`) which are stable. Signal inputs and queries are available but were developer preview — consider upgrading to Angular 20 for the fully stable experience. Either way, start Phase 1 now.
 
 **If you are on Angular 14-16:** Prioritize the version upgrade. Signals adoption is a compelling reason to accelerate the upgrade timeline, but the upgrade itself is the prerequisite. Plan for version upgrade first, signals adoption second.
 
