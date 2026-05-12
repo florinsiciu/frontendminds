@@ -3,7 +3,7 @@ import type { PageSeo } from "@/types/assessment";
 // ─── Default Site Metadata ──────────────────────────────────────────────────
 
 export const defaultSeo: PageSeo = {
-  title: "FrontendMinds — Angular Migration & Modernization Consulting",
+  title: "FrontendMinds — Angular Migration & Upgrade Consulting",
   description:
     "Helping CTOs and engineering managers modernize Angular applications. Free assessment, migration guides, and business case frameworks — based on 19 enterprise migrations.",
 };
@@ -12,7 +12,7 @@ export const defaultSeo: PageSeo = {
 
 export const pageSeo: Record<string, PageSeo> = {
   home: {
-    title: "FrontendMinds — Angular Migration & Modernization Consulting",
+    title: "FrontendMinds — Angular Migration & Upgrade Consulting",
     description:
       "Helping CTOs and engineering managers modernize Angular applications. Free assessment, migration guides, and business case frameworks — based on 19 enterprise migrations.",
   },
@@ -51,28 +51,28 @@ export const pageSeo: Record<string, PageSeo> = {
       "Terms of service for the Angular Modernization Scorecard by FrontendMinds.",
   },
   blog: {
-    title: "Blog | FrontendMinds",
+    title: "Angular Migration & Upgrade Blog | FrontendMinds",
     description:
-      "Practical articles on AI for frontend, Angular modernization, dev workflows, and tooling.",
+      "Angular migration guides, upgrade strategies, and business case frameworks for engineering managers and CTOs — based on 19 enterprise migration projects.",
   },
   newsletter: {
     title: "The Frontend Signal | FrontendMinds",
     description: "Practical AI + frontend insights delivered monthly. Tools that work, patterns that scale, and lessons from real implementation work.",
   },
   services: {
-    title: "Services | FrontendMinds",
+    title: "Angular Consulting & Migration Services | FrontendMinds",
     description:
-      "Angular modernization audits, AI tool stack rationalization, and consulting for dev teams.",
+      "Angular migration consulting, modernization audits, and AI tool stack rationalization for enterprise teams. From assessment to implementation — based on 19 migration projects.",
   },
   about: {
-    title: "About | FrontendMinds",
+    title: "About Florin Siciu — Angular Migration Consultant | FrontendMinds",
     description:
-      "FrontendMinds is a knowledge hub built by Florin Siciu for developers exploring practical AI in frontend work.",
+      "8+ years of Angular architecture. 19 enterprise migration projects, 13 shared libraries, zero production downtime. Creator of the 5-Dimension Angular Modernization Framework.",
   },
   contact: {
-    title: "Contact | FrontendMinds",
+    title: "Contact — Angular Consulting & Audit | FrontendMinds",
     description:
-      "Get in touch with FrontendMinds for consulting, partnerships, or general inquiries.",
+      "Get in touch about Angular migration consulting, modernization audits, or AI tool stack rationalization. Response within 1-2 business days.",
   },
 };
 
