@@ -15,6 +15,7 @@ import { StickyMobileCta } from "@/components/landing/sticky-mobile-cta";
 export const metadata: Metadata = {
   title: pageSeo.home.title,
   description: pageSeo.home.description,
+  alternates: { canonical: "/" },
 };
 
 export default function Home() {

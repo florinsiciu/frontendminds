@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { pageSeo } from "@/lib/content/seo";
 
 export const metadata: Metadata = {
-  title: pageSeo.contact.title,
-  description: pageSeo.contact.description,
-  alternates: { canonical: "/contact" },
+  title: pageSeo.unlock.title,
+  description: pageSeo.unlock.description,
+  robots: { index: false, follow: false },
 };
 
-export default function ContactLayout({
+export default function UnlockLayout({
   children,
 }: {
   children: React.ReactNode;

@@ -25,7 +25,7 @@ export function BlogPostRow({ post, index = 0 }: { post: BlogPostMeta; index?: n
               style={{ backgroundColor: color }}
             />
             {post.image && (
-              <Image src={post.image} alt="" fill className="object-cover" />
+              <Image src={post.image} alt={post.title} fill className="object-cover" />
             )}
           </div>
 

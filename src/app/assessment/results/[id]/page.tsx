@@ -53,6 +53,7 @@ export async function generateMetadata({
   return {
     title: `${title} | FrontendMinds`,
     description,
+    robots: { index: false, follow: false },
     openGraph: {
       title,
       description,

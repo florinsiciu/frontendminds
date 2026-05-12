@@ -5,6 +5,7 @@ import { termsOfService } from "@/lib/content/legal";
 export const metadata: Metadata = {
   title: pageSeo.terms.title,
   description: pageSeo.terms.description,
+  alternates: { canonical: "/terms" },
 };
 
 export default function Terms() {

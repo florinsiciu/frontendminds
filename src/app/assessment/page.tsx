@@ -9,12 +9,23 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { Reveal } from "@/components/ui/reveal";
 import { intro, scoringExplainer } from "@/lib/content/assessment";
 import { pageSeo, faqJsonLd } from "@/lib/content/seo";
+import { siteConfig } from "@/lib/config/site";
 import { DIMENSION_COLORS, DIMENSION_ORDER } from "@/lib/config/scoring";
 import { DIMENSIONS } from "@/lib/data/questions";
 
 export const metadata: Metadata = {
   title: pageSeo.assessment.title,
   description: pageSeo.assessment.description,
+  alternates: { canonical: "/assessment" },
+};
+
+const assessmentBreadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.baseUrl },
+    { "@type": "ListItem", position: 2, name: "Assessment", item: `${siteConfig.baseUrl}/assessment` },
+  ],
 };
 
 export default function AssessmentIntro() {
@@ -23,6 +34,10 @@ export default function AssessmentIntro() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(assessmentBreadcrumb) }}
       />
       {/* Hero */}
       <Section bg="muted" width="narrow">

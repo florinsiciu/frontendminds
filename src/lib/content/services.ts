@@ -51,7 +51,7 @@ export const scorecardBridge = {
   tagline: "Not sure where you stand?",
   headline: "Start With a Free Diagnostic",
   subtitle:
-    "Score your Angular app across 5 dimensions in under 3 minutes. Get a personalized action plan — then decide if you need help executing it.",
+    "Score your Angular app across the 5-Dimension Angular Modernization Framework in under 3 minutes. Get a personalized action plan — then decide if you need help executing it.",
   stats: [
     { value: "20", label: "Questions" },
     { value: "5", label: "Dimensions" },
@@ -92,7 +92,7 @@ export const services: Service[] = [
     description:
       "A deep-dive into your Angular project covering version health, architecture patterns, modern API adoption, and delivery readiness. You leave with a prioritized modernization roadmap your team can act on immediately.",
     outcomes: [
-      "Full assessment across 5 modernization dimensions",
+      "Full assessment across the 5-Dimension Angular Modernization Framework",
       "Prioritized list of technical debt and risks",
       "Actionable roadmap with quick wins and long-term milestones",
       "Written report delivered within 14 days",

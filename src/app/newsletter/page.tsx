@@ -11,6 +11,7 @@ import { Reveal } from "@/components/ui/reveal";
 export const metadata: Metadata = {
   title: pageSeo.newsletter.title,
   description: pageSeo.newsletter.description,
+  alternates: { canonical: "/newsletter" },
 };
 
 const dimensionColors: Record<string, string> = {

@@ -83,7 +83,7 @@ export function FounderSection() {
                     <GithubIcon className="size-5" />
                   </a>
                   <a
-                    href="https://x.com/nicusorsiciu"
+                    href="https://x.com/FlorinSiciu"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-muted-foreground transition-colors hover:text-slate-300"

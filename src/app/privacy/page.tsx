@@ -5,6 +5,7 @@ import { privacyPolicy } from "@/lib/content/legal";
 export const metadata: Metadata = {
   title: pageSeo.privacy.title,
   description: pageSeo.privacy.description,
+  alternates: { canonical: "/privacy" },
 };
 
 export default function Privacy() {
