@@ -47,6 +47,19 @@ export const mdxComponents: MDXComponents = {
   a: (props) => <a className="text-primary underline underline-offset-4 hover:text-accent" {...props} />,
   code: (props) => <code className="rounded bg-surface px-1.5 py-0.5 text-sm text-accent" {...props} />,
   hr: () => <hr className="my-8 border-border" />,
+  table: (props) => (
+    <div className="my-6 overflow-x-auto rounded-lg border border-white/[0.06]">
+      <table className="w-full text-sm" {...props} />
+    </div>
+  ),
+  thead: (props) => <thead className="border-b border-white/[0.08] bg-white/[0.03]" {...props} />,
+  th: (props) => (
+    <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground" {...props} />
+  ),
+  td: (props) => (
+    <td className="border-t border-white/[0.04] px-4 py-3 text-foreground/80" {...props} />
+  ),
+  tr: (props) => <tr className="transition-colors hover:bg-white/[0.02]" {...props} />,
   Callout,
   ImageWithCaption,
   AssessmentCta: () => <AssessmentCta variant="inline" />,
