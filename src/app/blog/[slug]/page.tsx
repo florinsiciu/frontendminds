@@ -13,6 +13,7 @@ import { PostHeader } from "@/components/blog/post-header";
 import { ReadingProgress } from "@/components/blog/reading-progress";
 import { RelatedPosts } from "@/components/blog/related-posts";
 import { AssessmentCta } from "@/components/blog/assessment-cta";
+import { FaqSection } from "@/components/blog/faq-section";
 import { LeadMagnet } from "@/components/landing/lead-magnet";
 
 export async function generateStaticParams() {
@@ -137,6 +138,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           </div>
         )}
       </div>
+
+      {post.faq && post.faq.length > 0 && <FaqSection items={post.faq} />}
 
       <RelatedPosts posts={related} />
 
