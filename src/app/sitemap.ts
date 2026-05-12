@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
-import { getAllSlugs } from "@/lib/blog";
+import { getAllPosts } from "@/lib/blog";
 import { siteConfig } from "@/lib/config/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const blogSlugs = getAllSlugs();
+  const publishedSlugs = getAllPosts().filter((p) => !p.draft).map((p) => p.slug);
   const now = new Date();
 
   const staticPages: MetadataRoute.Sitemap = [
@@ -18,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteConfig.baseUrl}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  const blogPages: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
+  const blogPages: MetadataRoute.Sitemap = publishedSlugs.map((slug) => ({
     url: `${siteConfig.baseUrl}/blog/${slug}`,
     lastModified: now,
     changeFrequency: "monthly" as const,

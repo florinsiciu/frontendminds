@@ -28,6 +28,7 @@ function parseMdxFile(filePath: string, slug: string): BlogPostMeta & { content:
     image: data.image,
     tags: data.tags ?? [],
     featured: data.featured ?? false,
+    draft: data.draft ?? false,
     readingTime: estimateReadingTime(content),
     content,
   };

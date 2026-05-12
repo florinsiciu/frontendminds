@@ -3,7 +3,7 @@ import { getAllPosts } from "@/lib/blog";
 import { siteConfig } from "@/lib/config/site";
 
 export async function GET() {
-  const posts = getAllPosts();
+  const posts = getAllPosts().filter((p) => !p.draft);
 
   const feed = new Feed({
     title: "FrontendMinds",

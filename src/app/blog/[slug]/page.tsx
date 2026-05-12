@@ -31,6 +31,7 @@ export async function generateMetadata({
   return {
     title: `${post.title} | FrontendMinds`,
     description: post.description,
+    ...(post.draft && { robots: { index: false, follow: false } }),
     openGraph: {
       title: post.title,
       description: post.description,

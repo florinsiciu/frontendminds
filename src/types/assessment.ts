@@ -209,6 +209,7 @@ export interface BlogPostMeta {
   image?: string;
   tags: string[];
   featured: boolean;
+  draft: boolean;
   readingTime: string;
 }
 

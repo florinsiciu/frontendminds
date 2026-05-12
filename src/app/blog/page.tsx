@@ -18,7 +18,7 @@ export default async function BlogIndex({
 }) {
   const params = await searchParams;
   const category = params.category;
-  const allPosts = getAllPosts();
+  const allPosts = getAllPosts().filter((p) => !p.draft);
   const posts = category ? allPosts.filter((p) => p.category === category) : allPosts;
 
   const uniqueCategories = [...new Set(allPosts.map((p) => p.category))].filter(
