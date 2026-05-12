@@ -54,7 +54,7 @@ export async function submitContact(input: ContactInput): Promise<ContactResult>
     resend.emails
       .send({
         from: `${siteConfig.name} <contact@frontendminds.com>`,
-        to: "florin@frontendminds.com",
+        to: "contact@frontendminds.com",
         subject: `New contact: ${reason} from ${name}`,
         html: `
           <p><strong>Name:</strong> ${name}</p>
