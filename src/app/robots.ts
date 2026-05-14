@@ -3,7 +3,18 @@ import { siteConfig } from "@/lib/config/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: { userAgent: "*", allow: "/", disallow: ["/assessment/quiz", "/assessment/unlock", "/assessment/results"] },
+    rules: {
+      userAgent: "*",
+      allow: "/",
+      disallow: [
+        "/assessment/quiz",
+        "/assessment/unlock",
+        "/assessment/results",
+        "/_next/",
+        "/$",
+        "/&",
+      ],
+    },
     sitemap: `${siteConfig.baseUrl}/sitemap.xml`,
   };
 }

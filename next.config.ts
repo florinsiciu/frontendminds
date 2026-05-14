@@ -17,6 +17,13 @@ const nextConfig: NextConfig = {
         source: "/(.*)\\.(js|css|woff2|png|jpg|jpeg|svg|ico|webp)",
         headers: [
           { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      {
+        source: "/_next/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
         ],
       },
     ];
