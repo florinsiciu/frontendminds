@@ -77,12 +77,15 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         }
       : null;
 
+  const articleImage = post.image ?? `${siteConfig.baseUrl}/blog/${slug}/opengraph-image`;
+
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
     description: post.description,
-    datePublished: post.date,
+    datePublished: new Date(post.date).toISOString(),
+    image: articleImage,
     author: {
       "@type": "Person",
       name: siteConfig.author,
@@ -100,7 +103,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     },
     mainEntityOfPage: `${siteConfig.baseUrl}/blog/${slug}`,
     articleSection: categoryLabel,
-    ...(post.image && { image: post.image }),
     ...(post.tags.length > 0 && { keywords: post.tags.join(", ") }),
   };
 
