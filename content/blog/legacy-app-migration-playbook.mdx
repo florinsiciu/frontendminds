@@ -172,13 +172,13 @@ Regardless of which strategy you chose, structure the migration in two-week cycl
 2. **Validate.** Run automated tests, perform manual regression testing, verify that the migrated piece integrates correctly with the rest of the application.
 3. **Ship.** Deploy the migrated piece to production. If something breaks, roll back. The scope is small enough that rollback is safe.
 
-This cadence accomplishes two things. First, it produces visible progress that maintains stakeholder confidence. Second, it surfaces problems early — a dependency conflict discovered in week two is far cheaper to resolve than the same conflict discovered in month eight.
+This cadence accomplishes two things. First, it produces visible progress that maintains stakeholder confidence. Second, it surfaces problems early — a dependency conflict discovered in week two is far cheaper to resolve than the same conflict discovered in month eight. For Angular migrations specifically, [AI pair programming](/blog/ai-pair-programming-angular) can dramatically accelerate the migrate-validate cycle by handling routine code conversion patterns while developers focus on architectural decisions.
 
 ### Web App Maintenance During Migration
 
 One of the most common questions from engineering leaders is whether feature development stops during migration. It does not have to.
 
-The 70/30 model works consistently across enterprise projects: dedicate 70% of engineering capacity to migration work and 30% to feature development and web app maintenance. Feature velocity dips during migration but never stops entirely.
+The 70/30 model works consistently across enterprise projects: dedicate 70% of engineering capacity to migration work and 30% to feature development and web app maintenance. Feature velocity dips during migration but never stops entirely. Teams that equip developers with [effective AI development tools](/blog/ai-development-tools-frontend-teams) during migration consistently protect that 30% feature capacity without burning out the team.
 
 This model requires the Strangler Fig or incremental upgrade strategy. Big-bang rewrites, by definition, freeze feature development on the legacy system because you are building a replacement, not evolving the existing application.
 

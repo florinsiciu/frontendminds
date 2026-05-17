@@ -133,7 +133,7 @@ Asset groups control how your application shell — JavaScript bundles, CSS, ima
 }
 ```
 
-**installMode: prefetch** downloads and caches resources immediately when the service worker installs. Use this for your application shell — the critical JavaScript and CSS the user needs to see anything at all.
+**installMode: prefetch** downloads and caches resources immediately when the service worker installs. Use this for your application shell — the critical JavaScript and CSS the user needs to see anything at all. For applications where even the cached shell is too large, combining PWA caching with [server-side rendering and lazy loading](/blog/angular-ssr-lazy-loading-enterprise) reduces the initial payload users need before they see meaningful content.
 
 **installMode: lazy** caches resources only when they are first requested. Use this for images, fonts, and non-critical assets that should not block the initial service worker installation.
 
