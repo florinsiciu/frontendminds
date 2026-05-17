@@ -3,7 +3,7 @@
 **Date:** 2026-05-12
 **Source:** Expert review of `keyword-research.md` and `analysis.md`
 **Purpose:** Distill research into a focused, executable action plan
-**Status:** Partially executed — see checkmarks below
+**Status:** Mostly complete — updated 2026-05-17
 
 ---
 
@@ -25,28 +25,13 @@ The keyword research identifies 20 target keywords. That's a Year 2 portfolio st
 
 Five steps, in order. Each one must be complete before moving to the next.
 
-### Step 1: Complete the 3 empty blog posts (Days 1-7)
+### Step 1: Complete the 3 empty blog posts (Days 1-7) — DONE
 
-Google has already indexed `angular-migrations-fail` with no real content. Visitors bounce. This actively damages domain trust.
+All 9 blog posts have full content with FAQ schema. All confirmed indexed in Google (verified via GSC URL Inspection 2026-05-17). Two additional articles published (angular-security-vulnerabilities, software-end-of-life-guide) bringing total to 11 posts.
 
-**Action:**
-- Write 1,500-2,500 words of real, experience-backed content for each existing blog post
-- If a post can't be completed within the week, add `noindex` meta tag immediately — empty indexed pages are worse than no pages
-- Add FAQ schema (minimum 3 Q&A pairs) to each completed post
+### Step 2: Write ONE killer decision-maker post (Days 8-18) — DONE
 
-### Step 2: Write ONE killer decision-maker post (Days 8-18)
-
-**Title:** "How to Build a Business Case for Angular Migration"
-
-**Specs:**
-- 3,000 words minimum
-- Include a downloadable business case template (PDF or Google Doc)
-- FAQ schema targeting PAA questions: "How to justify Angular migration to management?", "What is the ROI of frontend modernization?"
-- CTA: free assessment
-- Tone: written for engineering managers and CTOs, not developers
-- Differentiator: "Based on migrating 19 enterprise applications" — specific timelines, real cost ranges, actual outcomes
-
-This single post targets the biggest content gap in the entire Angular modernization space.
+Published as `angular-migration-business-case.mdx`. Ranking #1 for "angular migration business case ROI". Title/description optimized on 2026-05-17 with ROI and cost model keywords. Internally linked from 7 other posts.
 
 ### Step 3: Start LinkedIn posting cadence (Days 8-30, ongoing)
 
@@ -60,15 +45,9 @@ This single post targets the biggest content gap in the entire Angular moderniza
 
 **Why LinkedIn first:** The target audience (CTOs, engineering managers) lives on LinkedIn, not Google. Many will never search "angular modernization" but will scroll past a LinkedIn post about it. LinkedIn engagement also generates referral traffic and social signals that accelerate Google ranking.
 
-### Step 4: Publish the 5-Dimension Framework as a standalone page (Days 19-25)
+### Step 4: Publish the 5-Dimension Framework as a standalone page (Days 19-25) — DONE
 
-The 5-Dimension Angular Modernization Framework and 18 Diagnostic Patterns are the most citable, linkable assets FrontendMinds has. They should not be buried inside the assessment — they need their own SEO-optimized reference page.
-
-**Action:**
-- Create `/framework` or `/blog/angular-modernization-framework` page
-- Use the exact phrase "5-Dimension Angular Modernization Framework" in H1, meta description, and opening paragraph (GEO optimization)
-- Structure each dimension with: definition, why it matters, how to assess it, what good looks like
-- Link back to the assessment as "Take the assessment to score your application across all 5 dimensions"
+Published as `angular-modernization-framework.mdx`. Title optimized to "Angular Modernization Framework: 5 Dimensions to Evaluate" on 2026-05-17. Receives 6 inbound links from other posts. Links to EOL guide, Signals guide, Checklist, and Assessment.
 
 ### Step 5: Optimize assessment page metadata (Days 25-30)
 
