@@ -116,7 +116,7 @@ This is where most articles stop and where most enterprise teams get stuck. Know
 
 Before your team can adopt signals, three conditions must be met:
 
-**1. Angular 17 or newer — ideally Angular 20.** Core signal APIs (`signal`, `computed`) became stable in Angular 17. Signal inputs and queries were introduced in Angular 17.1/17.2 as developer preview and became fully stable in Angular 20. `linkedSignal` and `resource()` were introduced in Angular 19 and stabilized in Angular 20. For the complete stable signals experience, Angular 20 is the recommended target. If your application is on Angular 16 or older, version upgrade comes first — and that is a separate project with its own timeline.
+**1. Angular 17 or newer — ideally Angular 20.** Core signal APIs (`signal`, `computed`) became stable in Angular 17. Signal inputs and queries were introduced in Angular 17.1/17.2 as developer preview and became fully stable in Angular 20. `linkedSignal` and `resource()` were introduced in Angular 19 and stabilized in Angular 20. For the complete stable signals experience, Angular 20 is the recommended target. If your application is on Angular 16 or older, version upgrade comes first — the [Angular Upgrade Guide](/blog/angular-upgrade-guide) covers every version path — and that is a separate project with its own timeline.
 
 **2. OnPush change detection.** Signals work with the default change detection strategy, but you only get the full performance benefit with `OnPush`. If your components use the default strategy and rely on zone.js to trigger updates from deeply nested mutations, those patterns need to change before signals add value.
 
@@ -192,7 +192,7 @@ Three specific costs compound with delay:
 
 Signal adoption intersects with three of the five dimensions in the [5-Dimension Angular Modernization Framework](/blog/angular-modernization-framework):
 
-**Dimension 1: Migration & Version Health.** Signals require Angular 17+. If your version is behind, version upgrade is the prerequisite. Signal adoption compounds the urgency of staying current because every version adds new signal capabilities your team cannot access from older versions.
+**Dimension 1: Migration & Version Health.** Signals require Angular 17+. If your version is behind, version upgrade is the prerequisite — see the [version status guide](/blog/angular-end-of-life-2026) for your current risk profile. Signal adoption compounds the urgency of staying current because every version adds new signal capabilities your team cannot access from older versions.
 
 **Dimension 3: Modern Angular Adoption.** This is the primary dimension. Signal adoption is the single most impactful modern Angular capability for enterprise applications. It determines whether your team can leverage OnPush change detection, zoneless rendering, and the full modern Angular developer experience.
 

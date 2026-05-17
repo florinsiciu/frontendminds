@@ -22,7 +22,7 @@ faq:
 
 Angular 14 through 18 have all reached end-of-life. Angular 19 LTS support ends in May 2026. If your enterprise application is running on anything older than Angular 20, this article is the reference your team needs to understand what that status means and what to do about it.
 
-I have led version upgrades across 19 enterprise Angular applications, several of which were three or more major versions behind when the project started. The pattern is consistent: teams that understand their version status and act on it spend less, move faster, and avoid the compliance emergencies that force expensive, rushed migrations.
+I have led version upgrades across 19 enterprise Angular applications, several of which were three or more major versions behind when the project started. The pattern is consistent: teams that understand their version status and act on it spend less, move faster, and avoid the compliance emergencies that force expensive, rushed migrations. If you are not sure whether your application is falling behind, the [5 signs your Angular app is falling behind](/blog/angular-falling-behind) will help you assess.
 
 <Callout type="warning">
 This is not about AngularJS (version 1.x), which reached end-of-life on December 31, 2021 and is covered in [The Real Cost of Staying on AngularJS in 2026](/blog/cost-of-angularjs-2026). This article covers Angular versions 14 through 20 — the modern Angular framework.
@@ -156,7 +156,7 @@ In 19 enterprise Angular upgrade projects, the version upgrade itself — runnin
 
 **After:** Deciding whether to also modernize patterns during the upgrade. Should you adopt standalone components now, or just get to the target version first? Should you start using signals, or save that for a separate initiative?
 
-The answer from experience: **separate version upgrade from pattern modernization.** Get to a supported Angular version first. Then modernize incrementally. Combining both creates a project that is too large, too risky, and too slow.
+The answer from experience: **separate version upgrade from pattern modernization.** Get to a supported Angular version first. Then modernize incrementally. Combining both creates a project that is too large, too risky, and too slow. The [Angular Upgrade Guide](/blog/angular-upgrade-guide) covers every version path from 14 to 21 with breaking changes and realistic timelines. And before you start, review [why most Angular migrations fail](/blog/angular-migrations-fail) — the failure patterns are predictable and avoidable.
 
 > The teams that treat version upgrades as routine maintenance — small, frequent, planned — never face the emergency migration conversation. The teams that defer upgrades until end-of-life always do.
 

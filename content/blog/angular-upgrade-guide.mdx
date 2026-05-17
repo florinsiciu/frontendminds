@@ -20,7 +20,7 @@ faq:
     answer: "As of mid-2026, target Angular 20 or 21. Angular 20 is in LTS through November 2026. Angular 21 is actively supported with LTS through May 2027. Angular 19 LTS ends in May 2026. Any version below 19 is already end-of-life with no security patches."
 ---
 
-In 19 enterprise Angular upgrade projects, the version upgrade itself has never been the part that fails. What fails is the planning — teams that do not understand what each version jump requires, how long it actually takes, and where the hidden complexity lives.
+In 19 enterprise Angular upgrade projects, the version upgrade itself has never been the part that fails. What fails is the planning — teams that do not understand what each version jump requires, how long it actually takes, and where the hidden complexity lives. For the common failure patterns, see [why most Angular migrations fail](/blog/angular-migrations-fail).
 
 This guide covers every major version path from Angular 14 to 21. For each upgrade step, you get the breaking changes, the dependency requirements, the migration schematics, and the realistic effort estimate based on enterprise projects.
 
@@ -324,7 +324,7 @@ These estimates assume:
 
 Version health is **Dimension 1** of the [5-Dimension Angular Modernization Framework](/blog/angular-modernization-framework) — and it carries the highest business-impact weight because every other dimension depends on it. You cannot adopt [Angular Signals](/blog/angular-signals-enterprise-guide) without being on Angular 17+. You cannot use the new control flow without Angular 17+. You cannot go zoneless without Angular 20+.
 
-If you are not sure where your application stands, the [Angular Modernization Assessment](/assessment) scores your project across all five dimensions in under three minutes — starting with version health.
+If you are not sure where your application stands, start with the [Angular Modernization Checklist](/blog/angular-modernization-checklist) or the [Angular Modernization Assessment](/assessment) which scores your project across all five dimensions in under three minutes. If you need organizational approval, the [business case guide](/blog/angular-migration-business-case) provides the framework for getting funded.
 
 For the full picture of what each version status means for your organization's security, compliance, and hiring, see [Angular End of Life 2026](/blog/angular-end-of-life-2026).
 

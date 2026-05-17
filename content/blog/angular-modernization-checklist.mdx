@@ -42,7 +42,7 @@ This dimension determines whether your Angular version is current enough to supp
 
 **Q1. Is your app running Angular 16 or newer?** (Impact: High)
 
-Angular 16 is the threshold where modern patterns begin. Signals were introduced as developer preview in Angular 16, and standalone component improvements continued through this version. The new control flow syntax (@if, @for, @switch) requires Angular 17 or later. If you are below Angular 16, modernization of patterns is blocked until you upgrade.
+Angular 16 is the threshold where modern patterns begin. Signals were introduced as developer preview in Angular 16, and standalone component improvements continued through this version. The new control flow syntax (@if, @for, @switch) requires Angular 17 or later. If you are below Angular 16, modernization of patterns is blocked until you upgrade. See the [Angular version status guide](/blog/angular-end-of-life-2026) for the full EOL timeline.
 
 **Q2. Have you fully migrated away from AngularJS?** (Impact: Critical)
 
@@ -100,7 +100,7 @@ Standalone components have been the default since Angular 17. They enable better
 
 **Q10. Do you have a consistent strategy for reactive state?** (Impact: Medium)
 
-Whether you choose Signals, RxJS, or a deliberate combination, consistency matters more than the specific approach. Inconsistent state management creates cognitive overhead for every developer on the team and makes AI tooling less effective.
+Whether you choose [Signals](/blog/angular-signals-enterprise-guide), RxJS, or a deliberate combination, consistency matters more than the specific approach. Inconsistent state management creates cognitive overhead for every developer on the team and makes AI tooling less effective.
 
 **Q11. Are your forms maintainable and free of repetitive boilerplate?** (Impact: Low)
 

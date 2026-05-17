@@ -130,30 +130,26 @@ URL Inspection results (verified 2026-05-17):
 
 ---
 
-### Step 3: Internal Linking Improvements
+### Step 3: Internal Linking Improvements — COMPLETED
 
-**Status:** Not started
-**Priority:** High — distributes PageRank from strong pages to weak ones
+**Status:** Done (2026-05-17)
 
-**Problem:** The EOL article (569 impressions) likely has the most link equity, but it may not be effectively distributing that equity to other blog posts. Similarly, the #1-ranked pages (checklist, business case) should link to each other and to lower-performing pages.
+Audited and fixed internal link structure across all 9 blog posts. Eliminated 2 orphan pages and 1 dead end.
 
-**Analysis needed:**
-- Audit current internal links in each blog post
-- Map which posts link to which
-- Identify orphan pages (posts with no inbound internal links)
-- Check if the EOL article links to all other relevant posts
+**Before → After:**
+| Page | Before (Out/In) | After (Out/In) |
+|------|:---:|:---:|
+| EOL 2026 | 5/1 | 8/8 |
+| Falling Behind | 1/0 (ORPHAN) | 5/1 |
+| Business Case | 1/3 | 4/7 |
+| Migrations Fail | 0/2 (DEAD END) | 4/4 |
+| Checklist | 1/1 | 3/6 |
+| Framework | 1/6 | 4/6 |
+| Signals Guide | 2/2 | 4/5 |
+| Upgrade Guide | 3/0 (ORPHAN) | 6/5 |
+| AngularJS Cost | 2/1 | 5/1 |
 
-**Actions:**
-1. Create an internal link matrix (source → target)
-2. Ensure every blog post links to at least 2-3 other blog posts
-3. Add contextual links from the EOL article (strongest page) to:
-   - upgrade-guide (natural "here's how to upgrade")
-   - signals-enterprise-guide (natural "what modern Angular looks like")
-   - migrations-fail (natural "avoid these mistakes")
-4. Add links from checklist/framework to business-case and vice versa
-5. Ensure homepage and /blog listing link to all posts
-
-**Expected impact:** Improved indexing of weaker pages + PageRank distribution lifts positions for pages currently at 8-10 to 5-7.
+All links are contextual (placed where readers would naturally want to continue reading), not forced. Every page now both sends and receives link equity.
 
 ---
 
