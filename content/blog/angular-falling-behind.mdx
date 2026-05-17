@@ -39,6 +39,12 @@ Angular versions have a roughly 18-month active support window:
 
 If your application is on either of these versions, you are running on an unsupported framework with no security patches and a growing list of incompatibilities.
 
+### Frontend Security Implications
+
+Version drift is not just a developer experience problem — it is a frontend security risk. End-of-life Angular versions stop receiving security patches for the framework and its dependency tree. While Angular has included built-in XSS protection through DomSanitizer since Angular 2, this does not cover vulnerabilities in third-party dependencies, browser API interactions, or newly discovered attack vectors that emerge after end-of-life.
+
+Compliance frameworks like SOC 2, PCI-DSS, and ISO 27001 treat unsupported frontend software the same as unsupported backend software — as a control gap that auditors will flag. The longer you defer the upgrade, the wider the gap between your application's security posture and your compliance requirements.
+
 ### Why Version Drift Compounds
 
 Each major Angular version introduces breaking changes. The cost of upgrading scales non-linearly:

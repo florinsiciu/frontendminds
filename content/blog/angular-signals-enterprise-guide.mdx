@@ -200,6 +200,23 @@ Signal adoption intersects with three of the five dimensions in the [5-Dimension
 
 The Angular Modernization Assessment scores your application across all five dimensions, including specific questions about signal readiness and modern pattern adoption. If you are evaluating whether your team is ready for signals, the assessment quantifies exactly where you stand.
 
+## Angular Skills Required for Signals Adoption
+
+Signals adoption demands specific Angular skills that differ from the zone.js-era developer profile. Engineering managers evaluating team readiness should assess these capabilities:
+
+**Must-have skills for signals adoption:**
+- **Reactive programming fundamentals** — understanding data flow, derived state, and subscription lifecycle. Developers comfortable with RxJS observables adapt faster.
+- **OnPush change detection** — signals deliver their full benefit only with OnPush. Teams unfamiliar with OnPush's explicit update model need training before signals add value.
+- **TypeScript strict mode** — signals are strongly typed. Codebases without strict TypeScript will surface type errors during migration that slow the team.
+- **Component architecture** — signals work best with well-defined component boundaries. Developers need to understand input/output contracts, not just template binding.
+
+**Skills that accelerate adoption:**
+- Experience with state management libraries (NgRx, Akita) — the mental model transfers
+- Familiarity with Angular schematics — automated migrations handle mechanical conversions
+- Testing with component harnesses — signal-based components test differently than zone.js-based components
+
+Teams that invest 1-2 weeks in targeted signals training before starting Phase 1 consistently move faster than teams that learn on the job. The Angular documentation, combined with practical exercises on a sandbox project, is the most efficient path.
+
 ## What Your Team Should Do This Quarter
 
 If you are an engineering manager or tech lead evaluating signals adoption, here is the decision framework:

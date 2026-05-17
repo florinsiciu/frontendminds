@@ -64,6 +64,16 @@ Your team has three options for each vulnerability:
 
 In enterprise environments I have worked with, the security team initially accepts one or two known vulnerabilities. By the third quarter on an end-of-life framework, the list has grown long enough to trigger executive escalation.
 
+### Angular Security Vulnerabilities by Version
+
+The security risk is not theoretical. Each end-of-life Angular version carries unpatched exposure that grows over time:
+
+- **Angular 14–15:** Third-party libraries like Angular Material and NgRx have dropped support for these versions — security patches to those libraries no longer backport. CSP nonce support for inline styles (`ngCspNonce`) was not introduced until Angular 16, so applications on 14–15 have a harder time implementing strict Content Security Policies.
+- **Angular 16–18:** More recent, but the npm dependency tree continues to accumulate vulnerability disclosures without framework-level coordination of updates. Each month past end-of-life adds to the `npm audit` surface that your team must assess and mitigate manually.
+- **AngularJS (1.x):** The highest-risk category. Over four years without any patch. Known XSS vectors in the template compiler and no Trusted Types support (introduced in Angular 11+). See [The Real Cost of Staying on AngularJS](/blog/cost-of-angularjs-2026) for the full breakdown.
+
+Angular has included built-in XSS protection through its DomSanitizer since Angular 2, but this protection only covers the framework's own template rendering. It does not protect against vulnerabilities in dependencies, browser API interactions, or custom DOM manipulation — all of which accumulate without vendor patches after end-of-life.
+
 ### Compliance Impact
 
 Compliance frameworks treat end-of-life software as a control gap:
