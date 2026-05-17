@@ -1,0 +1,234 @@
+---
+title: "AngularJS to TypeScript: The Complete Migration Path in 2026"
+description: "Migrate AngularJS to Angular with TypeScript — strategy selection, ngUpgrade patterns, AI-assisted refactoring, and realistic timelines from enterprise migration projects. The most complex frontend migration path that still exists."
+date: "2026-05-17"
+category: "strategy"
+author: "florin-siciu"
+tags: ["angularjs", "typescript", "angular", "migration", "enterprise", "legacy"]
+featured: false
+draft: false
+faq:
+  - question: "How long does AngularJS to TypeScript migration take?"
+    answer: "An AngularJS to TypeScript migration (meaning a full migration to modern Angular) typically takes 6-12 months for enterprise applications using the incremental Strangler Fig approach. Small applications with fewer than 50 controllers can complete in 3-4 months. The timeline depends on application size, test coverage, and team familiarity with TypeScript and modern Angular patterns."
+  - question: "Can you run AngularJS and Angular together?"
+    answer: "Yes. The ngUpgrade module allows running AngularJS and Angular side-by-side in the same application. AngularJS components can use Angular services, and Angular components can be downgraded for use in AngularJS templates. This hybrid approach is the foundation of the Strangler Fig migration strategy — but it is a transitional state, not a permanent architecture."
+  - question: "Is AngularJS still safe to use in 2026?"
+    answer: "No. AngularJS reached end-of-life on December 31, 2021 and has not received security patches since. Running AngularJS in 2026 means accepting unpatched vulnerabilities, compliance gaps with SOC 2 and PCI-DSS, and a shrinking talent pool. HeroDevs offers paid Never-Ending Support (NES) as a temporary bridge, but migration to modern Angular is the only sustainable path."
+  - question: "What is the difference between AngularJS and Angular with TypeScript?"
+    answer: "AngularJS (1.x) is a JavaScript framework using controllers, $scope, and directives. Angular (2+) is a complete rewrite using TypeScript exclusively, with components, services, dependency injection, and a reactive programming model. They share a name but are fundamentally different frameworks — there is no automated upgrade path between them."
+  - question: "Can AI tools help with AngularJS to Angular migration?"
+    answer: "Yes. AI tools like GitHub Copilot, Cursor, and Claude can accelerate AngularJS to Angular migration by converting controllers to components, translating $scope patterns to TypeScript class properties, and generating unit tests for migrated code. Teams using AI-assisted migration report 30-40% faster refactoring on mechanical conversion tasks, though architectural decisions still require human judgment."
+---
+
+The AngularJS to TypeScript migration is the most complex frontend migration path that still exists in 2026. I have guided teams through it more times than I can count, and the same patterns keep repeating. Teams underestimate the scope because they hear "upgrade" and think version bump. This is not an upgrade. This is a rewrite from one framework to a completely different one that happens to share a name.
+
+AngularJS (1.x) uses JavaScript, controllers, `$scope`, and directives. Modern Angular uses TypeScript exclusively, with components, services, and a reactive programming model that has nothing in common with its predecessor. The migration path requires rewriting every controller, every directive, and every service — there is no automated tool that does this for you.
+
+But there are proven strategies that make it manageable. Here is the complete path.
+
+## Why You Cannot Wait Any Longer
+
+AngularJS reached end-of-life on December 31, 2021. That was over four years ago. Every month you delay migration, the cost increases across four dimensions:
+
+**Security exposure** — No patches means every new vulnerability is your team's problem. The npm dependency tree beneath AngularJS continues to accumulate CVEs that will never receive framework-level fixes.
+
+**Compliance failure** — SOC 2, PCI-DSS, ISO 27001, and HIPAA all flag end-of-life software as a control gap. Auditors are no longer accepting "we plan to migrate" as mitigation. They want timelines and evidence of progress.
+
+**Hiring impossibility** — Nobody wants to work on AngularJS in 2026. Senior developers command 20-40% rate premiums for legacy maintenance work, and junior developers have never learned the framework. Your talent pool shrinks every quarter.
+
+**AI tooling gap** — Modern AI coding assistants are trained on current framework patterns. They generate unreliable output for AngularJS codebases, which means your team cannot benefit from the productivity gains that competitors using modern Angular already have.
+
+<Callout type="info">
+For the full cost analysis, including specific numbers from enterprise projects, read [The Real Cost of Staying on AngularJS in 2026](/blog/cost-of-angularjs-2026).
+</Callout>
+
+## The Migration Path: AngularJS to Angular + TypeScript
+
+The path from AngularJS to modern Angular is not a single step. It is a transformation across multiple dimensions:
+
+| Dimension | AngularJS (1.x) | Angular (21+) |
+|-----------|-----------------|---------------|
+| Language | JavaScript | TypeScript (strict mode) |
+| Architecture | Controllers + $scope | Components + Services |
+| Modules | angular.module() | Standalone components |
+| Templates | ng-if, ng-repeat | @if, @for (control flow) |
+| DI | String-based injection | Type-based injection |
+| Build | Gulp/Grunt/Webpack | esbuild + Vite |
+| Testing | Karma + Jasmine | Jest or Vitest |
+
+Three strategies exist for making this transition. The right choice depends on your application size, team capacity, and business constraints.
+
+## Strategy 1: ngUpgrade (Strangler Fig Pattern)
+
+The ngUpgrade module is the official bridge between AngularJS and Angular. It allows both frameworks to run simultaneously in the same application, sharing services and rendering components from either framework in the same DOM.
+
+### How It Works
+
+1. **Bootstrap hybrid** — The application bootstraps Angular first, then AngularJS runs inside it
+2. **Upgrade services** — AngularJS services are wrapped for use in Angular components
+3. **Downgrade components** — New Angular components are downgraded for use in AngularJS templates
+4. **Migrate incrementally** — Each sprint converts one or more AngularJS controllers to Angular components
+5. **Remove AngularJS** — Once all code is migrated, the AngularJS runtime is removed
+
+### When to Use It
+
+The Strangler Fig pattern works best when:
+
+- Your application has more than 30 controllers or routes
+- You need to ship features during the migration (no feature freeze)
+- Your team can handle the complexity of two frameworks running simultaneously
+- The migration timeline is 6-12 months
+
+### The Catch
+
+Hybrid applications carry real overhead. Two framework runtimes means larger bundle sizes, more complex debugging, and change detection that crosses framework boundaries. Every week the hybrid state persists costs you developer productivity. Set a deadline and enforce it.
+
+<Callout type="info">
+The ngUpgrade bridge is a migration strategy, not a long-term architecture. I have seen teams run hybrid applications for two or more years because they never prioritized completing the migration. Do not let this happen — set an end date when you start.
+</Callout>
+
+## Strategy 2: Parallel Rewrite
+
+A parallel rewrite builds the new Angular application from scratch alongside the existing AngularJS application. Traffic is routed between them at the page or feature level, typically using a reverse proxy or route-level switching.
+
+### How It Works
+
+1. **Set up new Angular project** — Fresh Angular 21 application with TypeScript strict mode
+2. **Identify migration order** — Start with leaf pages (low dependency, high value)
+3. **Rewrite per route** — Each route is rebuilt in Angular, tested, and deployed independently
+4. **Switch traffic** — Routes are switched from AngularJS to Angular one at a time
+5. **Decommission** — Once all routes are migrated, the AngularJS application is retired
+
+### When to Use It
+
+The parallel rewrite works best when:
+
+- Your application is route-based with clear page boundaries
+- Shared state between pages is minimal (no complex cross-route services)
+- Your team is small and the cognitive overhead of ngUpgrade is too high
+- You can deploy both applications behind the same domain
+
+### The Catch
+
+The parallel rewrite requires maintaining two separate applications during the migration period. Any bug fix or feature request must be evaluated against both codebases. Shared components like navigation headers or authentication flows need to work in both applications until the switch is complete.
+
+## Strategy 3: AI-Assisted Migration
+
+In 2026, AI tools have become a legitimate accelerator for AngularJS to Angular migration. They do not replace the architectural decisions — but they dramatically speed up the mechanical refactoring that makes up 60-70% of the work.
+
+### What AI Tools Can Do
+
+- **Convert controllers to components** — Transform `$scope`-based controllers into TypeScript component classes with proper input/output bindings
+- **Translate services** — Rewrite AngularJS services with `$http` into Angular services with `HttpClient` and proper typing
+- **Generate TypeScript interfaces** — Analyze existing JavaScript objects and API responses to produce type definitions
+- **Write unit tests** — Generate test scaffolding for migrated components using modern testing frameworks
+- **Identify patterns** — Scan the codebase and group similar controllers for batch conversion
+
+### What AI Tools Cannot Do
+
+- Decide your migration strategy (Strangler Fig vs. parallel rewrite)
+- Resolve complex state management patterns that span multiple controllers
+- Handle custom AngularJS directives with compile/link functions that have no direct Angular equivalent
+- Make routing architecture decisions
+- Validate that migrated business logic is correct
+
+### Practical Workflow
+
+The most effective pattern I have seen is pairing AI conversion with human review:
+
+1. AI generates the initial Angular component from an AngularJS controller
+2. A developer reviews the output, fixes architectural issues, and adjusts patterns to match the team's conventions
+3. AI generates unit tests based on the existing test file or the component behavior
+4. Developer validates test coverage and adds edge cases
+
+Teams using this workflow report 30-40% faster completion on the mechanical conversion tasks. The time savings compound because developers spend their energy on architectural decisions rather than syntax translation.
+
+## TypeScript Adoption: What Changes for Your Team
+
+Moving from AngularJS JavaScript to Angular TypeScript is not just a language change. It changes how your team thinks about code.
+
+### Enable Strict Mode from Day One
+
+Do not start with TypeScript in permissive mode and plan to tighten it later. That never happens. Enable strict mode in `tsconfig.json` from the first day of migration:
+
+```json
+{
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true
+  }
+}
+```
+
+Strict mode catches bugs at compile time that AngularJS would only reveal at runtime. The initial learning curve is steeper, but the long-term velocity gain is significant.
+
+### Key Mindset Shifts
+
+| AngularJS Pattern | Angular + TypeScript Pattern |
+|-------------------|------------------------------|
+| `$scope.items = []` | `items = signal<Item[]>([])` |
+| `$http.get('/api')` | `httpClient.get<Response>('/api')` |
+| `angular.module('app')` | Standalone component imports |
+| Runtime type checking | Compile-time type safety |
+| Mutable state everywhere | Immutable patterns with signals |
+| String-based DI tokens | Type-based injection |
+
+### Training Timeline
+
+Most developers with JavaScript experience reach productive TypeScript proficiency in 2-4 weeks of focused practice. Full fluency — including generics, utility types, and advanced type inference — takes 2-3 months of daily use. Plan for this ramp-up in your migration timeline.
+
+## Timeline and Cost Estimation Framework
+
+Every AngularJS to TypeScript migration is different, but after guiding multiple enterprise teams through this process, these ranges hold consistently:
+
+### By Application Size
+
+| Size | Controllers | Estimated Duration | Team Size |
+|------|-------------|--------------------|-----------|
+| Small | 10-30 | 3-4 months | 2-3 developers |
+| Medium | 30-80 | 6-9 months | 3-5 developers |
+| Large | 80-200+ | 9-14 months | 5-8 developers |
+
+### Cost Multipliers
+
+Factors that increase the timeline beyond the base estimate:
+
+- **Low test coverage** — Add 20-30% for writing tests before migration
+- **Custom directives with compile functions** — Add 15-25% for complex directive rewrites
+- **Shared mutable state** — Add 10-20% for untangling `$rootScope` patterns
+- **Third-party AngularJS libraries** — Add 5-15% per library without an Angular equivalent
+- **No TypeScript experience on team** — Add 15-20% for the learning curve
+
+### The 70/30 Rule
+
+The most successful migrations I have led maintain a 70/30 split: 70% of sprint capacity goes to migration work, 30% goes to feature work and bug fixes. This keeps the business moving while ensuring the migration progresses steadily. A 100% migration focus sounds faster but causes organizational fatigue and political risk when stakeholders see no new features for months.
+
+## Common Failure Modes
+
+The AngularJS to Angular migration has specific failure patterns beyond the general migration risks. Watch for these:
+
+**The Eternal Hybrid** — Teams start with ngUpgrade, migrate 60% of the application, and then lose momentum. The remaining 40% is always the hardest part — complex pages with deep state dependencies. Set milestones and hold the team accountable.
+
+**TypeScript Avoidance** — Developers use `any` types everywhere to avoid dealing with TypeScript's type system. This defeats the purpose of migration and creates a codebase that is harder to maintain than the original AngularJS. Code review must enforce proper typing from the start.
+
+**Scope Creep** — The migration becomes an excuse to redesign the UI, refactor the API, and modernize the database. Each addition extends the timeline and increases risk. Migrate first, improve second.
+
+**Testing Gaps** — Teams skip writing tests for migrated components because "the original did not have tests either." Migrated code without tests is a regression waiting to happen.
+
+<Callout type="info">
+For the full breakdown of migration failure patterns and prevention strategies, read [Why Most Angular Migrations Fail (And How to Avoid It)](/blog/angular-migrations-fail).
+</Callout>
+
+## Your Migration Roadmap
+
+The path from AngularJS to modern Angular with TypeScript is long, but it is well-understood. Thousands of teams have completed it. The ones that succeed share three traits: they start with a thorough assessment, they choose the right strategy for their context, and they commit to finishing.
+
+If you are still running AngularJS in 2026, the question is not whether to migrate — it is how fast you can start. Every month of delay increases cost, compounds security risk, and makes hiring harder.
+
+For the complete version-by-version upgrade path once you reach modern Angular, the [Angular Upgrade Guide](/blog/angular-upgrade-guide) covers every step from version 14 to 21. And if you are evaluating the full landscape of risks from running end-of-life Angular versions, the [Angular End of Life 2026](/blog/angular-end-of-life-2026) guide has the current status of every version.
+
+---
+
+**Ready to migrate your AngularJS application to modern Angular with TypeScript?** I offer a structured migration assessment that evaluates your application's complexity, recommends the right strategy, and provides a realistic timeline and budget. [Request your free assessment](/assessment) and get clarity on your migration path within one week.
