@@ -154,27 +154,22 @@ All links are contextual (placed where readers would naturally want to continue 
 
 ---
 
-### Step 4: Content Gap — New Articles Targeting High-Volume Queries
+### Step 4: Content Gap — New Articles Targeting High-Volume Queries — COMPLETED
 
-**Status:** In progress (2 of 8 clusters published)
-**Priority:** Medium — expands keyword surface area
+**Status:** Done (2026-05-17) — all 8 clusters published
 
-**Published (2026-05-17):**
+| # | Article | Target Volume | Competition | File |
+|---|---------|:---:|:---:|---|
+| 1 | Angular Security Vulnerabilities Guide | 6,000+ | Very Low (4) | `angular-security-vulnerabilities.mdx` |
+| 2 | Software End-of-Life Survival Guide | 2,500+ | Near Zero (1) | `software-end-of-life-guide.mdx` |
+| 3 | Frontend Security Compliance | 7,000+ | Low (10) | `frontend-security-compliance.mdx` |
+| 4 | Legacy Application Migration Playbook | 1,500+ | Near Zero (1) | `legacy-app-migration-playbook.mdx` |
+| 5 | Frontend Framework Comparison 2026 | 1,100+ | Very Low (2) | `frontend-framework-comparison-2026.mdx` |
+| 6 | Enterprise Web Application Security | 2,000+ | Very Low (0-10) | `angular-web-application-security.mdx` |
+| 7 | Progressive Web Apps with Angular | 6,500+ | Low (11) | `angular-progressive-web-apps.mdx` |
+| 8 | Angular Developer Skills 2026 | 800+ | Low (15) | `angular-developer-skills-2026.mdx` |
 
-| Article | Target Volume | Competition | File |
-|---|:---:|:---:|---|
-| Angular Security Vulnerabilities Guide | 6,000+/mo | Very Low (4) | `angular-security-vulnerabilities.mdx` |
-| Software End-of-Life Survival Guide | 2,500+/mo | Near Zero (1) | `software-end-of-life-guide.mdx` |
-
-Both articles are internally linked from 2-3 existing posts. Total blog posts: 11.
-
-**Remaining clusters (not yet written):**
-- Cluster 3: Frontend Security Compliance (7,000+ vol)
-- Cluster 4: Legacy Application Migration Playbook (1,500+ vol)
-- Cluster 5: Frontend Framework Comparison 2026 (1,100+ vol)
-- Cluster 6: Enterprise Web Application Security (2,000+ vol)
-- Cluster 7: Progressive Web Apps with Angular (6,500+ vol)
-- Cluster 8: Angular Developer Skills Assessment (800+ vol)
+Total blog posts: 17 (up from 9). All articles have featured snippet optimization, FAQ schema, internal links, and fact-checked content. Zero orphan pages.
 
 **Problem:** The competitive research revealed queries where frontendminds.com has relevant content but doesn't rank, and queries with volume where no content exists.
 

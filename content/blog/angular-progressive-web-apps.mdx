@@ -1,0 +1,369 @@
+---
+title: "Building Progressive Web Apps with Angular: Enterprise Implementation Guide"
+description: "Build progressive web apps with Angular using @angular/pwa, service workers, and caching strategies. Enterprise guide covering offline auth, data sync, and testing."
+date: "2026-05-17"
+category: "strategy"
+author: "florin-siciu"
+tags: ["angular", "pwa", "progressive-web-app", "service-worker", "enterprise", "offline"]
+featured: false
+draft: false
+faq:
+  - question: "How do I add PWA support to an existing Angular application?"
+    answer: "Run ng add @angular/pwa in your Angular project. This schematic adds the @angular/service-worker package, generates a manifest.webmanifest file, creates default icon assets, updates your index.html with manifest and theme-color meta tags, and registers the service worker in your application configuration. The entire setup takes minutes, but enterprise-grade configuration requires tuning caching strategies and offline behavior."
+  - question: "Can a progressive web app work fully offline?"
+    answer: "Yes, but with caveats for enterprise applications. Static assets and previously visited pages can be served from the service worker cache without any network connection. API data requires a caching strategy — you can pre-cache critical data or cache responses as users navigate. Authentication tokens and encrypted data need special handling since service workers cannot access cookies directly."
+  - question: "What caching strategies does the Angular service worker support?"
+    answer: "The Angular service worker configured through ngsw-config.json supports two primary caching strategies: freshness (network-first, falling back to cache) and performance (cache-first, falling back to network). You assign each strategy to asset groups or data groups depending on whether content is static or dynamic. Enterprise applications typically use performance for static assets and freshness for API responses."
+  - question: "How do I test a progressive web app built with Angular?"
+    answer: "Use ng build to create a production build, then serve it with a local HTTP server since service workers do not activate in ng serve. Run Lighthouse PWA audits in Chrome DevTools to verify installability, service worker registration, and HTTPS readiness. Test offline behavior by toggling the offline checkbox in DevTools Network tab. For automated testing, use Playwright or Cypress to simulate offline conditions in CI pipelines."
+  - question: "Do progressive web apps require HTTPS?"
+    answer: "Yes. Service workers only register on pages served over HTTPS, with the sole exception of localhost for development. This is a browser security requirement, not an Angular limitation. Enterprise applications behind corporate proxies or internal networks still need valid TLS certificates for PWA features to function. Plan your certificate strategy before rolling out PWA capabilities to production."
+---
+
+In 19 enterprise Angular projects, the request that comes up most frequently after the initial modernization is not about micro-frontends or design systems. It is about progressive web apps — specifically, whether Angular can deliver app-like experiences that work offline, install on devices, and reduce dependency on native mobile teams.
+
+The answer is yes, and Angular has one of the most mature progressive web app implementations of any frontend framework. But the gap between running `ng add @angular/pwa` and shipping a production-grade progressive web app for enterprise users is where most teams struggle.
+
+<Callout type="info">
+This guide assumes your Angular application is on version 16 or newer. If you are on an older version, start with the [Angular upgrade guide](/blog/angular-upgrade-guide) to reach a version that fully supports modern PWA features. The @angular/pwa schematic works with older versions, but service worker configuration and build tooling have improved significantly in recent releases.
+</Callout>
+
+## What Is a Progressive Web App?
+
+A progressive web app is a web application that uses modern browser APIs — service workers, web app manifest, and HTTPS — to deliver reliability, installability, and native-like performance on any device. Progressive web apps load instantly from cache even on unreliable networks, can be installed to the home screen without an app store, and support features like push notifications and background sync. For enterprise teams, progressive web app development eliminates the need to maintain separate native codebases while reaching users across every platform from a single deployment.
+
+The term was coined by Google engineers in 2015, but the underlying technologies have matured considerably since then. In 2026, every major browser supports the core progressive web app APIs, and Angular provides first-party tooling that handles the most complex parts of progressive web application development automatically.
+
+## Why Enterprise Teams Choose Angular for Progressive Web Apps
+
+Most progressive web app tutorials focus on simple demos — a todo list that works offline, a news reader that caches articles. Enterprise progressive web app development involves different challenges entirely:
+
+**Authentication persistence across offline sessions.** Your users expect to open the app and see their data, even without connectivity. That means tokens, session state, and role-based access need to survive service worker lifecycle events.
+
+**Data synchronization with conflict resolution.** When users modify data offline, those changes need to sync when connectivity returns — and conflicts between offline edits and server-side changes need a resolution strategy your business stakeholders agree on.
+
+**Controlled update rollouts.** When you deploy a new version, the service worker lifecycle determines when users get the update. In enterprise environments, you cannot have half your users on version 3 and half on version 4 of a critical workflow.
+
+Angular addresses these challenges better than most frameworks because the @angular/service-worker package provides a declarative configuration model through ngsw-config.json, giving you fine-grained control over caching, updates, and resource groups without writing raw service worker code.
+
+## Setting Up @angular/pwa
+
+The Angular CLI provides a single command to add progressive web app capabilities to any Angular application:
+
+```bash
+ng add @angular/pwa
+```
+
+This schematic performs five changes to your project:
+
+1. **Adds @angular/service-worker** to your dependencies
+2. **Generates manifest.webmanifest** with default app name, colors, and display mode
+3. **Creates default icon assets** in multiple sizes for different devices
+4. **Updates index.html** with manifest link and theme-color meta tag
+5. **Registers the service worker** in your application configuration
+
+After running this command, your application is technically a progressive web app. But the default configuration is optimized for simple applications. Enterprise applications need to configure three areas: the web app manifest, caching strategies, and update handling.
+
+### Configuring the Web App Manifest
+
+The manifest.webmanifest file controls how your progressive web app appears when installed. For enterprise applications, pay attention to these properties:
+
+```json
+{
+  "name": "Your Enterprise Application",
+  "short_name": "EnterpriseApp",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "theme_color": "#1a1a2e",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+```
+
+Set `display` to `standalone` for a native-like experience without browser chrome. Set `scope` to limit which URLs the service worker controls — critical for enterprise applications that coexist with other systems on the same domain.
+
+## Service Worker Caching Strategies
+
+The ngsw-config.json file is where the real engineering decisions happen. Angular's service worker groups resources into two categories: **asset groups** for static resources and **data groups** for API responses.
+
+### Asset Groups
+
+Asset groups control how your application shell — JavaScript bundles, CSS, images, fonts — is cached and served:
+
+```json
+{
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**"
+        ]
+      }
+    }
+  ]
+}
+```
+
+**installMode: prefetch** downloads and caches resources immediately when the service worker installs. Use this for your application shell — the critical JavaScript and CSS the user needs to see anything at all.
+
+**installMode: lazy** caches resources only when they are first requested. Use this for images, fonts, and non-critical assets that should not block the initial service worker installation.
+
+### Data Groups
+
+Data groups control how API responses are cached. This is where enterprise progressive web app development gets complex:
+
+```json
+{
+  "dataGroups": [
+    {
+      "name": "api-freshness",
+      "urls": ["/api/live-data/**"],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 100,
+        "maxAge": "1h",
+        "timeout": "5s"
+      }
+    },
+    {
+      "name": "api-performance",
+      "urls": ["/api/reference-data/**"],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 50,
+        "maxAge": "7d"
+      }
+    }
+  ]
+}
+```
+
+**Freshness strategy** (network-first): the service worker tries the network first and falls back to cache if the request fails or exceeds the timeout. Use this for data that changes frequently — user dashboards, notifications, real-time feeds.
+
+**Performance strategy** (cache-first): the service worker serves from cache immediately and updates the cache in the background. Use this for reference data that changes infrequently — configuration, lookup tables, organizational hierarchies.
+
+<Callout type="tip">
+The timeout parameter in freshness strategy is critical for enterprise applications. Set it based on your users' actual network conditions. A 5-second timeout works for office environments. Field workers on mobile networks may need 10-15 seconds before falling back to cache. Measure before you configure.
+</Callout>
+
+## Offline Capabilities for Enterprise Applications
+
+Making an Angular progressive web app work offline requires more than caching strategies. Enterprise applications have three offline challenges that simple PWAs do not face.
+
+### Authentication in Offline Mode
+
+Service workers cannot access HTTP-only cookies, and JWT tokens stored in memory are lost when the browser closes. For enterprise progressive web apps, you need a strategy for authentication persistence:
+
+**Token storage approach:** Store encrypted tokens in IndexedDB, accessible to both the main thread and the service worker. When the user opens the app offline, the application reads the cached token, validates its expiration locally, and renders the appropriate UI. When connectivity returns, the application silently refreshes the token.
+
+**Graceful degradation approach:** Design your application to show read-only cached data when authentication cannot be verified, and prompt for re-authentication when the network returns. This is simpler to implement and avoids the security complexity of offline token management.
+
+The right approach depends on your security requirements. Financial and healthcare applications typically need the second approach. Internal tools with lower risk profiles can often use the first.
+
+### Offline Data Synchronization
+
+When users create or modify data while offline, you need a sync strategy. The pattern that works for most enterprise applications:
+
+1. **Write to IndexedDB immediately** — give the user instant feedback
+2. **Queue sync operations** — store pending changes with timestamps and operation types
+3. **Sync when online** — process the queue in order when connectivity returns
+4. **Handle conflicts** — when server data has changed since the offline edit, apply your conflict resolution strategy (last-write-wins, merge, or prompt the user)
+
+Angular does not provide a built-in sync framework, but the service worker's offline detection combined with RxJS operators or Angular Signals makes the implementation straightforward. Teams already using [Angular Signals](/blog/angular-signals-enterprise-guide) for state management find that the reactive model maps naturally to sync status tracking — a signal that reflects whether the application is online, syncing, or has pending changes.
+
+<AssessmentCta />
+
+### Push Notifications
+
+The Angular service worker includes built-in support for push notifications through the `SwPush` service:
+
+```typescript
+import { SwPush } from '@angular/service-worker';
+
+@Component({ /* ... */ })
+export class NotificationComponent {
+  constructor(private swPush: SwPush) {}
+
+  subscribeToNotifications() {
+    this.swPush.requestSubscription({
+      serverPublicKey: 'YOUR_VAPID_PUBLIC_KEY'
+    })
+    .then(subscription => {
+      // Send subscription to your server
+    });
+  }
+}
+```
+
+For enterprise applications, push notifications require a backend push service and VAPID key management. The subscription model is per-device and per-browser, so plan your notification infrastructure to handle users with multiple devices.
+
+## Managing Updates in Production
+
+Service worker updates follow a specific lifecycle: the browser checks for a new ngsw.json on navigation, downloads the new service worker if changes are detected, installs it in the background, and activates it on the next navigation or when all tabs are closed.
+
+For enterprise applications, the default update behavior is usually too passive. The `SwUpdate` service gives you control:
+
+```typescript
+import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
+import { filter } from 'rxjs';
+
+@Component({ /* ... */ })
+export class AppComponent {
+  constructor(private swUpdate: SwUpdate) {
+    this.swUpdate.versionUpdates
+      .pipe(filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY'))
+      .subscribe(() => {
+        if (confirm('A new version is available. Update now?')) {
+          document.location.reload();
+        }
+      });
+  }
+}
+```
+
+<Callout type="warning">
+Never force-reload without user consent in enterprise applications. Users may have unsaved form data, active workflows, or pending offline changes. Always prompt before activating a new service worker version, and save application state before reloading.
+</Callout>
+
+In environments where you need controlled rollouts, combine the SwUpdate service with feature flags or version-checking endpoints. Check the server for the minimum required version on each navigation, and only prompt for update when the user's cached version falls below the minimum.
+
+## Installation Prompts
+
+Progressive web apps can prompt users to install the application to their home screen. The browser fires a `beforeinstallprompt` event when installation criteria are met — the app is served over HTTPS, has a valid manifest, and has a registered service worker.
+
+For enterprise applications, capture this event and show a custom installation prompt at the right moment in the user journey:
+
+```typescript
+@Component({ /* ... */ })
+export class InstallPromptComponent {
+  private deferredPrompt: any;
+  showInstallButton = signal(false);
+
+  constructor() {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      this.deferredPrompt = e;
+      this.showInstallButton.set(true);
+    });
+  }
+
+  installApp() {
+    this.deferredPrompt?.prompt();
+    this.deferredPrompt?.userChoice.then((result: any) => {
+      this.deferredPrompt = null;
+      this.showInstallButton.set(false);
+    });
+  }
+}
+```
+
+Do not show the installation prompt on first visit. Wait until the user has engaged with the application — completed a workflow, visited multiple times, or spent meaningful time on the platform. Enterprise users are more receptive to installation prompts when they already understand the value of the application.
+
+## Testing Your Progressive Web App
+
+Service workers do not activate during development with `ng serve`. You need a production build to test PWA functionality:
+
+```bash
+ng build
+npx http-server dist/your-app/browser -p 8080
+```
+
+### Lighthouse PWA Audit
+
+Run a Lighthouse audit in Chrome DevTools to verify your progressive web app meets the baseline criteria:
+
+- **Installability:** valid manifest with required properties, registered service worker, served over HTTPS
+- **Service worker:** responds with 200 when offline, registers successfully, controls the page
+- **Performance:** fast first contentful paint, interactive within acceptable thresholds
+
+Lighthouse will flag specific issues — missing manifest properties, icons that do not meet size requirements, or pages that fail to load offline. Address every item before shipping to production.
+
+### Testing Offline Behavior
+
+Chrome DevTools provides an offline toggle in the Network tab, but automated testing is more reliable for enterprise CI pipelines. Use Playwright or Cypress to simulate offline conditions:
+
+1. Load the application and wait for the service worker to install
+2. Switch to offline mode
+3. Navigate to cached routes and verify they render
+4. Attempt API calls and verify graceful degradation
+5. Switch back to online and verify data synchronization
+
+### Testing on Devices
+
+Desktop browser testing is not sufficient. Install your progressive web app on actual Android and iOS devices to verify:
+
+- The installation flow works correctly
+- The app launches in standalone mode
+- Push notifications are delivered
+- Offline behavior works after the app is backgrounded and restored
+
+iOS has historically lagged behind Android in PWA support. Test specifically for iOS quirks: storage limits, lack of push notification support on older iOS versions, and differences in standalone display behavior.
+
+## Enterprise Architecture Considerations
+
+Building a progressive web app is not just a frontend concern. It affects your entire application architecture. Teams that treat it as an afterthought end up rebuilding.
+
+### When PWA Makes Sense
+
+Progressive web app development delivers the highest value for enterprise applications where:
+
+- Users need offline access — field workers, warehouse staff, travelling sales teams
+- Native app store distribution adds friction — internal tools, B2B platforms
+- Multiple platforms must be supported with a single team — web, mobile, desktop
+- Network reliability varies — global deployments, emerging markets, rural connectivity
+
+### When PWA Is Not Enough
+
+Be honest about the limitations. Progressive web apps cannot access certain device APIs — Bluetooth, NFC, advanced camera controls, and some file system operations remain native-only. If your application requires deep hardware integration, a PWA may serve as a complement to native apps rather than a replacement.
+
+### Fitting PWA into Your Modernization Roadmap
+
+For teams already working through an Angular modernization, PWA capabilities should come after foundational upgrades. The priority sequence that works for most enterprise teams:
+
+1. **Get to a current Angular version** — follow the [Angular upgrade guide](/blog/angular-upgrade-guide) to reach Angular 19 or newer
+2. **Adopt modern patterns** — standalone components, signals, and modern control flow as covered in the [modernization framework](/blog/angular-modernization-framework)
+3. **Add PWA capabilities** — once the foundation is solid, the @angular/pwa schematic works cleanly
+4. **Optimize for your users** — tune caching strategies, offline behavior, and update policies based on actual usage patterns
+
+Attempting progressive web app development on a legacy Angular codebase that is [falling behind](/blog/angular-falling-behind) creates compounding problems. The service worker layer adds complexity, and debugging PWA issues in an already-struggling codebase slows down both the modernization and the PWA implementation.
+
+<Callout type="tip">
+If you are unsure whether your Angular application is ready for progressive web app capabilities, the [free architecture assessment](/assessment) evaluates your codebase across five dimensions and identifies what needs to happen before adding PWA features.
+</Callout>
+
+## What to Do Next
+
+Progressive web app development with Angular is a mature, well-supported path for enterprise applications. The @angular/pwa schematic handles the scaffolding. The Angular service worker provides declarative caching configuration through ngsw-config.json. The SwUpdate and SwPush services give you programmatic control over updates and notifications.
+
+The hard part is not the technology — it is the enterprise-specific decisions: what to cache, how to handle offline authentication, when to prompt for updates, and how to synchronize data. These decisions depend on your users, your security requirements, and your infrastructure.
+
+Start with `ng add @angular/pwa`, configure your caching strategies based on actual user behavior, and test thoroughly on real devices with real network conditions. The tooling is ready. The question is whether your application architecture is.
