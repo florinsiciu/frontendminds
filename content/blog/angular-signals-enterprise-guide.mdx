@@ -28,9 +28,11 @@ The answer depends on where your application stands today. And the difference be
 This is not a signals tutorial. If you need to learn the API, the [official Angular documentation](https://angular.dev/guide/signals) is excellent. This guide is for engineering managers and tech leads who need to understand what signals adoption means for their team, their architecture, and their migration timeline.
 </Callout>
 
-## Why Signals Change Everything for Enterprise Angular
+## What Are Angular Signals?
 
-Angular Signals are not just a new API. They represent a fundamental shift in how Angular handles reactivity and change detection — the two mechanisms that determine how your application responds to user actions, data changes, and state updates.
+Angular Signals are a fine-grained reactivity primitive that provides an alternative to zone.js-based change detection. Introduced as developer preview in Angular 16 and fully stable since Angular 20, signals let Angular track exactly which components need to update when state changes — instead of checking the entire component tree on every browser event. For enterprise applications, this means better performance, simpler debugging, and a path to fully zoneless Angular.
+
+Signals represent a fundamental shift in how Angular handles reactivity and change detection — the two mechanisms that determine how your application responds to user actions, data changes, and state updates.
 
 Before signals, Angular relied on zone.js to detect changes. Zone.js patches every browser API — setTimeout, Promise, addEventListener, HTTP requests — and triggers change detection across the entire component tree whenever anything happens. For small applications, this works fine. For enterprise applications with hundreds of components, deep component trees, and complex state management, it creates three problems that compound over time:
 

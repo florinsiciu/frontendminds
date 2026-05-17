@@ -9,15 +9,15 @@ featured: false
 draft: false
 faq:
   - question: "Which Angular versions are end of life in 2026?"
-    answer: "As of mid-2026, Angular 14 (EOL December 2023), Angular 15 (EOL May 2024), Angular 16 (EOL November 2024), Angular 17 (EOL May 2025), Angular 18 (EOL November 2025), and all earlier versions including AngularJS (EOL December 2021) are end-of-life. Angular 19 LTS ends May 2026. Angular 20 is actively supported with LTS through November 2026."
+    answer: "As of May 2026, Angular 14 through 18 and all earlier versions including AngularJS are end-of-life. Angular 19 LTS ends May 19, 2026. Angular 20 is actively supported with LTS through November 2026. Angular 21 is actively supported with LTS through May 2027."
   - question: "What happens when an Angular version reaches end of life?"
-    answer: "End-of-life means no security patches, no bug fixes, and no updates from the Angular team. Any vulnerability discovered in the framework or its dependency tree after EOL is your team's responsibility to patch, work around, or accept as a known risk. Compliance frameworks like SOC 2, ISO 27001, and PCI-DSS flag end-of-life software as a control gap."
+    answer: "End-of-life means no security patches, bug fixes, or updates from the Angular team. Any vulnerability discovered after EOL is your team's responsibility to patch or accept as known risk. Compliance frameworks like SOC 2, ISO 27001, and PCI-DSS flag end-of-life software as a control gap."
   - question: "Is Angular 19 still supported?"
-    answer: "Angular 19 is in Long-Term Support (LTS) through May 2026, meaning it receives critical fixes and security patches only. After May 2026, Angular 19 becomes end-of-life. Teams on Angular 19 should upgrade to Angular 20 to maintain support through November 2026."
+    answer: "Angular 19 LTS support ends on May 19, 2026. After that date, it receives no further security patches or bug fixes and becomes end-of-life. Teams on Angular 19 should upgrade to Angular 20 or 21 to maintain vendor support."
   - question: "How long does it take to upgrade from one Angular version to the next?"
-    answer: "A single major version upgrade typically takes 1-3 days for small applications and 1-2 weeks for medium enterprise applications. However, the effort scales non-linearly when you are multiple versions behind. Going from Angular 14 to 20 involves six sequential major upgrades, each with its own breaking changes, dependency updates, and testing requirements. Based on enterprise projects, a multi-version jump typically takes 2-4 months of focused effort."
+    answer: "A single major version upgrade takes 1-3 days for small applications and 1-2 weeks for enterprise applications. Multi-version jumps scale non-linearly — going from Angular 14 to 20 typically takes 2-4 months because each of the six sequential upgrades has its own breaking changes and dependency updates."
   - question: "Should I upgrade Angular incrementally or skip versions?"
-    answer: "Angular officially supports upgrading one major version at a time using ng update. The CLI enforces this constraint — attempting to skip versions will not proceed. The incremental approach — upgrading from 14 to 15, then 15 to 16, and so on — is the only reliable path. Each step has its own migration guide and automated schematics."
+    answer: "Angular requires upgrading one major version at a time using ng update. The CLI enforces this — skipping versions is not supported. The incremental path (14 to 15, then 15 to 16, and so on) is the only reliable approach, with migration schematics available for each step."
 ---
 
 Angular 14 through 18 have all reached end-of-life. Angular 19 LTS support ends in May 2026. If your enterprise application is running on anything older than Angular 20, this article is the reference your team needs to understand what that status means and what to do about it.
@@ -28,21 +28,24 @@ I have led version upgrades across 19 enterprise Angular applications, several o
 This is not about AngularJS (version 1.x), which reached end-of-life on December 31, 2021 and is covered in [The Real Cost of Staying on AngularJS in 2026](/blog/cost-of-angularjs-2026). This article covers Angular versions 14 through 20 — the modern Angular framework.
 </Callout>
 
-## Angular Version Status Table: May 2026
+## Which Angular Versions Are End of Life in 2026?
 
-Every major Angular release follows the same lifecycle: 6 months of active support with regular updates and patches, followed by 12 months of Long-Term Support with critical fixes and security patches only. After 18 months total, the version reaches end-of-life. For a broader overview of how this lifecycle works across all software, see [What Software End of Life Actually Means](/blog/software-end-of-life-guide).
+As of May 2026, Angular versions 14, 15, 16, 17, and 18 are all end-of-life. They receive no security patches, no bug fixes, and no updates. Angular 19 LTS support ends on May 19, 2026. Angular 20 is the current actively supported version with LTS through November 2026.
 
-| Version | Released | Active Support Ended | LTS Ended | Status (May 2026) |
-|---------|----------|---------------------|-----------|-------------------|
-| **Angular 14** | June 2022 | December 2022 | December 2023 | End-of-life |
-| **Angular 15** | November 2022 | May 2023 | May 2024 | End-of-life |
-| **Angular 16** | May 2023 | November 2023 | November 2024 | End-of-life |
-| **Angular 17** | November 2023 | May 2024 | May 2025 | End-of-life |
-| **Angular 18** | May 2024 | November 2024 | November 2025 | End-of-life |
-| **Angular 19** | November 2024 | May 2025 | **May 2026** | LTS (ending now) |
-| **Angular 20** | May 2025 | November 2025 | **November 2026** | Active |
+Every major Angular release follows the same lifecycle: 6 months of active support, followed by 12 months of Long-Term Support, totaling 18 months before end-of-life. For a broader overview of how this lifecycle works across all software, see [What Software End of Life Actually Means](/blog/software-end-of-life-guide).
 
-If your version shows a past date in the LTS column, you are running unsupported software in production. As of May 2026, that includes Angular 14 through 18 — and Angular 19 LTS is ending within weeks.
+| Version | Released | Security Support Ended | Status (May 2026) |
+|---------|----------|----------------------|-------------------|
+| Angular 14 | June 2022 | December 2023 | End-of-life |
+| Angular 15 | November 2022 | May 2024 | End-of-life |
+| Angular 16 | May 2023 | November 2024 | End-of-life |
+| Angular 17 | November 2023 | May 2025 | End-of-life |
+| Angular 18 | May 2024 | November 2025 | End-of-life |
+| Angular 19 | November 2024 | **May 19, 2026** | LTS (ending now) |
+| Angular 20 | May 2025 | **November 2026** | Actively supported |
+| Angular 21 | November 2025 | **May 2027** | Actively supported |
+
+If your version shows a past date in the Security Support Ended column, you are running unsupported software in production. As of May 2026, that includes Angular 14 through 18 — and Angular 19 LTS is ending within days.
 
 <Callout type="info">
 The 18-month support window moves fast. Angular 16 felt current when it launched in May 2023. By November 2024 — just 18 months later — it was end-of-life. Teams that treat version upgrades as "someday" projects consistently get caught by this timeline.

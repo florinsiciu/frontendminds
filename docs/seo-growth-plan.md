@@ -231,25 +231,20 @@ Both articles are internally linked from 2-3 existing posts. Total blog posts: 1
 
 ---
 
-### Step 6: Featured Snippet Optimization
+### Step 6: Featured Snippet Optimization — COMPLETED
 
-**Status:** Not started
-**Priority:** Medium — can leapfrog positions 1-5
+**Status:** Done (2026-05-17)
 
-**Problem:** endoflife.date wins featured snippets with clean data tables. arc.dev wins with concise paragraph answers. Your EOL article has better data but isn't winning the snippet.
+Analyzed endoflife.date's winning featured snippet (3-column table with Release, Released, Security Support) and Google AI Overview patterns. Optimized the EOL article:
 
-**Analysis needed:**
-- Compare your version status table HTML structure vs endoflife.date
-- Check if your FAQ answers are concise enough for featured snippet extraction
-- Test if adding a summary paragraph before the table helps
+**Changes made:**
+1. **H2 now matches exact PAA question:** "Which Angular Versions Are End of Life in 2026?" (was "Angular Version Status Table: May 2026")
+2. **Added direct answer paragraph** immediately under the H2 — concise 3-sentence answer that Google can extract as a paragraph snippet
+3. **Simplified table to 4 columns** matching endoflife.date's pattern: Version, Released, Security Support Ended, Status. Removed "Active Support Ended" column (less relevant to searchers). Added Angular 21.
+4. **Tightened all 5 FAQ answers** to 40-60 words each (optimal featured snippet length, down from 50-80 words)
+5. **Added exact date "May 19, 2026"** in table (matches endoflife.date's specificity)
 
-**Actions:**
-1. Ensure the version status table in the EOL article renders as a clean HTML `<table>` (not a markdown table that might render as divs)
-2. Add a concise 2-3 sentence summary paragraph directly answering "which Angular versions are end of life in 2026?" before the table
-3. Format FAQ answers to be self-contained 40-60 word answers (featured snippet optimal length)
-4. Add structured "What to do" sections with clear headers matching PAA questions
-
-**Expected impact:** Winning even one featured snippet for "angular 19 end of life" would likely 5-10x impressions for that query.
+**Expected impact:** Competing for the featured snippet on "angular 19 end of life" and "which angular versions are end of life" queries. If won, would 5-10x impressions for those queries.
 
 ---
 

@@ -20,6 +20,10 @@ faq:
     answer: "SOC 2 Type II audits flag end-of-life frameworks as a control deficiency. ISO 27001 assessments require documented risk acceptance for unsupported software. PCI-DSS mandates that software components are maintained and patched. HIPAA security rules require current software as part of technical safeguards. Cyber insurance underwriters increasingly factor end-of-life frontend frameworks into risk pricing."
 ---
 
+## Does Unsupported Angular Have Security Vulnerabilities?
+
+Yes. Running an unsupported Angular version in production means no security patches for the framework, its first-party libraries, or its coordinated dependency updates. Each month past end-of-life adds newly disclosed vulnerabilities to your dependency tree that your team must assess and mitigate without vendor support. Angular 14 through 18 are all end-of-life, and Angular 19 LTS ends May 19, 2026.
+
 Running an unsupported Angular version in production is not just a technical inconvenience — it is a security vulnerability that compounds every month. Each day without framework-level patches adds to the attack surface your team must monitor, assess, and mitigate on its own. And the longer you wait, the harder it gets to close the gap.
 
 In 19 enterprise Angular migration projects, I have seen the security conversation play out the same way. A compliance audit flags the framework version. The security team logs it as a known risk. Six months later, the dependency vulnerability count has doubled, the audit finding is still open, and the migration that would have been manageable is now urgent.
