@@ -1,0 +1,158 @@
+---
+title: "Angular Latest Version (May 2026): Current Stable Release & Full Version History"
+description: "The latest stable Angular version is Angular 22, released May 2026. Complete version table with release dates, support status, and upgrade paths — updated May 2026."
+date: "2026-05-18"
+category: "dev-workflow"
+author: "florin-siciu"
+tags: ["angular", "version", "release", "upgrade", "2026"]
+featured: false
+draft: false
+faq:
+  - question: "What is the latest version of Angular in 2026?"
+    answer: "As of May 2026, the latest stable Angular version is Angular 22, released on May 13, 2026. Angular 21 (November 2025) is in LTS through May 2027, and Angular 20 (May 2025) is in LTS through November 2026. All three receive security patches."
+  - question: "What is the current stable version of Angular?"
+    answer: "Angular 22 is the current stable version, released May 13, 2026. Angular 21 is in Long-Term Support through May 2027. Angular 20 is in LTS through November 2026. For new projects, use Angular 22."
+  - question: "How often does Angular release new versions?"
+    answer: "Angular follows a predictable 6-month major release cycle. New major versions are released in May and November each year. Each version receives 6 months of active support followed by 12 months of Long-Term Support (LTS), totaling 18 months of coverage."
+  - question: "How do I check my current Angular version?"
+    answer: "Run ng version or ng v in your project directory to see your Angular CLI and framework versions. You can also check the @angular/core version in your package.json file. If your version is below Angular 20, you are running end-of-life or soon-to-be-end-of-life software."
+  - question: "Should I upgrade to the latest Angular version?"
+    answer: "If you are on Angular 19 or older, yes — upgrade as soon as possible. Angular 19 LTS ended May 19, 2026, and all earlier versions are already end-of-life with no security patches. Target Angular 21 or 22. Each single-version upgrade takes 1-2 weeks for enterprise applications."
+---
+
+The latest stable version of Angular is **Angular 22**, released on May 13, 2026. Angular 21 (November 2025) and Angular 20 (May 2025) are also supported under Long-Term Support. If you are searching for the current Angular version in May 2026, Angular 22 is it.
+
+This page is a living reference for Angular version status. It covers which versions are supported, which are end-of-life, and what your team should do based on where you are today.
+
+## Angular Version Table (May 2026)
+
+| Version | Released | Active Support Ended | LTS Ended | Status (May 2026) |
+|---------|----------|---------------------|-----------|-------------------|
+| Angular 14 | June 2022 | November 2022 | November 2023 | End-of-life |
+| Angular 15 | November 2022 | May 2023 | May 2024 | End-of-life |
+| Angular 16 | May 2023 | November 2023 | November 2024 | End-of-life |
+| Angular 17 | November 2023 | May 2024 | May 2025 | End-of-life |
+| Angular 18 | May 2024 | November 2024 | November 2025 | End-of-life |
+| Angular 19 | November 2024 | May 2025 | **May 19, 2026** | End-of-life |
+| Angular 20 | May 2025 | November 2025 | **November 2026** | LTS supported |
+| Angular 21 | November 2025 | May 2026 | **May 2027** | LTS supported |
+| Angular 22 | May 13, 2026 | November 2026 | **May 2028** | Actively supported |
+
+<Callout type="warning">
+Angular 19 LTS ended on May 19, 2026. If your application runs Angular 19 or anything older, you are running unsupported software. See the [Angular end-of-life guide](/blog/angular-end-of-life-2026) for the security, compliance, and operational risks this creates.
+</Callout>
+
+## Which Angular Version Should You Use?
+
+**For new projects starting in May 2026:** Use Angular 22. It is the latest stable release with the longest support window (LTS through May 2028).
+
+**For existing applications on Angular 21:** You are in good shape. Angular 21 LTS runs through May 2027. Plan to upgrade to 22 within the next quarter to stay within the active support window.
+
+**For existing applications on Angular 20:** Angular 20 LTS runs through November 2026. Upgrade to 21 or 22 before LTS expires.
+
+**For existing applications on Angular 19 or older:** Upgrade now. Angular 19 LTS ended May 19, 2026. Anything below 19 has been end-of-life for months or years. The [Angular upgrade guide](/blog/angular-upgrade-guide) covers every version path from 14 to 21 with breaking changes, dependency requirements, and realistic timelines.
+
+## What Changed in Recent Angular Versions
+
+### Angular 22 (May 2026)
+
+Angular 22 marks the "signal-first" era. Key changes:
+
+- **Selectorless components.** Components can be imported directly in templates without a selector string, simplifying component composition.
+- **Signal Forms stable.** The new signal-based form system — introduced experimentally in Angular 21 — is now stable. It replaces the reactive forms pattern with a lightweight, signal-driven API.
+- **OnPush as default.** New components use `OnPush` change detection by default, encouraging signal-based reactivity over Zone.js-triggered checks.
+- **MCP server stable.** The Angular CLI ships with stable Model Context Protocol support for AI-assisted development tooling.
+- **Vitest as primary test runner.** Vitest is now the default for all new projects, with experimental Jest and Web Test Runner support removed.
+
+### Angular 21 (November 2025)
+
+- **Zoneless change detection is the default** for new projects. Zone.js is no longer included, with change detection driven explicitly by signals.
+- **Signal Forms introduced** as an experimental API — a new form system built entirely on signals, replacing the `valueChanges` subscription pattern.
+- **Vitest integration stabilized** and became the default test runner, replacing Jasmine and Karma for new applications.
+- **Angular ARIA package** in developer preview for accessible component patterns.
+
+### Angular 20 (May 2025)
+
+- **Signal primitives graduated to stable** — `signal()`, `effect()`, `linkedSignal()`, signal-based queries and inputs are all production-ready.
+- **Incremental hydration stable** — SSR hydration powered by `@defer` blocks, introduced in Angular 19 developer preview, is now production-ready.
+- **Zoneless change detection stabilized** in v20.2, enabling Zone.js-free applications.
+- **`resource()` and `httpResource()` APIs** introduced experimentally for reactive async data fetching.
+
+For teams upgrading from older versions, the most significant architectural shifts happened in Angular 17 (standalone default, new control flow, esbuild builder), Angular 20 (stable signals), and Angular 21 (zoneless default). The [Angular Signals enterprise guide](/blog/angular-signals-enterprise-guide) covers how to adopt these patterns incrementally.
+
+## Angular Release Schedule
+
+Angular follows a predictable 6-month major release cycle:
+
+| Release Window | Version | Expected |
+|---------------|---------|----------|
+| May 2025 | Angular 20 | Released |
+| November 2025 | Angular 21 | Released |
+| May 2026 | Angular 22 | Released |
+| November 2026 | Angular 23 | Expected |
+
+Each major version receives:
+- **6 months of active support** — bug fixes, security patches, and minor feature updates
+- **12 months of Long-Term Support (LTS)** — critical bug fixes and security patches only
+- **Total coverage: 18 months** from release to end-of-life
+
+This 18-month window moves faster than most enterprise teams expect. Angular 17 felt cutting-edge when it launched in November 2023 with standalone components and the new control flow. By May 2025 — just 18 months later — it was end-of-life.
+
+<Callout type="info">
+The 6-month cadence means you can plan upgrades on a predictable calendar. Teams that budget one version upgrade per quarter never fall behind. Teams that defer upgrades accumulate version debt that compounds — each skipped version adds breaking changes, dependency conflicts, and migration effort.
+</Callout>
+
+## How to Check Your Current Angular Version
+
+Run this command in your project directory:
+
+```bash
+ng version
+```
+
+This outputs your Angular CLI version and all `@angular/*` package versions. The `@angular/core` version is your framework version.
+
+You can also check directly in `package.json`:
+
+```bash
+grep "@angular/core" package.json
+```
+
+If your version number starts with 14, 15, 16, 17, 18, or 19, you are running end-of-life software. See the [5 signs your Angular app is falling behind](/blog/angular-falling-behind) for a broader assessment of your application health.
+
+## How to Upgrade to the Latest Angular Version
+
+Angular supports upgrading one major version at a time using the `ng update` command:
+
+```bash
+ng update @angular/core @angular/cli
+```
+
+This runs migration schematics that automatically update your code for breaking changes where possible. You cannot skip versions — going from Angular 17 to 22 requires five sequential upgrades: 17 → 18 → 19 → 20 → 21 → 22.
+
+**Realistic timelines from enterprise projects:**
+
+| Starting Version | Target | Steps | Typical Duration |
+|-----------------|--------|-------|-----------------|
+| Angular 21 → 22 | 22 | 1 upgrade | 1-2 weeks |
+| Angular 20 → 22 | 22 | 2 upgrades | 2-4 weeks |
+| Angular 19 → 22 | 22 | 3 upgrades | 3-6 weeks |
+| Angular 18 → 22 | 22 | 4 upgrades | 1-2 months |
+| Angular 16 → 22 | 22 | 6 upgrades | 2-4 months |
+| Angular 14 → 22 | 22 | 8 upgrades | 4-6 months |
+
+These timelines are from 19 enterprise migration projects and include dependency updates, testing, and CI/CD pipeline adjustments. Small applications are faster. Large monorepos with custom build configurations take longer.
+
+The [Angular upgrade guide](/blog/angular-upgrade-guide) covers every version path with specific breaking changes, dependency requirements, and the migration schematics available for each step.
+
+<Callout type="info">
+Separate the version upgrade from pattern modernization. Get to a supported version first, then adopt signals, zoneless change detection, and signal forms incrementally. Combining both into one project is the most common reason [Angular migrations fail](/blog/angular-migrations-fail).
+</Callout>
+
+<AssessmentCta />
+
+## Staying Current Going Forward
+
+The simplest way to avoid version debt is to upgrade within the first quarter after each new Angular release. With a 6-month release cadence, that means two planned upgrades per year — each taking 1-2 weeks for a single-version jump.
+
+If you are multiple versions behind and need help planning the upgrade path, the [free Angular modernization assessment](/assessment) evaluates your application across five dimensions and gives you a prioritized roadmap in three minutes.
