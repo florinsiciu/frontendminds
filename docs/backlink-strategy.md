@@ -1,8 +1,33 @@
 # FrontendMinds Backlink Building Strategy
 
-**Date:** 2026-05-14
-**Current DA:** ~5 | **Indexed pages:** 4 (10 more submitted for indexing today)
+**Date:** 2026-05-14 | **Updated:** 2026-05-18 (post-GSC analysis)
+**Current DA:** ~5 | **Indexed pages:** 12 (13 not indexed — robots.txt fix deployed, re-crawl pending)
 **Goal:** Reach DA 15-20 within 6 months, acquire 30-50 quality backlinks
+
+---
+
+## GSC-Informed Quick Wins (added 2026-05-18)
+
+Based on the GSC analysis showing 1,050 impressions, 0.2% CTR, and zero external links, these are the **highest-urgency actions** to break out of the Google sandbox:
+
+### This Week — Do These First
+
+- [ ] **Cross-post the Angular EOL guide to dev.to** with canonical link back to frontendminds.com. This is your most topically unique post and the one already getting impressions. Wait 2-3 days after the robots.txt fix deploys so Google indexes the updated version first.
+- [ ] **Post the new "Angular Latest Version (May 2026)" article to r/angular and r/webdev.** Angular 22 just released May 13 — version-check content is timely right now. This post was purpose-built to capture 81+ impressions from "angular latest version" queries.
+- [ ] **Answer 2-3 Stack Overflow questions** about Angular versions/upgrades/EOL. Link to your EOL guide or upgrade guide as further reading. Target tags: `angular-migration`, `angular-upgrade`, `angularjs`.
+
+### Next Week
+
+- [ ] **Cross-post the upgrade guide to Hashnode** (canonical). It targets "angular upgrade guide 2026" — a competitive query where you need authority signals.
+- [ ] **Email Angular Weekly / ng-conf newsletter curators** pitching the EOL guide as a resource. Angular 19 just went EOL on May 19 — the timing is perfect for newsletter coverage.
+- [ ] **Find 3 recent "angular version history" or "angular upgrade" articles** on Medium/dev.to and leave insightful comments that add value (not link drops).
+
+### Why These Specifically
+
+GSC shows your site ranks position 6.4 average (page 1) but has 0.2% CTR and zero backlinks. The search results for your target queries are dominated by angular.dev, Hashbyt, Stackademic, and Medium posts. Even 2-3 quality backlinks will signal to Google that frontendminds.com is a legitimate source, which should:
+1. Trigger indexing of the 3 rejected blog posts (upgrade guide, signals guide, AngularJS cost guide)
+2. Improve CTR as Google shows your results more prominently
+3. Accelerate the move from position 6 to positions 1-3
 
 ---
 
