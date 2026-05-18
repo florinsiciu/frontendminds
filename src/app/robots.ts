@@ -10,7 +10,6 @@ export default function robots(): MetadataRoute.Robots {
         "/assessment/quiz",
         "/assessment/unlock",
         "/assessment/results",
-        "/_next/",
         "/$",
         "/&",
       ],
