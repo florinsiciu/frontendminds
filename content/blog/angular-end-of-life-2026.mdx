@@ -15,7 +15,7 @@ faq:
   - question: "Is Angular 19 still supported?"
     answer: "Angular 19 LTS support ended on May 19, 2026. It no longer receives security patches or bug fixes and is now end-of-life. Teams on Angular 19 should upgrade to Angular 21 or 22 to maintain vendor support."
   - question: "How long does it take to upgrade from one Angular version to the next?"
-    answer: "A single major version upgrade takes 1-3 days for small applications and 1-2 weeks for enterprise applications. Multi-version jumps scale non-linearly — going from Angular 14 to 20 typically takes 2-4 months because each of the six sequential upgrades has its own breaking changes and dependency updates."
+    answer: "A single major version upgrade takes 1-3 days for small applications and 1-2 weeks for enterprise applications. Multi-version jumps scale non-linearly — going from Angular 14 to 22 typically takes 4-6 months because each of the eight sequential upgrades has its own breaking changes and dependency updates."
   - question: "Should I upgrade Angular incrementally or skip versions?"
     answer: "Angular requires upgrading one major version at a time using ng update. The CLI enforces this — skipping versions is not supported. The incremental path (14 to 15, then 15 to 16, and so on) is the only reliable approach, with migration schematics available for each step."
 ---
@@ -160,7 +160,7 @@ In 19 enterprise Angular upgrade projects, the version upgrade itself — runnin
 
 **After:** Deciding whether to also modernize patterns during the upgrade. Should you adopt standalone components now, or just get to the target version first? Should you start using signals, or save that for a separate initiative?
 
-The answer from experience: **separate version upgrade from pattern modernization.** Get to a supported Angular version first. Then modernize incrementally. Combining both creates a project that is too large, too risky, and too slow. The [Angular Upgrade Guide](/blog/angular-upgrade-guide) covers every version path from 14 to 21 with breaking changes and realistic timelines. And before you start, review [why most Angular migrations fail](/blog/angular-migrations-fail) — the failure patterns are predictable and avoidable.
+The answer from experience: **separate version upgrade from pattern modernization.** Get to a supported Angular version first. Then modernize incrementally. Combining both creates a project that is too large, too risky, and too slow. The [Angular Upgrade Guide](/blog/angular-upgrade-guide) covers every version path from 14 to 22 with breaking changes and realistic timelines. And before you start, review [why most Angular migrations fail](/blog/angular-migrations-fail) — the failure patterns are predictable and avoidable.
 
 > The teams that treat version upgrades as routine maintenance — small, frequent, planned — never face the emergency migration conversation. The teams that defer upgrades until end-of-life always do.
 

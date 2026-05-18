@@ -92,7 +92,7 @@ Modern Angular includes security features that directly support compliance requi
 
 **CSP nonce support (Angular 16+):** Content Security Policy with nonce-based script and style loading is a key security control for preventing cross-site scripting. Angular introduced `ngCspNonce` in version 16, enabling strict CSP policies without `unsafe-inline` directives. Applications on Angular 14 or 15 must choose between weak CSP policies (using `unsafe-inline`) or complex custom workarounds — both of which auditors scrutinize.
 
-**DomSanitizer (Angular 2+):** Angular's built-in sanitization has been present since Angular 2, providing baseline XSS protection through template binding. However, the sanitization pipeline has been improved in each subsequent release. Versions past end-of-life do not receive these improvements, meaning edge cases fixed in Angular 20 remain open in older versions.
+**DomSanitizer (Angular 2+):** Angular's built-in sanitization has been present since Angular 2, providing baseline XSS protection through template binding. However, the sanitization pipeline has been improved in each subsequent release. Versions past end-of-life do not receive these improvements, meaning edge cases fixed in Angular 22 remain open in older versions.
 
 ### The Dependency Chain Compliance Problem
 
@@ -144,7 +144,7 @@ Based on 19 Angular migration projects, closing frontend security compliance gap
 
 **Phase 2: Immediate Risk Reduction (Weeks 3-6).** Implement controls that do not require a framework upgrade: security headers, CSP policies (even if they require `unsafe-inline` on older versions), dependency updates within peer constraints, and formal risk acceptance documentation for remaining gaps.
 
-**Phase 3: Framework Upgrade Planning (Weeks 4-8).** Scope the upgrade path and build the [business case for migration](/blog/angular-migration-business-case). A single major version jump takes 1-2 weeks for enterprise applications. Multi-version jumps from Angular 14 to 20 typically require 2-4 months. The [Angular upgrade guide](/blog/angular-upgrade-guide) covers every version path.
+**Phase 3: Framework Upgrade Planning (Weeks 4-8).** Scope the upgrade path and build the [business case for migration](/blog/angular-migration-business-case). A single major version jump takes 1-2 weeks for enterprise applications. Multi-version jumps from Angular 14 to 22 typically require 4-6 months. The [Angular upgrade guide](/blog/angular-upgrade-guide) covers every version path.
 
 **Phase 4: Incremental Migration (Months 2-9).** Upgrade one major version at a time with compliance checkpoints at each step. Each version closes specific gaps: Angular 11 enables Trusted Types, Angular 16 enables CSP nonce support, and reaching the current supported version restores full vendor patching coverage.
 

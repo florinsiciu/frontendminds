@@ -1,6 +1,6 @@
 ---
-title: "Angular Upgrade Guide 2026: Every Version Path from 14 to 21"
-description: "Step-by-step Angular upgrade paths from v14 to v21. Breaking changes, dependency requirements, and migration schematics for each version jump — with realistic timelines from 19 enterprise projects."
+title: "Angular Upgrade Guide 2026: Every Version Path from 14 to 22"
+description: "Step-by-step Angular upgrade paths from v14 to v22. Breaking changes, dependency requirements, and migration schematics for each version jump — with realistic timelines from 19 enterprise projects."
 date: "2026-05-12"
 category: "dev-workflow"
 author: "florin-siciu"
@@ -11,18 +11,18 @@ faq:
   - question: "How do I upgrade Angular to the latest version?"
     answer: "Run ng update @angular/core @angular/cli to upgrade one major version at a time. Angular enforces sequential upgrades — you cannot skip versions. Each major version has its own breaking changes, dependency requirements, and migration schematics. Use the interactive guide at angular.dev/update-guide to see the specific steps for your version pair."
   - question: "Can I skip Angular versions when upgrading?"
-    answer: "No. The Angular CLI enforces upgrading one major version at a time. To go from Angular 14 to 20, you must upgrade through 14→15→16→17→18→19→20 sequentially. Each step runs its own migration schematics and resolves version-specific breaking changes. Attempting to skip versions will fail during dependency resolution."
+    answer: "No. The Angular CLI enforces upgrading one major version at a time. To go from Angular 14 to 22, you must upgrade through 14→15→16→17→18→19→20→21→22 sequentially. Each step runs its own migration schematics and resolves version-specific breaking changes. Attempting to skip versions will fail during dependency resolution."
   - question: "How long does an Angular upgrade take?"
-    answer: "A single major version upgrade typically takes 1-3 days for small applications and 1-2 weeks for medium enterprise applications. The two hardest transitions are 16→17 (TypeScript 5.x required, Node.js 16 dropped, standalone becomes default) and 19→20 (Node.js 18 dropped, significant TypeScript bump). Multi-version jumps compound — going from Angular 14 to 20 typically takes 2-4 months for enterprise applications."
+    answer: "A single major version upgrade typically takes 1-3 days for small applications and 1-2 weeks for medium enterprise applications. The two hardest transitions are 16→17 (TypeScript 5.x required, Node.js 16 dropped, standalone becomes default) and 19→20 (Node.js 18 dropped, significant TypeScript bump). Multi-version jumps compound — going from Angular 14 to 22 typically takes 4-6 months for enterprise applications."
   - question: "What is the hardest Angular upgrade?"
     answer: "The 16→17 upgrade is the most significant. It requires jumping to TypeScript 5.2+, drops Node.js 16 support entirely, makes standalone components the default, introduces the esbuild/Vite builder as default, and removes legacy Angular Material components. The 19→20 upgrade is also notable because it drops Node.js 18 support. Plan extra time for these two transitions."
   - question: "Which Angular version should I upgrade to?"
-    answer: "As of mid-2026, target Angular 20 or 21. Angular 20 is in LTS through November 2026. Angular 21 is actively supported with LTS through May 2027. Angular 19 LTS ends in May 2026. Any version below 19 is already end-of-life with no security patches."
+    answer: "As of mid-2026, target Angular 22. Angular 22 is the actively supported version with LTS through May 2028. Angular 21 is in LTS through May 2027. Angular 20 is in LTS through November 2026. Angular 19 and all earlier versions are end-of-life with no security patches."
 ---
 
 In 19 enterprise Angular upgrade projects, the version upgrade itself has never been the part that fails. What fails is the planning — teams that do not understand what each version jump requires, how long it actually takes, and where the hidden complexity lives. For the common failure patterns, see [why most Angular migrations fail](/blog/angular-migrations-fail).
 
-This guide covers every major version path from Angular 14 to 21. If your team is still on AngularJS (1.x), you need a [different migration path entirely](/blog/angularjs-to-typescript-migration) before this guide applies. For each upgrade step, you get the breaking changes, the dependency requirements, the migration schematics, and the realistic effort estimate based on enterprise projects.
+This guide covers every major version path from Angular 14 to 22. If your team is still on AngularJS (1.x), you need a [different migration path entirely](/blog/angularjs-to-typescript-migration) before this guide applies. For each upgrade step, you get the breaking changes, the dependency requirements, the migration schematics, and the realistic effort estimate based on enterprise projects.
 
 <Callout type="info">
 The interactive Angular update guide at [angular.dev/update-guide](https://angular.dev/update-guide) generates step-by-step instructions for your specific version pair. Use it alongside this guide — it covers the mechanical steps while this guide covers the strategic decisions and enterprise-specific pitfalls.
@@ -36,7 +36,7 @@ Every Angular upgrade follows the same pattern:
 ng update @angular/core @angular/cli
 ```
 
-Angular enforces upgrading one major version at a time. To go from Angular 14 to 20, you must walk through every intermediate version: 14→15→16→17→18→19→20. Each step runs migration schematics that automatically fix known breaking changes in your code.
+Angular enforces upgrading one major version at a time. To go from Angular 14 to 22, you must walk through every intermediate version: 14→15→16→17→18→19→20→21→22. Each step runs migration schematics that automatically fix known breaking changes in your code.
 
 Before starting any upgrade, commit your current state and run:
 
@@ -61,7 +61,7 @@ Every Angular version requires specific TypeScript and Node.js versions. Mismatc
 | **Angular 20** | >=5.8.0 &lt;6.0.0 | ^20.19.0 \|\| ^22.12.0 \|\| ^24.0.0 | **Node 18 dropped** |
 | **Angular 21** | >=5.9.0 &lt;6.0.0 | ^20.19.0 \|\| ^22.12.0 \|\| ^24.0.0 | — |
 
-**RxJS has remained stable** across the entire range at ^6.5.3 || ^7.4.0. No Angular upgrade from 14 to 21 forces an RxJS version change.
+**RxJS has remained stable** across the entire range at ^6.5.3 || ^7.4.0. No Angular upgrade from 14 to 22 forces an RxJS version change.
 
 Check your current versions before starting:
 
@@ -279,18 +279,19 @@ Not all upgrades are equal. Here is how they rank by effort:
 
 ## How Long Does an Angular Upgrade Take?
 
-Based on 19 enterprise upgrade projects, a single major version upgrade takes 1-3 days for small applications and 1-2 weeks for medium enterprise applications. Multi-version jumps scale non-linearly — going from Angular 14 to 20 typically takes 8-16 weeks because each of the six sequential upgrades has its own breaking changes, dependency conflicts, and testing requirements.
+Based on 19 enterprise upgrade projects, a single major version upgrade takes 1-3 days for small applications and 1-2 weeks for medium enterprise applications. Multi-version jumps scale non-linearly — going from Angular 14 to 22 typically takes 16-24 weeks because each of the eight sequential upgrades has its own breaking changes, dependency conflicts, and testing requirements.
 
 Here is what multi-version jumps actually take:
 
 | Starting Version | Target | Steps | Estimated Effort |
 |-----------------|--------|-------|-----------------|
-| Angular 14 | Angular 20 | 6 upgrades | 8-16 weeks |
-| Angular 15 | Angular 20 | 5 upgrades | 6-12 weeks |
-| Angular 16 | Angular 20 | 4 upgrades | 5-10 weeks |
-| Angular 17 | Angular 20 | 3 upgrades | 3-6 weeks |
-| Angular 18 | Angular 20 | 2 upgrades | 2-4 weeks |
-| Angular 19 | Angular 20 | 1 upgrade | 1-2 weeks |
+| Angular 14 | Angular 22 | 8 upgrades | 16-24 weeks |
+| Angular 16 | Angular 22 | 6 upgrades | 8-16 weeks |
+| Angular 17 | Angular 22 | 5 upgrades | 6-12 weeks |
+| Angular 18 | Angular 22 | 4 upgrades | 5-10 weeks |
+| Angular 19 | Angular 22 | 3 upgrades | 3-6 weeks |
+| Angular 20 | Angular 22 | 2 upgrades | 2-4 weeks |
+| Angular 21 | Angular 22 | 1 upgrade | 1-2 weeks |
 
 These estimates assume:
 - Medium enterprise application (50-200 components)
