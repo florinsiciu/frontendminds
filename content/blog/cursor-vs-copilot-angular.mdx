@@ -51,7 +51,7 @@ Both tools handle Angular 21's template syntax competently in 2026. The new cont
 
 Where I noticed a difference: Copilot produces faster inline completions when I am writing templates. It anticipates the next binding or directive with less latency. Cursor sometimes pauses to load context from related component files before suggesting template code, which adds a small delay but often produces more contextually accurate suggestions.
 
-For teams still migrating from `*ngIf` and `*ngFor` to the new syntax, Cursor's codebase indexing helps it understand which components have already been converted, reducing inconsistency across the project.
+For teams still migrating from `*ngIf` and `*ngFor` to the new syntax, Cursor's codebase indexing helps it understand which components have already been converted, reducing inconsistency across the project. Connecting the [Angular MCP server](/blog/angular-mcp-server-guide) to either tool further improves consistency by giving the AI live access to current Angular conventions.
 
 One specific pattern where Copilot wins: writing `@for` blocks with `track` expressions. Copilot consistently suggests the correct `track` property based on the iterated type, while Cursor occasionally suggests `track $index` when a unique identifier is available on the object.
 
