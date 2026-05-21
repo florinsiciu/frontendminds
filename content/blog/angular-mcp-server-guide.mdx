@@ -1,0 +1,411 @@
+---
+title: "Angular MCP Server: Complete Setup Guide for Cursor, VS Code, and Claude Code"
+description: "Set up the Angular CLI MCP server in every major IDE. Step-by-step configuration for Cursor, VS Code Copilot, Claude Code, and JetBrains — with all 13 tools explained and common issues solved."
+date: "2026-05-21"
+category: "angular-ai"
+author: "florin-siciu"
+tags: ["angular", "mcp", "ai-tools", "cursor", "claude-code", "developer-tools"]
+featured: true
+draft: false
+faq:
+  - question: "What is the Angular MCP server?"
+    answer: "The Angular MCP server is a Model Context Protocol server built into the Angular CLI that gives AI coding assistants real-time access to Angular best practices, documentation, project structure, and migration tools. Run it with the ng mcp command. It ensures AI tools generate code using current Angular patterns — standalone components, signals, inject(), and @if control flow — instead of outdated conventions from their training data."
+  - question: "How do I set up Angular MCP in Cursor?"
+    answer: "Create a .cursor/mcp.json file in your project root with the Angular CLI MCP server configuration. Set the command to npx and args to -y, @angular/cli, mcp. Cursor detects the config automatically and registers the server. Verify it is connected in Cursor Settings under the MCP section — you should see 6 tools listed under angular-cli."
+  - question: "What tools does the Angular MCP server provide?"
+    answer: "The Angular MCP server provides 6 stable tools enabled by default: get_best_practices, search_documentation, list_projects, find_examples, ai_tutor, and onpush_zoneless_migration. It also offers 7 experimental tools that must be enabled with the -E flag: modernize, build, test, e2e, devserver.start, devserver.stop, and devserver.wait_for_build. The stable tools cover best practices enforcement, documentation search, project discovery, code examples, interactive tutoring, and migration planning."
+  - question: "What Angular CLI version do I need for MCP?"
+    answer: "The MCP server was introduced experimentally in Angular CLI v20.1 with limited functionality, expanded with most tools in v20.2, and reached stable status in v21. For access to all 6 stable tools including find_examples and ai_tutor, use Angular CLI v20.2 or later. Version 21 or later is recommended for the best experience and most reliable tool behavior."
+  - question: "Can I use Angular MCP with Claude Code?"
+    answer: "Yes. Run claude mcp add angular-cli -- npx -y @angular/cli mcp from your Angular project directory. For team-wide setup, create a .mcp.json file in your project root and commit it to version control — this format works with both Claude Code and Cursor. Claude Code is not listed in the official Angular MCP documentation, but the standard MCP protocol works identically across all compatible AI tools."
+---
+
+The Angular CLI MCP server gives AI coding assistants real-time access to Angular best practices, documentation, and project structure. This guide covers complete setup for Cursor, VS Code Copilot, Claude Code, and JetBrains — with all 13 tools explained and common issues solved.
+
+## The Problem MCP Solves
+
+Ask any AI coding assistant to generate an Angular component today and you will likely get something like this:
+
+```typescript
+// WITHOUT MCP — AI generates Angular 12-15 patterns
+import { Component, Input, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-user-card',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <div *ngIf="user">
+      <h3>{{ user.name }}</h3>
+      <p *ngFor="let role of user.roles">{{ role }}</p>
+    </div>
+  `
+})
+export class UserCardComponent implements OnInit {
+  @Input() user: User | null = null;
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.userService.trackView(this.user?.id);
+  }
+}
+```
+
+This compiles. It also uses patterns that are falling behind the framework. The explicit `standalone: true` flag is redundant since Angular 19 made standalone the default. `*ngIf` and `*ngFor` were deprecated in Angular 20 in favor of the `@if` and `@for` built-in control flow (introduced in Angular 17, removal planned for Angular 22). The `input()` signal function is the recommended modern alternative to the `@Input()` decorator. The `inject()` function is preferred over constructor injection. `CommonModule` is no longer needed for control flow — `@if` and `@for` are built into the template engine and require no imports.
+
+Now the same prompt with the Angular MCP server connected:
+
+```typescript
+// WITH MCP — AI generates current Angular 21 patterns
+import { Component, effect, inject, input } from '@angular/core';
+
+@Component({
+  selector: 'app-user-card',
+  template: `
+    @if (user(); as u) {
+      <h3>{{ u.name }}</h3>
+      @for (role of u.roles; track role) {
+        <p>{{ role }}</p>
+      }
+    }
+  `
+})
+export class UserCardComponent {
+  user = input<User | null>(null);
+
+  private userService = inject(UserService);
+
+  constructor() {
+    effect(() => {
+      const u = this.user();
+      if (u) this.userService.trackView(u.id);
+    });
+  }
+}
+```
+
+The difference is one configuration file. The Angular MCP server gives your AI tool live access to the framework's current conventions at the moment it generates code — not whatever was in its training data.
+
+<Callout type="info">
+This guide covers setup for Cursor, VS Code (Copilot), Claude Code, and JetBrains. If you just need the fastest path, jump to Quick Start. For broader guidance on which AI tools work best with Angular, see our [AI pair programming guide](/blog/ai-pair-programming-angular) and [AI coding assistant comparison](/blog/best-ai-coding-assistants-angular).
+</Callout>
+
+## What Is the Angular MCP Server?
+
+MCP (Model Context Protocol) is an open standard that lets AI tools communicate with external data sources in real time. Think of it as a USB port for AI assistants — a standardized way to plug in context that the AI did not have during training.
+
+The Angular CLI includes a built-in MCP server that exposes six categories of functionality to any compatible AI tool:
+
+- **Best practices** — the official Angular coding conventions, updated with every release
+- **Documentation search** — live queries against angular.dev
+- **Project awareness** — your workspace structure, apps, libraries, and selector prefixes
+- **Code examples** — a curated database of official examples, resolved against your installed Angular version
+- **Interactive tutoring** — a guided learning experience for modern Angular patterns
+- **Migration planning** — analysis and step-by-step plans for moving to OnPush change detection and zoneless Angular
+
+The server was introduced experimentally in Angular CLI v20.1 (July 2025), expanded with the full toolset in v20.2 (August 2025), and reached stable status in v21 (November 2025).
+
+When your AI assistant connects to this server, every code generation request is informed by current Angular patterns. The AI stops generating `*ngIf` because `get_best_practices` tells it to use `@if`. It stops importing `CommonModule` because the best practices guide says the new control flow syntax does not require it. It uses `inject()` instead of constructor injection because that is what the current framework recommends.
+
+## Prerequisites
+
+Before setting up the MCP server, confirm you have:
+
+- **Angular CLI v20.2 or later** (v21+ recommended). Check with `ng version`.
+- **Node.js 18 or later**. The `npx` command is used to run the server.
+- **One of these IDEs:** Cursor, VS Code with GitHub Copilot, Claude Code, or a JetBrains IDE (WebStorm, IntelliJ IDEA).
+
+If you are on an older Angular CLI version, run `npm install -g @angular/cli@latest` to update, or use `npx -y @angular/cli mcp` which downloads the latest version automatically.
+
+## Quick Start
+
+Three steps to get the Angular MCP server running in your IDE.
+
+**Step 1 — Verify the server works.** Open a terminal in your Angular project and run:
+
+```bash
+npx -y @angular/cli mcp
+```
+
+You should see output indicating the MCP server has started. Press `Ctrl+C` to stop it — you will not run it manually in practice. Your IDE handles starting and stopping the server.
+
+**Step 2 — Add the configuration to your IDE.** Create the config file for your IDE of choice (detailed instructions for each IDE follow below). For Cursor, the fastest path is creating `.cursor/mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "angular-cli": {
+      "command": "npx",
+      "args": ["-y", "@angular/cli", "mcp"]
+    }
+  }
+}
+```
+
+**Step 3 — Test the connection.** Open your AI assistant and ask: "What projects are in this workspace?" If the MCP server is connected, the AI will call the `list_projects` tool and return your workspace structure from `angular.json` — including project names, types, and selector prefixes.
+
+If that works, you are set up. Every code generation prompt will now have access to Angular's current best practices.
+
+## IDE Setup Guides
+
+### Cursor
+
+Create `.cursor/mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "angular-cli": {
+      "command": "npx",
+      "args": ["-y", "@angular/cli", "mcp"]
+    }
+  }
+}
+```
+
+**Verify:** Open Cursor Settings and navigate to the MCP section. You should see `angular-cli` listed with a green status indicator and 6 tools registered.
+
+**Key detail:** Cursor uses the `"mcpServers"` key in its configuration file. This is different from VS Code, which uses `"servers"`. Mixing them up is the most common setup error.
+
+### VS Code (GitHub Copilot)
+
+Create `.vscode/mcp.json` in your project root:
+
+```json
+{
+  "servers": {
+    "angular-cli": {
+      "command": "npx",
+      "args": ["-y", "@angular/cli", "mcp"]
+    }
+  }
+}
+```
+
+**Verify:** Open the Command Palette (`Ctrl+Shift+P`) and run "MCP: List Servers". You should see `angular-cli` listed as connected.
+
+**Key detail:** VS Code uses the `"servers"` key — not `"mcpServers"`. This is the most common mistake when copying configurations between editors. You also need the GitHub Copilot extension installed with MCP support enabled.
+
+### Claude Code
+
+Claude Code supports three configuration approaches depending on whether you want personal, team-shared, or global setup.
+
+**Option 1 — CLI command (personal, fastest):**
+
+```bash
+claude mcp add angular-cli -- npx -y @angular/cli mcp
+```
+
+This stores the configuration in `~/.claude.json` under your current project path. It is private to you and loads only in this project.
+
+**Option 2 — Project-level `.mcp.json` (team sharing):**
+
+Create `.mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "angular-cli": {
+      "command": "npx",
+      "args": ["-y", "@angular/cli", "mcp"]
+    }
+  }
+}
+```
+
+Commit this file to your repository. Every team member using Claude Code (or Cursor — same format) gets the MCP server automatically. Claude Code prompts for approval before using project-scoped servers for the first time.
+
+**Option 3 — Global (all your projects):**
+
+```bash
+claude mcp add --scope user angular-cli -- npx -y @angular/cli mcp
+```
+
+This makes the Angular MCP server available in every project you open with Claude Code.
+
+**Verify:** Run `claude mcp list` in your terminal, or type `/mcp` inside a Claude Code session. You should see `angular-cli` listed as connected with the `npx` command.
+
+**Understanding scopes:**
+
+| Scope | Flag | Shared with team? | Stored in |
+|-------|------|--------------------|-----------|
+| Local (default) | `--scope local` | No | `~/.claude.json` (per-project section) |
+| Project | `--scope project` | Yes, via version control | `.mcp.json` in project root |
+| User | `--scope user` | No | `~/.claude.json` (global section) |
+
+<Callout type="warning">
+A common mistake: MCP server configurations go in ~/.claude.json or .mcp.json — NOT in .claude/settings.json. The settings files control permissions and environment variables, not MCP servers. If your server is not loading, check that you are editing the right file.
+</Callout>
+
+### JetBrains (WebStorm / IntelliJ IDEA)
+
+1. Open **Settings** → **Tools** → **AI Assistant** → **Model Context Protocol (MCP)**
+2. Click **Add** and select the JSON configuration format
+3. Paste the configuration:
+
+```json
+{
+  "command": "npx",
+  "args": ["-y", "@angular/cli", "mcp"]
+}
+```
+
+4. Name the server `angular-cli` and save
+
+**Requires:** The AI Assistant plugin must be installed and enabled. JetBrains MCP support works with the built-in AI Assistant.
+
+### Team Setup: Shared Configuration
+
+For teams, the `.mcp.json` file in your project root is the recommended approach. This single file works with both Cursor and Claude Code:
+
+```json
+{
+  "mcpServers": {
+    "angular-cli": {
+      "command": "npx",
+      "args": ["-y", "@angular/cli", "mcp"]
+    }
+  }
+}
+```
+
+Commit this to your repository. New team members get the Angular MCP server configured automatically when they clone the project and open it in a supported IDE.
+
+The `-y` flag on `npx` is important for team setups. Without it, npm may prompt to confirm the package installation, which hangs the background MCP server process since there is no interactive terminal to respond to the prompt.
+
+## MCP Tools Reference
+
+The Angular MCP server provides 13 tools organized into two tiers: 6 stable tools enabled by default and 7 experimental tools that require explicit opt-in.
+
+### Stable Tools (Enabled by Default)
+
+These 6 tools are available immediately after connecting the MCP server.
+
+**`get_best_practices`** retrieves the official Angular Best Practices Guide — a comprehensive markdown document covering standalone components, signals, `inject()`, OnPush change detection, modern control flow, typed forms, and more. This is the tool that prevents your AI from generating outdated patterns. It runs locally and does not require internet.
+
+*When to use it:* Every session. Most AI tools call this automatically when generating Angular code, but you can prompt it explicitly: "Check the Angular best practices before generating this component."
+
+**`search_documentation`** queries the live Angular documentation at angular.dev. It accepts a search query and can return full content from the top result. You can target specific Angular versions for version-relevant results. This is the only stable tool that requires an internet connection.
+
+*When to use it:* When you need API details, configuration options, or official guidance. "How do I configure lazy loading in Angular?" triggers a documentation search and returns the current answer.
+
+**`list_projects`** reads your `angular.json` and returns all applications and libraries in the workspace — including project names, types (application vs. library), root directories, source roots, and selector prefixes. This gives the AI awareness of your workspace structure before it generates any code.
+
+*When to use it:* At the start of any AI-assisted work session. "What projects are in this workspace?" maps your codebase for the AI and prevents it from generating code that conflicts with your project organization.
+
+**`find_examples`** searches a curated database of official Angular code examples with rich metadata: titles, summaries, keywords, and required packages. The tool is version-aware — it resolves examples from your installed `@angular/core` version, so you get examples compatible with your project. Supports filtering by keywords, packages, and related concepts.
+
+*When to use it:* When learning modern patterns or validating an approach. "Show me an example of signal-based state management" returns official, tested implementations rather than AI-generated approximations.
+
+**`ai_tutor`** launches an interactive Angular tutor that guides you through building a "Smart Recipe Box" application step by step. It teaches modern Angular patterns including signals, control flow, and standalone components through a learn-then-apply loop: explain a concept, then give a hands-on exercise. It sees your actual code and provides targeted feedback.
+
+*When to use it:* Onboarding new team members to modern Angular or learning signals and control flow yourself. Recommended for Angular v20+ projects.
+
+**`onpush_zoneless_migration`** analyzes Angular components or folders and produces a step-by-step, iterative plan to migrate to OnPush change detection — a prerequisite for zoneless Angular. It identifies unmanaged subscriptions, patterns that will not trigger change detection without Zone.js, and recommends signal conversions. The output is a prioritized migration plan with alternative approaches.
+
+*When to use it:* When planning a migration to OnPush change detection or evaluating zoneless readiness. "Analyze this component for OnPush migration" returns a concrete, actionable plan.
+
+### Experimental Tools (Require `-E` Flag)
+
+These 7 tools must be enabled explicitly. They give the AI the ability to build, test, run, and modify your project.
+
+| Tool | What It Does | Enable With | Modifies Code? |
+|------|-------------|-------------|----------------|
+| `modernize` | Runs code migrations: control-flow, standalone, signal-input, self-closing, inject | `-E modernize` | Yes |
+| `build` | Runs `ng build` (one-off, no watch) | `-E build` | No |
+| `test` | Runs project unit tests | `-E test` | No |
+| `e2e` | Runs end-to-end tests | `-E e2e` | No |
+| `devserver.start` | Starts `ng serve` asynchronously | `-E devserver` | No |
+| `devserver.stop` | Stops a running dev server | `-E devserver` | No |
+| `devserver.wait_for_build` | Returns output logs of the most recent build | `-E devserver` | No |
+
+**The `modernize` tool** deserves special attention. It performs actual code transformations on your files:
+
+- **control-flow** — `*ngIf` / `*ngFor` / `*ngSwitch` → `@if` / `@for` / `@switch`
+- **standalone** — converts components, directives, and pipes to standalone
+- **signal-input** — `@ViewChild` / `@ContentChild` → signal-based `viewChild` / `contentChild`
+- **self-closing** — converts empty element tags to self-closing tags
+- **inject** — `InjectFlags` enum → options object
+
+To enable it, add `-E modernize` to your MCP server args:
+
+```json
+{
+  "mcpServers": {
+    "angular-cli": {
+      "command": "npx",
+      "args": ["-y", "@angular/cli", "mcp", "-E", "modernize"]
+    }
+  }
+}
+```
+
+**The devserver tools** let your AI start, stop, and monitor a development server. Use `-E devserver` to enable all three at once. This is useful for workflows where the AI generates code, starts the dev server, checks for build errors, and iterates — all within a single session.
+
+To enable multiple experimental tools:
+
+```json
+{
+  "mcpServers": {
+    "angular-cli": {
+      "command": "npx",
+      "args": ["-y", "@angular/cli", "mcp", "-E", "modernize", "build", "test", "devserver"]
+    }
+  }
+}
+```
+
+## CLI Flags
+
+Three flags control which tools the MCP server registers:
+
+**`--read-only`** restricts the server to tools that do not modify your project. This disables `modernize` and `build` from experimental tools. Use this when you want AI to have full read access to best practices and documentation but zero ability to change code through MCP.
+
+```json
+{ "args": ["-y", "@angular/cli", "mcp", "--read-only"] }
+```
+
+**`--local-only`** restricts the server to tools that do not require internet. This disables `search_documentation` (the only network-dependent stable tool). Use this in air-gapped environments or when you want faster responses without external API calls.
+
+```json
+{ "args": ["-y", "@angular/cli", "mcp", "--local-only"] }
+```
+
+**`-E <tool>`** (or `--experimental-tool`) enables specific experimental tools. You can combine multiple tools and mix with the other flags:
+
+```json
+{ "args": ["-y", "@angular/cli", "mcp", "--read-only", "-E", "test", "e2e"] }
+```
+
+This gives the AI read-only access to best practices plus the ability to run your test suites — but not to modify code or start dev servers.
+
+## Combining MCP with Agent Skills and Rules Files
+
+The MCP server is one layer of a larger AI configuration stack. For maximum code quality, combine it with these complementary tools:
+
+| Layer | Purpose | Setup |
+|-------|---------|-------|
+| **MCP Server** | Live tools: best practices, docs, project awareness, migration planning | `ng mcp` (this guide) |
+| **Agent Skills** | Domain-specific instructions for AI agents | `npx skills add https://github.com/angular/skills` |
+| **Rules files** | Static conventions specific to your IDE | `.cursor/rules/`, `CLAUDE.md`, `.github/copilot-instructions.md` |
+| **AGENTS.md** | Platform-agnostic AI instructions, committed to your repo | `AGENTS.md` in project root |
+
+The MCP server handles dynamic, tool-based interactions — the AI calls `get_best_practices` or `search_documentation` when it needs information. Rules files provide static context that the AI reads at the start of every session — your team's specific conventions, architectural decisions, and coding standards that go beyond the framework defaults.
+
+Angular provides pre-built rules files for each major IDE at `angular.dev/ai/develop-with-ai`. You can download these as a starting point and customize them for your team's patterns.
+
+## Troubleshooting
+
+**MCP server not connecting.** Verify Node.js 18+ is installed (`node --version`). Try running the server manually with `npx -y @angular/cli mcp` to see if it starts. If npm throws an error, clear the npx cache with `npx clear-npx-cache` and retry.
+
+**Tools not appearing in your IDE.** Check the config key name. Cursor uses `"mcpServers"` while VS Code uses `"servers"`. This mismatch is the single most common setup error — the config file loads without errors but the server never connects because the IDE does not recognize the key.
+
+**Server hangs on startup.** Add the `-y` flag to your npx command: `npx -y @angular/cli mcp`. Without it, npm may prompt to confirm the package installation. Since the MCP server runs as a background process with no interactive terminal, the prompt hangs indefinitely.
+
+**Only 5 tools showing instead of 6.** If you are using the `--local-only` flag, `search_documentation` is excluded because it requires an internet connection. This is expected behavior, not an error.
+
+**Claude Code: server not loading after configuration.** MCP server definitions go in `~/.claude.json` (created by `claude mcp add`) or `.mcp.json` (project-level). They do not go in `.claude/settings.json` or `.claude/settings.local.json` — those files control permissions and environment variables. If you edited the wrong file, move the configuration or re-run the `claude mcp add` command.
+
+**Server works but AI still generates old patterns.** The MCP server provides tools that the AI *can* call, but some AI assistants do not call `get_best_practices` automatically. Try prompting explicitly: "Check the Angular best practices guide, then generate the component." Combining MCP with a rules file that instructs the AI to always consult best practices first produces more consistent results.
