@@ -1,0 +1,66 @@
+---
+description: Angular best practices and coding standards for modern Angular development. Enforces standalone components, signals, inject(), @if/@for control flow, and OnPush change detection.
+globs: ["**/*.{ts,html,scss,css}"]
+---
+
+# Angular Best Practices
+
+# Setup: Save this file to .cursor/rules/angular.mdc in your project root.
+# Source: Adapted from angular.dev/assets/context/angular-20.mdc
+# Guide: https://frontendminds.com/blog/why-ai-writes-outdated-angular-code
+
+This project adheres to modern Angular best practices, emphasizing maintainability, performance, accessibility, and scalability.
+
+## TypeScript Best Practices
+
+* **Strict Type Checking:** Always enable and adhere to strict type checking.
+* **Prefer Type Inference:** Allow TypeScript to infer types when obvious from context.
+* **Avoid `any`:** Do not use the `any` type. Prefer `unknown` when a type is uncertain.
+
+## Angular Best Practices
+
+* **Standalone Components:** Always use standalone components, directives, and pipes. Avoid `NgModules`.
+* **Implicit Standalone:** Do NOT set `standalone: true` in decorators — it is the default since Angular 19.
+* **Signals for State Management:** Use Angular Signals for reactive state management.
+* **Lazy Loading:** Implement lazy loading for feature routes.
+* **NgOptimizedImage:** Use `NgOptimizedImage` for all static images.
+* **Host bindings:** Do NOT use `@HostBinding` and `@HostListener`. Use the `host` object in decorators instead.
+
+## Components
+
+* **`input()` and `output()` Functions:** Use `input()` and `output()` functions, not `@Input()` and `@Output()` decorators.
+    ```typescript
+    userId = input<string>('');
+    userSelected = output<string>();
+    ```
+* **`computed()` for Derived State:** Use `computed()` for state derived from signals.
+* **`ChangeDetectionStrategy.OnPush`:** Always set `changeDetection: ChangeDetectionStrategy.OnPush`.
+* **Reactive Forms:** Prefer Reactive Forms over Template-driven forms.
+* **No `ngClass`/`ngStyle`:** Use native `[class.active]="isActive"` and `[style.font-size.px]="fontSize"` bindings.
+
+## State Management
+
+* Use signals for local component state.
+* Use `computed()` for derived state.
+* Do NOT use `mutate` on signals — use `update` or `set`.
+
+## Templates
+
+* Use native control flow (`@if`, `@for`, `@switch`) instead of `*ngIf`, `*ngFor`, `*ngSwitch`.
+    ```html
+    @if (isVisible) {
+      <section>Content</section>
+    }
+    @for (item of items; track item.id) {
+      <section>{{ item }}</section>
+    }
+    ```
+* Use the `async` pipe to handle observables in templates.
+
+## Services
+
+* Use `providedIn: 'root'` for singleton services.
+* Use `inject()` function instead of constructor injection.
+    ```typescript
+    private myService = inject(MyService);
+    ```

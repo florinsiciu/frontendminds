@@ -1,0 +1,278 @@
+---
+title: "Why AI Writes Outdated Angular Code (And How to Fix It Across Every Tool)"
+description: "AI coding tools generate Angular 12-era patterns because of training data lag. Here is exactly why it happens and step-by-step fixes for Cursor, VS Code Copilot, Claude Code, and JetBrains using Angular's official rules files, MCP server, and Agent Skills."
+date: "2026-05-21"
+category: "angular-ai"
+author: "florin-siciu"
+tags: ["angular", "ai-tools", "cursor", "copilot", "claude-code", "developer-tools", "configuration"]
+featured: true
+draft: false
+faq:
+  - question: "Why does GitHub Copilot generate old Angular code?"
+    answer: "GitHub Copilot generates outdated Angular patterns because its training data is dominated by Angular 2 through 15 code — the versions that accumulated the most Stack Overflow answers, GitHub repos, and blog posts over the past decade. Angular 17+ patterns like signals, @if control flow, and the input() function represent a small fraction of the training corpus. Copilot issue #1128 documented this explicitly, with users reporting that Copilot recommended replacing @for with *ngFor and described Angular 12 as the latest version."
+  - question: "How do I make AI use Angular signals instead of BehaviorSubjects?"
+    answer: "Configure your AI tool with Angular's official rules files, which explicitly instruct the AI to use signals for state management. For Cursor, download angular-20.mdc from angular.dev/assets/context/ and place it in .cursor/rules/. For VS Code Copilot, download guidelines.md and save it as .github/copilot-instructions.md. For Claude Code, add signal conventions to your CLAUDE.md file. Then connect the Angular MCP server for live best-practices enforcement."
+  - question: "How do I configure Cursor for modern Angular development?"
+    answer: "Two steps: first, download Angular's official Cursor rules file from angular.dev/assets/context/angular-20.mdc and save it to .cursor/rules/angular.mdc in your project. This gives Cursor static knowledge of modern Angular patterns. Second, connect the Angular MCP server by creating .cursor/mcp.json with the Angular CLI MCP configuration — this gives Cursor live access to best practices, documentation, and project structure."
+  - question: "What is CLAUDE.md and how does it help with Angular?"
+    answer: "CLAUDE.md is a project-level instruction file for Claude Code. It is plain markdown placed in your project root and read automatically at the start of every Claude Code session. For Angular projects, it should contain your team's conventions — standalone components, signals for state, inject() for dependencies, @if/@for for control flow — so Claude Code generates code matching your current patterns instead of defaulting to older Angular conventions from its training data."
+  - question: "What are Angular Agent Skills?"
+    answer: "Angular Agent Skills are domain-specific instruction packages that teach AI agents about Angular's conventions, reactivity model, and project structure. Install them with npx skills add https://github.com/angular/skills. Two skills are available: angular-developer for code generation and architectural guidance, and angular-new-app for scaffolding new projects. They work with Gemini CLI, Antigravity, and skills.sh."
+---
+
+AI coding tools generate outdated Angular patterns because their training data is dominated by older versions of the framework. This guide explains exactly why it happens, shows you the six specific patterns AI gets wrong, and provides step-by-step fixes for Cursor, VS Code Copilot, Claude Code, JetBrains, and more — using Angular's official configuration files.
+
+## The Root Cause: Training Data Lag
+
+Every AI coding assistant — GitHub Copilot, Cursor, Claude Code, ChatGPT — is trained on massive datasets of public code. The problem is simple math: Angular has existed since 2016, and the patterns that accumulated the most code, Stack Overflow answers, and blog posts over that decade are from Angular 2 through 15. The modern patterns that Angular recommends today were introduced across several releases: `inject()` arrived in Angular 14 (June 2022), signals in Angular 16 (May 2023), `@if`/`@for` control flow and the `input()` function in Angular 17 (November 2023). These features became stable in Angular 18, standalone became the default in Angular 19, and `*ngIf`/`*ngFor` were deprecated in Angular 20. That is a rapid evolution over just two years — against eight years of legacy patterns dominating the training data.
+
+The result is predictable. Ask an AI tool to generate an Angular component and it reaches for the patterns it has seen most often: `*ngIf`, `@Input()` decorators, constructor injection, explicit `standalone: true`, `CommonModule` imports. These patterns compile. They also use conventions that Angular has deprecated or moved past.
+
+This is not speculation. GitHub Copilot issue [#1128](https://github.com/microsoft/vscode-copilot-release/issues/1128), titled "copilot AI unaware of Angular 17, or anything past Angular 12," documented the problem explicitly. When asked about Angular versions, Copilot responded: "as of my last update, the latest stable version of Angular is Angular 12." Users reported that Copilot actively replaced modern `@for` blocks with deprecated `*ngFor` directives, calling the older syntax "Angular's latest features for control flow."
+
+The issue accumulated frustrated comments from April 2024 through April 2025. Microsoft eventually archived the entire `vscode-copilot-release` repository in March 2026 without delivering a targeted fix for Angular knowledge gaps. The underlying problem remains: training data lag means every AI tool will default to older patterns unless you explicitly configure it otherwise.
+
+## The Six Patterns AI Gets Wrong
+
+These are the specific patterns where AI tools consistently generate outdated Angular code, along with what modern Angular actually looks like.
+
+### 1. Structural Directives Instead of Built-In Control Flow
+
+AI tools default to `*ngIf` and `*ngFor` because these patterns dominated Angular code for seven years. The built-in control flow (`@if`, `@for`, `@switch`) was introduced as developer preview in Angular 17, became stable in Angular 18, and is the recommended approach. The structural directives were deprecated in Angular 20 and are scheduled for removal in Angular 22.
+
+```typescript
+// What AI generates (deprecated in Angular 20)
+<div *ngIf="user">{{ user.name }}</div>
+<div *ngFor="let item of items">{{ item }}</div>
+
+// What modern Angular uses (since Angular 17)
+@if (user) {
+  <div>{{ user.name }}</div>
+}
+@for (item of items; track item.id) {
+  <div>{{ item }}</div>
+}
+```
+
+The new syntax requires no imports — `@if` and `@for` are built into the template engine. `CommonModule` is no longer needed for control flow.
+
+### 2. @Input() Decorator Instead of input() Signal Function
+
+The `input()` signal function was introduced as developer preview in Angular 17.1 and became stable in Angular 18. The `@Input()` decorator still works and is not deprecated, but `input()` integrates with Angular's signal-based reactivity system, enabling `computed()` and `effect()` to react to input changes automatically.
+
+```typescript
+// What AI generates
+@Input() userId: string = '';
+
+// What modern Angular recommends
+userId = input<string>('');
+```
+
+### 3. Constructor Injection Instead of inject()
+
+The `inject()` function has been available since Angular 14 (June 2022) and is now the preferred way to inject dependencies. Despite being available for over three years, AI tools still default to constructor injection because the older pattern dominates training data. Angular provides an official migration schematic (`ng generate @angular/core:inject`) to convert constructor-based injection to `inject()`.
+
+```typescript
+// What AI generates
+constructor(private userService: UserService, private router: Router) {}
+
+// What modern Angular recommends
+private userService = inject(UserService);
+private router = inject(Router);
+```
+
+### 4. Explicit standalone: true
+
+Since Angular 19, standalone is the default for all components, directives, and pipes. Specifying `standalone: true` is redundant — the Angular CLI's `ng update` migration removes it automatically.
+
+```typescript
+// What AI generates (redundant since Angular 19)
+@Component({
+  standalone: true,
+  selector: 'app-user-card',
+  template: `...`
+})
+
+// What modern Angular uses (standalone is implicit)
+@Component({
+  selector: 'app-user-card',
+  template: `...`
+})
+```
+
+### 5. BehaviorSubject Instead of signal()
+
+For component-level state management, signals are the recommended replacement for BehaviorSubject. They are synchronous, simpler to compose with `computed()`, and integrate directly with Angular's change detection.
+
+```typescript
+// What AI generates
+private count$ = new BehaviorSubject<number>(0);
+count = this.count$.asObservable();
+increment() { this.count$.next(this.count$.value + 1); }
+
+// What modern Angular recommends
+count = signal(0);
+increment() { this.count.update(c => c + 1); }
+```
+
+### 6. NgClass/NgStyle Instead of Native Bindings
+
+AI tools import `CommonModule` or `NgClass` to use `[ngClass]` for conditional CSS classes. Modern Angular uses native class and style bindings directly — no directives or imports needed.
+
+```html
+<!-- What AI generates -->
+<section [ngClass]="{'active': isActive}"></section>
+
+<!-- What modern Angular uses -->
+<section [class.active]="isActive"></section>
+```
+
+## The Fix: Angular's AI Configuration Stack
+
+Angular provides official configuration files that solve this problem. The fix is a four-layer stack — each layer adds a different type of context that prevents AI tools from falling back to outdated patterns.
+
+<Callout type="info">
+You do not need all four layers. Start with Layer 1 (rules files) for immediate improvement. Add Layer 2 (MCP server) for dynamic project awareness. Layers 3 and 4 are for teams using specific AI agent tools.
+</Callout>
+
+| Layer | What It Does | When the AI Reads It |
+|-------|-------------|---------------------|
+| **Rules files** | Static conventions for your IDE | Start of every session |
+| **MCP server** | Live tools: best practices, docs, project structure | When the AI calls a tool |
+| **Agent Skills** | Domain-specific instructions for AI agents | When installed in the agent |
+| **AGENTS.md** | Platform-agnostic team instructions | Start of every session |
+
+### Layer 1: Rules Files — Every Developer, Every Session
+
+Rules files are static markdown documents that your AI tool reads at the start of every session. Angular provides official rules files for each major IDE — download them, drop them into your project, and every AI interaction uses current Angular conventions.
+
+#### Cursor
+
+Download Angular's official Cursor rules file and save it in your project:
+
+1. Download [`angular-20.mdc`](https://angular.dev/assets/context/angular-20.mdc) from angular.dev
+2. Save it to `.cursor/rules/angular.mdc` in your project root
+3. Cursor reads this file automatically on every session
+
+The file includes YAML frontmatter that targets TypeScript, HTML, and CSS files, plus detailed Bad/Good code examples for every modern Angular pattern — standalone components, signals, `inject()`, `input()`/`output()`, `@if`/`@for`, `OnPush`, and more.
+
+#### VS Code (GitHub Copilot)
+
+Download Angular's guidelines and save them as Copilot workspace instructions:
+
+1. Download [`guidelines.md`](https://angular.dev/assets/context/guidelines.md) from angular.dev
+2. Save it to `.github/copilot-instructions.md` in your project root
+3. Copilot reads this file for every request in the workspace
+
+The file includes a persona definition ("You are a dedicated Angular developer immersed in Angular v20+"), a complete component example with signals and `@if` control flow, resource links to angular.dev essentials, accessibility requirements (WCAG AA, AXE), and the full best practices checklist.
+
+<Callout type="warning">
+The file must be inside the .github/ directory — not at the project root. There is no .copilot-instructions.md at root. The correct path is .github/copilot-instructions.md.
+</Callout>
+
+#### Claude Code
+
+Claude Code reads a `CLAUDE.md` file from your project root at the start of every session. Angular does not provide a pre-built `CLAUDE.md`, but you can adapt the official `best-practices.md` file:
+
+1. Download [`best-practices.md`](https://angular.dev/assets/context/best-practices.md) from angular.dev
+2. Save it as `CLAUDE.md` in your project root (or add its contents to your existing `CLAUDE.md`)
+3. Claude Code reads this automatically on every session
+
+You can also add team-specific conventions — your selector prefix, state management approach, test patterns — that go beyond the framework defaults. A ready-to-use template is available as a [downloadable resource](/resources/angular-claude-md-template.md).
+
+#### JetBrains (WebStorm / IntelliJ IDEA)
+
+1. Download [`guidelines.md`](https://angular.dev/assets/context/guidelines.md) from angular.dev
+2. Open **Settings** → **Tools** → **AI Assistant** → **Custom Instructions**
+3. Paste the content of `guidelines.md` into the custom instructions field
+
+JetBrains uses the same `guidelines.md` file as VS Code Copilot.
+
+#### Windsurf
+
+1. Download [`guidelines.md`](https://angular.dev/assets/context/guidelines.md) from angular.dev
+2. Save it as `guidelines.md` and configure it in Cascade Memories
+
+#### Firebase Studio
+
+1. Download [`airules.md`](https://angular.dev/assets/context/airules.md) from angular.dev
+2. Save it to `.idx/airules.md` in your project
+
+Note: `airules.md` is a slightly stripped-down version of `guidelines.md` — it omits the accessibility requirements section and a few template rules. If you need accessibility enforcement, use `guidelines.md` instead.
+
+### Layer 2: Angular MCP Server — Live Tools and Project Awareness
+
+Rules files are static — they give the AI a set of conventions to follow. The MCP server adds dynamic context: live documentation search, project structure awareness, code examples resolved against your installed Angular version, and migration planning tools.
+
+The MCP server is the single most impactful upgrade for AI code quality in Angular projects. It provides 6 stable tools (best practices, documentation, project discovery, examples, tutoring, migration analysis) and 7 experimental tools (build, test, e2e, dev server, and code modernization).
+
+For complete setup instructions covering Cursor, VS Code, Claude Code, and JetBrains, see the [Angular MCP Server Complete Setup Guide](/blog/angular-mcp-server-guide).
+
+The key takeaway: rules files tell the AI what patterns to use. The MCP server lets the AI verify those patterns against live documentation and understand your specific project before generating code. They are complementary — use both.
+
+### Layer 3: Agent Skills — For AI Agent Workflows
+
+Angular Agent Skills are domain-specific instruction packages designed for AI agents that use the skills protocol. They provide deeper architectural guidance than rules files, covering reactivity patterns (signals, `linkedSignal`, `resource`), forms, dependency injection, routing, SSR, accessibility, animations, styling, testing, and CLI tooling.
+
+Install them with:
+
+```bash
+npx skills add https://github.com/angular/skills
+```
+
+Two skills are available:
+
+- **`angular-developer`** — Generates Angular code and provides architectural guidance across all major Angular domains
+- **`angular-new-app`** — Creates new Angular applications with proper modern structure
+
+Compatible with Gemini CLI, Antigravity, and the community tool [skills.sh](https://skills.sh/). Agent Skills are not a replacement for rules files — they serve different tools. If your workflow uses Gemini CLI or another agent-based tool, install the skills. For IDE-based development with Cursor, VS Code, or Claude Code, rules files and MCP are the primary layers.
+
+### Layer 4: AGENTS.md — Platform-Agnostic Team Instructions
+
+`AGENTS.md` is a convention for platform-agnostic AI instructions committed to your repository root. Unlike IDE-specific rules files, `AGENTS.md` is read by multiple AI tools — including VS Code Copilot, Claude Code, and others that support the convention.
+
+Use `AGENTS.md` for team-wide instructions that apply regardless of which IDE or AI tool a developer uses:
+
+```markdown
+# Angular Project AI Instructions
+
+This project uses Angular 21 with the following conventions:
+- Standalone components (implicit, do not set standalone: true)
+- Signals for component state, computed() for derived state
+- inject() for dependency injection
+- @if/@for/@switch control flow (not *ngIf/*ngFor/*ngSwitch)
+- input()/output() functions (not @Input()/@Output() decorators)
+- OnPush change detection strategy
+- Vitest for unit testing
+```
+
+Commit this to your repository. Every team member's AI tool picks it up automatically.
+
+## Which Fix Do You Need?
+
+Start with the first column. Add more layers as needed.
+
+| Your IDE / Tool | Start With | Then Add | Optional |
+|----------------|-----------|----------|----------|
+| **Cursor** | `.cursor/rules/angular.mdc` | [MCP server](/blog/angular-mcp-server-guide) | `AGENTS.md` for team |
+| **VS Code + Copilot** | `.github/copilot-instructions.md` | [MCP server](/blog/angular-mcp-server-guide) | `AGENTS.md` for team |
+| **Claude Code** | `CLAUDE.md` + [MCP server](/blog/angular-mcp-server-guide) | `AGENTS.md` | Agent Skills via skills.sh |
+| **JetBrains** | Custom Instructions (paste `guidelines.md`) | [MCP server](/blog/angular-mcp-server-guide) | `AGENTS.md` for team |
+| **Gemini CLI** | Agent Skills (`npx skills add`) | [MCP server](/blog/angular-mcp-server-guide) | — |
+| **Multiple tools on a team** | `AGENTS.md` + [MCP server](/blog/angular-mcp-server-guide) | IDE-specific rules per developer | Agent Skills |
+
+## Downloadable Configuration Templates
+
+Ready-to-use configuration files for your project. Download, drop into the correct path, and commit to version control — every developer on your team gets better AI output immediately.
+
+- [**Cursor rules file**](/resources/angular-cursor-rules.mdc) → save to `.cursor/rules/angular.mdc`
+- [**Copilot instructions**](/resources/angular-copilot-instructions.md) → save to `.github/copilot-instructions.md`
+- [**Claude Code CLAUDE.md template**](/resources/angular-claude-md-template.md) → save to `CLAUDE.md` in project root
+
+These files are adapted from Angular's official configuration files at [angular.dev/ai/develop-with-ai](https://angular.dev/ai/develop-with-ai) with setup instructions added.
+
+## The Compound Effect
+
+Each layer alone makes a measurable difference. Rules files stop the AI from generating `*ngIf` and constructor injection. The MCP server adds project awareness so generated code uses your actual services and interfaces. Agent Skills provide architectural depth for complex decisions. `AGENTS.md` ensures consistency across a team using different tools.
+
+Together, they transform AI from a tool that generates plausible-but-outdated Angular code into one that generates code matching your team's current conventions. The configuration takes minutes. The impact compounds across every AI interaction for every developer on the team.

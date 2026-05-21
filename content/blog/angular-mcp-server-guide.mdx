@@ -394,7 +394,7 @@ The MCP server is one layer of a larger AI configuration stack. For maximum code
 
 The MCP server handles dynamic, tool-based interactions — the AI calls `get_best_practices` or `search_documentation` when it needs information. Rules files provide static context that the AI reads at the start of every session — your team's specific conventions, architectural decisions, and coding standards that go beyond the framework defaults.
 
-Angular provides pre-built rules files for each major IDE at `angular.dev/ai/develop-with-ai`. You can download these as a starting point and customize them for your team's patterns.
+Angular provides pre-built rules files for each major IDE at `angular.dev/ai/develop-with-ai`. You can download these as a starting point and customize them for your team's patterns. For a complete walkthrough of each layer — including why AI tools default to outdated patterns and how to fix it tool by tool — see [Why AI Writes Outdated Angular Code (And How to Fix It)](/blog/why-ai-writes-outdated-angular-code).
 
 ## Troubleshooting
 
@@ -408,4 +408,4 @@ Angular provides pre-built rules files for each major IDE at `angular.dev/ai/dev
 
 **Claude Code: server not loading after configuration.** MCP server definitions go in `~/.claude.json` (created by `claude mcp add`) or `.mcp.json` (project-level). They do not go in `.claude/settings.json` or `.claude/settings.local.json` — those files control permissions and environment variables. If you edited the wrong file, move the configuration or re-run the `claude mcp add` command.
 
-**Server works but AI still generates old patterns.** The MCP server provides tools that the AI *can* call, but some AI assistants do not call `get_best_practices` automatically. Try prompting explicitly: "Check the Angular best practices guide, then generate the component." Combining MCP with a rules file that instructs the AI to always consult best practices first produces more consistent results.
+**Server works but AI still generates old patterns.** The MCP server provides tools that the AI *can* call, but some AI assistants do not call `get_best_practices` automatically. Try prompting explicitly: "Check the Angular best practices guide, then generate the component." Combining MCP with a rules file that instructs the AI to always consult best practices first produces more consistent results. The [complete guide to fixing outdated AI output](/blog/why-ai-writes-outdated-angular-code) covers the root cause and provides configuration templates for every tool.

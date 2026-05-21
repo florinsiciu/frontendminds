@@ -71,8 +71,9 @@
 
 ---
 
-#### Article 2: Why AI Writes Outdated Angular Code (And How to Fix It)
+#### Article 2: Why AI Writes Outdated Angular Code (And How to Fix It) — COMPLETED 2026-05-21
 
+**Status:** Published as `content/blog/why-ai-writes-outdated-angular-code.mdx` (2,579 words, 28th blog post). 3 downloadable templates created in `public/resources/`. Internal links added from 7 existing articles.
 **Publish by:** Week 2
 **Priority:** HIGH — #1 developer pain point, zero competition for consolidated guide
 
