@@ -1,0 +1,154 @@
+---
+title: "Angular 22: What's New, What Changed, and What Enterprise Teams Need to Know"
+description: "Angular 22 was released June 3, 2026. Signal forms, Angular ARIA, OnPush by default, async signals, the @Service decorator, and stable MCP tooling — here's what matters for enterprise teams upgrading from Angular 14-21."
+date: "2026-06-15"
+lastUpdated: "2026-06-15"
+category: "dev-workflow"
+author: "florin-siciu"
+tags: ["angular", "angular-22", "release", "signals", "upgrade", "2026"]
+featured: true
+draft: false
+faq:
+  - question: "When was Angular 22 released?"
+    answer: "Angular 22 was released on June 3, 2026. The official release event premiered on June 5, 2026. Angular 22 is the latest stable version and is now in active support."
+  - question: "What are the main features of Angular 22?"
+    answer: "Angular 22 introduces stable Signal Forms, Angular ARIA accessible components, OnPush change detection by default, the new @Service decorator, asynchronous dependency injection, async signals with resource(), stable Angular MCP tooling, and router enhancements including Navigation API integration."
+  - question: "Is Angular 22 ready for production?"
+    answer: "Yes. Angular 22 is the current stable release. Signal Forms and Angular ARIA are both production-ready. Async signals via resource() are stable. MCP tooling has graduated to stable. It is the recommended target for all new and upgrading projects."
+  - question: "Should I upgrade to Angular 22?"
+    answer: "If you are on Angular 19 or older, upgrade to Angular 22 through each intermediate version — Angular enforces sequential upgrades. If you are on Angular 20 or 21, upgrade to Angular 22 to stay within the active support window. Angular 21 entered LTS on June 3, 2026, and Angular 20 LTS ends November 2026."
+  - question: "How do I upgrade to Angular 22?"
+    answer: "Run ng update @angular/core@22 @angular/cli@22 from Angular 21. Angular requires upgrading one major version at a time. If you are on an older version, see the full step-by-step upgrade guide at frontendminds.com/blog/angular-upgrade-guide for every version path from v14 to v22."
+  - question: "What is OnPush by default in Angular 22?"
+    answer: "In Angular 22, new components use OnPush change detection by default. This aligns with Angular's zoneless-first direction — OnPush relies on explicit signal-based reactivity rather than Zone.js-triggered change detection. Existing components are not affected; OnPush default applies only to newly generated components."
+  - question: "What are Angular Signal Forms?"
+    answer: "Signal Forms are Angular 22's new form system built entirely on signals. They replace the reactive forms pattern with a composable, signal-driven API using form() from @angular/forms/signals. Signal Forms are production-ready in Angular 22 after being introduced experimentally in Angular 21."
+---
+
+Angular 22 was released on June 3, 2026. This is not an incremental update — it marks the point where Angular's signal-based architecture moves from experimental to production-default across forms, change detection, and async data fetching. If your team has been waiting for the signal ecosystem to stabilize before adopting it, the wait is over.
+
+I have been tracking Angular's signal adoption across 19 enterprise projects. Angular 22 is the version where "should we adopt signals?" stops being a question and becomes "we need a plan to adopt signals." The framework's defaults now assume signal-based patterns. Teams that delay this shift will increasingly fight the framework instead of working with it.
+
+## What's New in Angular 22
+
+### Signal Forms: Production-Ready
+
+The headline feature. Signal Forms replace Angular's reactive forms with a signal-driven API that is composable, type-safe, and dramatically simpler. Introduced experimentally in Angular 21, Signal Forms are now **stable and production-ready** in Angular 22.
+
+```typescript
+import { signal } from "@angular/core";
+import { form } from "@angular/forms/signals";
+
+@Component({
+  selector: "app-payment",
+  imports: [FormField],
+  templateUrl: "./app-payment.html",
+})
+class Payment {
+  readonly paymentModel = signal({
+    paymentType: "",
+    amount: 0,
+  });
+
+  readonly f = form(this.paymentModel, {
+    required(schema.paymentType, {
+      message: "Required field",
+    }),
+  });
+}
+```
+
+For enterprise teams: Signal Forms do not deprecate reactive forms in Angular 22. Both APIs coexist. But new development should target Signal Forms, and existing forms should be migrated incrementally. The [Angular Signals enterprise guide](/blog/angular-signals-enterprise-guide) covers the migration strategy.
+
+### Angular ARIA: Accessible Components for Production
+
+Angular ARIA provides accessible component primitives that cover common accessibility patterns. These are **production-ready** in Angular 22 — not experimental, not developer preview. Use them directly in production applications.
+
+This matters for enterprise teams because accessibility compliance (WCAG 2.1 AA, Section 508) is increasingly required by procurement contracts and legal requirements. Angular ARIA gives you accessible building blocks instead of hand-rolling ARIA attributes.
+
+### OnPush Change Detection by Default
+
+New components in Angular 22 use `OnPush` change detection by default. This is a significant shift:
+
+- **Before Angular 22:** New components used `Default` change detection (Zone.js-triggered)
+- **Angular 22:** New components use `OnPush` (signal-triggered)
+
+This aligns with Angular's zoneless-first direction. The previous default (`Default`) has been renamed to `Eager` for clarity. Existing components are **not affected** — this change only applies to newly generated components.
+
+For enterprise teams already using signals: this is a non-event. For teams still relying on Zone.js change detection patterns, this is a signal (pun intended) that migration should be prioritized. See [Angular Signals enterprise guide](/blog/angular-signals-enterprise-guide) for the adoption playbook.
+
+### Async Signals with resource()
+
+The `resource()` and `httpResource()` APIs — introduced experimentally in Angular 20 — are now **stable** in Angular 22. These APIs bring asynchronous data fetching into the signal graph:
+
+```typescript
+import { resource, signal, computed } from "@angular/core";
+
+const selectedCity = signal("Chicago");
+
+const weatherResource = resource({
+  params: () => ({ city: selectedCity() }),
+  loader: (params) => fetchWeatherForecast(params.city),
+});
+
+const currentTemperature = computed(() => {
+  if (weatherResource.hasValue()) {
+    return weatherResource.value().temperature;
+  }
+});
+```
+
+This replaces the pattern of subscribing to observables, managing loading states manually, and dealing with unsubscription. For enterprise applications with heavy API integration, `resource()` significantly reduces boilerplate.
+
+### The @Service Decorator
+
+Angular 22 introduces `@Service` — a new decorator that clarifies intent for injectable services. While `@Injectable()` continues to work, `@Service` provides a more descriptive API for the most common use case.
+
+### Asynchronous Dependency Injection
+
+Angular 22 adds asynchronous dependency injection, enabling lazy loading of services and their dependencies. This is particularly valuable for large enterprise applications where tree-shaking alone isn't sufficient to reduce initial bundle size.
+
+### Stable MCP Tooling
+
+The Angular CLI's [MCP (Model Context Protocol) server](/blog/angular-mcp-server-guide) graduates to **stable** in Angular 22. All tools are production-ready, including testing and end-to-end tools. For teams using AI-assisted development with Cursor, VS Code Copilot, or Claude Code, this means reliable Angular-aware code generation.
+
+### Router Enhancements
+
+- **Navigation API integration** — Angular's router now integrates with the browser's Navigation API for smoother client-side navigation
+- **Route cleanup controls** — new APIs for managing route lifecycle and cleanup
+- **`@default` template syntax** — new control flow addition for exhaustive switch handling
+
+## Angular 22 Version Details
+
+| Detail | Value |
+|--------|-------|
+| **Release date** | June 3, 2026 |
+| **Current patch** | v22.0.1 |
+| **Active support ends** | ~December 2026 |
+| **LTS ends** | ~June 2028 |
+| **TypeScript required** | >=5.9.0 |
+| **Node.js required** | ^20.19.0 \|\| ^22.12.0 \|\| ^24.0.0 |
+
+## How to Upgrade to Angular 22
+
+From Angular 21:
+
+```bash
+ng update @angular/core@22 @angular/cli@22
+```
+
+From older versions, you must upgrade through each intermediate version sequentially. The [Angular upgrade guide](/blog/angular-upgrade-guide) covers every version path from v14 to v22 with breaking changes, dependency requirements, and realistic timelines from 19 enterprise projects.
+
+**Effort estimate for the 21→22 upgrade:** 1-3 days for most applications. The main work is adopting OnPush default for new components (existing components are unaffected) and evaluating Signal Forms adoption for new form development.
+
+## What This Means for Enterprise Teams
+
+Angular 22 draws a clear line: the signal era is production-ready. The three decisions enterprise teams need to make:
+
+1. **When to upgrade.** If you are on Angular 19 or older, you are on [end-of-life software with no security patches](/blog/angular-end-of-life-2026). Upgrade now — target Angular 22.
+
+2. **When to adopt Signal Forms.** New forms should use Signal Forms immediately. Existing reactive forms work fine but should be migrated incrementally during maintenance cycles.
+
+3. **When to go fully zoneless.** Angular 22 makes OnPush the default, but existing Zone.js applications continue to work. Plan your zoneless migration for 2026-2027 using the [signals enterprise guide](/blog/angular-signals-enterprise-guide).
+
+For the full version status of every Angular release, see the [Angular latest version reference](/blog/angular-latest-version-2026).
