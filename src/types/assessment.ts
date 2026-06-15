@@ -209,6 +209,7 @@ export interface BlogPostMeta {
   title: string;
   description: string;
   date: string;
+  lastUpdated?: string;
   category: string;
   author: string;
   image?: string;

@@ -85,6 +85,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     headline: post.title,
     description: post.description,
     datePublished: new Date(post.date).toISOString(),
+    dateModified: new Date(post.lastUpdated ?? post.date).toISOString(),
     image: articleImage,
     author: {
       "@type": "Person",

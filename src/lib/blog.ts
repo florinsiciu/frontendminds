@@ -23,6 +23,7 @@ function parseMdxFile(filePath: string, slug: string): BlogPostMeta & { content:
     title: data.title ?? "",
     description: data.description ?? "",
     date: data.date ?? "",
+    lastUpdated: data.lastUpdated,
     category: data.category ?? "",
     author: data.author ?? "florin-siciu",
     image: data.image,
