@@ -77,6 +77,23 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         }
       : null;
 
+  const howToJsonLd =
+    post.howTo
+      ? {
+          "@context": "https://schema.org",
+          "@type": "HowTo",
+          name: post.howTo.name,
+          description: post.howTo.description,
+          ...(post.howTo.totalTime && { totalTime: post.howTo.totalTime }),
+          step: post.howTo.steps.map((step, i) => ({
+            "@type": "HowToStep",
+            position: i + 1,
+            name: step.name,
+            text: step.text,
+          })),
+        }
+      : null;
+
   const articleImage = post.image ?? `${siteConfig.baseUrl}/blog/${slug}/opengraph-image`;
 
   const articleJsonLd = {
@@ -146,6 +163,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
+      {howToJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
         />
       )}
       <ReadingProgress />

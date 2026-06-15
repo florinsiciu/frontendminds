@@ -204,6 +204,18 @@ export interface FaqItem {
   answer: string;
 }
 
+export interface HowToStep {
+  name: string;
+  text: string;
+}
+
+export interface HowToData {
+  name: string;
+  description: string;
+  totalTime?: string;
+  steps: HowToStep[];
+}
+
 export interface BlogPostMeta {
   slug: string;
   title: string;
@@ -218,6 +230,7 @@ export interface BlogPostMeta {
   draft: boolean;
   readingTime: string;
   faq?: FaqItem[];
+  howTo?: HowToData;
 }
 
 export interface BlogPost extends BlogPostMeta {

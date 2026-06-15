@@ -19,6 +19,27 @@ faq:
     answer: "The 16→17 upgrade is the most significant. It requires jumping to TypeScript 5.2+, drops Node.js 16 support entirely, makes standalone components the default, introduces the esbuild/Vite builder as default, and removes legacy Angular Material components. The 19→20 upgrade is also notable because it drops Node.js 18 support. Plan extra time for these two transitions."
   - question: "Which Angular version should I upgrade to?"
     answer: "As of June 2026, target Angular 22. Angular 22 was released on June 3, 2026, and is the current stable version. Angular 21 entered LTS on June 3, 2026, with support through May 2027. Angular 20 is in LTS through November 2026. Angular 19 and all earlier versions are end-of-life with no security patches. See the latest version status at frontendminds.com/blog/angular-latest-version-2026."
+howTo:
+  name: "How to Upgrade Angular from v14 to v22"
+  description: "Step-by-step guide to upgrade Angular through every major version from 14 to 22, one version at a time using ng update."
+  totalTime: "P90D"
+  steps:
+    - name: "Upgrade Angular 14 to 15"
+      text: "Run ng update @angular/core@15 @angular/cli@15. Review Angular Material MDC migration for CSS changes. Effort: 1-3 days."
+    - name: "Upgrade Angular 15 to 16"
+      text: "Run ng update @angular/core@16 @angular/cli@16. Drop Node.js 14 — upgrade Node first if needed. Effort: 1-3 days."
+    - name: "Upgrade Angular 16 to 17"
+      text: "Run ng update @angular/core@17 @angular/cli@17. This is the hardest upgrade — requires TypeScript 5.2+, drops Node.js 16, standalone becomes default, esbuild replaces webpack. Effort: 1-3 weeks."
+    - name: "Upgrade Angular 17 to 18"
+      text: "Run ng update @angular/core@18 @angular/cli@18. Stable control flow replaces structural directives. Zoneless applications available in developer preview. Effort: 1-3 days."
+    - name: "Upgrade Angular 18 to 19"
+      text: "Run ng update @angular/core@19 @angular/cli@19. Incremental hydration and standalone defaults become the norm. Effort: 1-3 days."
+    - name: "Upgrade Angular 19 to 20"
+      text: "Run ng update @angular/core@20 @angular/cli@20. Node.js 18 is dropped — upgrade to Node 20+. Signals graduate to stable. Effort: 1-2 weeks."
+    - name: "Upgrade Angular 20 to 21"
+      text: "Run ng update @angular/core@21 @angular/cli@21. Zoneless change detection becomes the default for new projects. Effort: 1-3 days."
+    - name: "Upgrade Angular 21 to 22"
+      text: "Run ng update @angular/core@22 @angular/cli@22. Signal forms stable, OnPush default, selectorless components. Effort: 1-3 days."
 ---
 
 In 19 enterprise Angular upgrade projects, the version upgrade itself has never been the part that fails. What fails is the planning — teams that do not understand what each version jump requires, how long it actually takes, and where the hidden complexity lives. For the common failure patterns, see [why most Angular migrations fail](/blog/angular-migrations-fail).
