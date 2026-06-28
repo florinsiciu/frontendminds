@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { submitContact, type ContactInput } from "@/actions/contact";
 import { contactPage } from "@/lib/content/contact";
 
@@ -9,6 +9,11 @@ type FormStatus = "idle" | "submitting" | "success" | "error";
 export default function ContactPage() {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const mountTime = useRef(0);
+
+  useEffect(() => {
+    mountTime.current = Date.now();
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -21,6 +26,8 @@ export default function ContactPage() {
       email: formData.get("email") as string,
       reason: formData.get("reason") as ContactInput["reason"],
       message: formData.get("message") as string,
+      website: (formData.get("website") as string) || undefined,
+      _t: mountTime.current,
     };
 
     const result = await submitContact(input);
@@ -56,6 +63,16 @@ export default function ContactPage() {
           onSubmit={handleSubmit}
           className="space-y-6 rounded-lg border border-border bg-card p-8"
         >
+          {/* Honeypot — invisible to users, bots fill it */}
+          <input
+            name="website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="sr-only"
+          />
+
           {/* Name */}
           <div>
             <label

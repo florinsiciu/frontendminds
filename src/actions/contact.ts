@@ -1,6 +1,7 @@
 "use server";
 
 import { z } from "zod/v3";
+import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { Resend } from "resend";
 import { siteConfig } from "@/lib/config/site";
@@ -12,12 +13,39 @@ const contactSchema = z.object({
   email: z.string().email("Invalid email address").max(320),
   reason: z.enum(["general", "service", "speaking", "partnership"]),
   message: z.string().min(10, "Message must be at least 10 characters").max(5000),
+  website: z.string().optional(),
+  _t: z.number().optional(),
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;
 export type ContactResult =
   | { success: true }
   | { success: false; error: string };
+
+// ─── Rate Limiting ───────────────────────────────────────────────────────────
+
+const RATE_LIMIT_MAX = 3;
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+const MIN_SUBMIT_TIME_MS = 3000;
+
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+
+  for (const [key, entry] of rateLimitMap) {
+    if (entry.resetAt <= now) rateLimitMap.delete(key);
+  }
+
+  const entry = rateLimitMap.get(ip);
+  if (!entry) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT_MAX) return false;
+  entry.count++;
+  return true;
+}
 
 // ─── Server Action ────────────────────────────────────────────────────────────
 
@@ -31,9 +59,24 @@ export async function submitContact(input: ContactInput): Promise<ContactResult>
     };
   }
 
-  const { name, email, reason, message } = parsed.data;
+  const { name, email, reason, message, website, _t } = parsed.data;
 
-  // 2. Insert into Supabase
+  // 2. Honeypot check — bots fill hidden fields
+  if (website) return { success: true };
+
+  // 3. Timing check — humans take >3s to fill a form
+  if (_t && Date.now() - _t < MIN_SUBMIT_TIME_MS) return { success: true };
+
+  // 4. Rate limiting by IP
+  const reqHeaders = await headers();
+  const ip = reqHeaders.get("x-forwarded-for")?.split(",")[0]?.trim()
+    ?? reqHeaders.get("x-real-ip")
+    ?? "unknown";
+  if (!checkRateLimit(ip)) {
+    return { success: false, error: "Too many submissions. Please try again later." };
+  }
+
+  // 5. Insert into Supabase
   const supabase = await createClient();
   const { error: dbError } = await supabase.from("contact_submissions").insert({
     name,
@@ -47,7 +90,7 @@ export async function submitContact(input: ContactInput): Promise<ContactResult>
     return { success: false, error: "Failed to save your message. Please try again." };
   }
 
-  // 3. Send notification email to Florin (non-blocking)
+  // 6. Send notification email (non-blocking)
   const resendApiKey = process.env.RESEND_API_KEY;
   if (resendApiKey) {
     const resend = new Resend(resendApiKey);
