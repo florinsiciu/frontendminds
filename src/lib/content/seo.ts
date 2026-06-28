@@ -5,7 +5,7 @@ import type { PageSeo } from "@/types/assessment";
 export const defaultSeo: PageSeo = {
   title: "FrontendMinds — Angular Migration & Upgrade Consulting",
   description:
-    "Helping CTOs and engineering managers modernize Angular applications. Free assessment, migration guides, and business case frameworks — based on 19 enterprise migrations.",
+    "Angular modernization consulting for CTOs. Free assessment, migration guides, and business case frameworks — based on 19 enterprise migrations.",
 };
 
 // ─── Per-Page Overrides ─────────────────────────────────────────────────────
@@ -14,7 +14,7 @@ export const pageSeo: Record<string, PageSeo> = {
   home: {
     title: "FrontendMinds — Angular Migration & Upgrade Consulting",
     description:
-      "Helping CTOs and engineering managers modernize Angular applications. Free assessment, migration guides, and business case frameworks — based on 19 enterprise migrations.",
+      "Angular modernization consulting for CTOs. Free assessment, migration guides, and business case frameworks — based on 19 enterprise migrations.",
   },
   assessment: {
     title:
@@ -62,7 +62,7 @@ export const pageSeo: Record<string, PageSeo> = {
   services: {
     title: "Angular Consulting & Migration Services | FrontendMinds",
     description:
-      "Angular migration consulting, modernization audits, and AI tool stack rationalization for enterprise teams. From assessment to implementation — based on 19 migration projects.",
+      "Angular migration consulting, modernization audits, and AI tool stack rationalization. Assessment to implementation — 19 enterprise projects.",
   },
   about: {
     title: "About Florin Siciu — Angular Migration Consultant | FrontendMinds",
